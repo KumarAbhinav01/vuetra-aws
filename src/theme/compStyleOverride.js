@@ -122,6 +122,9 @@ export default function componentStyleOverrides(theme) {
         root: {
           backgroundImage: "none",
           background: theme.colors.bg3,
+          "&:focus-visible": {
+            outline: "none",
+          },
         },
         rounded: {
           borderRadius: `${theme?.customization?.borderRadius}px`,

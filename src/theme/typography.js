@@ -41,15 +41,30 @@ export default function themeTypography(theme) {
       fontWeight: 600,
       color: theme.colors.primary,
     },
+    subtitle1_500: {
+      fontSize: "13px",
+      fontWeight: 500,
+      color: theme.colors.primary,
+    },
     subtitle2: {
       fontSize: "12px",
       fontWeight: 600,
+      color: theme.colors.secondary,
+    },
+    subtitle2_500: {
+      fontSize: "12px",
+      fontWeight: 500,
       color: theme.colors.secondary,
     },
     caption: {
       fontSize: "13px",
       color: theme.colors.secondary,
       fontWeight: 600,
+    },
+    caption_500: {
+      fontSize: "13px",
+      color: theme.colors.secondary,
+      fontWeight: 500,
     },
     body1: {
       fontSize: "11.5px",

@@ -4,9 +4,10 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { Button, Divider, IconButton, alpha } from "@mui/material";
+import { Divider } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { ticketItems } from "../../static/dashboardItem";
+import Notification from "./NotificationSection";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,11 +84,13 @@ const TicketSection = () => {
         >
           {[0, 1, 2, 3].map((v, index) => (
             <CustomTabPanel value={value} index={index} key={index}>
-              <Stack spacing={4}>
+              <Stack spacing={1}>
                 {ticketItems
                   .filter((item) => item.access.includes(value))
                   .map((item, index) => (
-                    <Notification item={item} selected={true} index={index} />
+                    <Box sx={{ pl: 2 }}>
+                      <Notification item={item} selected={true} index={index} />
+                    </Box>
                   ))}
               </Stack>
             </CustomTabPanel>
@@ -140,120 +143,3 @@ const TicketSection = () => {
 };
 
 export default TicketSection;
-
-const Notification = ({ item, selected, index }) => {
-  return (
-    <Box
-      key={index}
-      sx={{
-        transition: "all 1000ms ease-in-out",
-        transform: selected ? "none" : "translateX(0) translateY(64px)",
-        overflow: selected ? "visible" : "hidden",
-        pl: 2,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          gap: 2,
-        }}
-      >
-        <IconButton
-          sx={{
-            p: 0.9,
-            borderRadius: "50%",
-            height: "fit-content",
-            backgroundColor: (theme) => alpha(theme.palette.color.blue, 0.17),
-            color: (theme) => theme.palette.color.blue,
-          }}
-        >
-          <item.icon size={16} />
-        </IconButton>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Box
-              sx={{
-                p: 0.5,
-                w: "fit-content",
-                h: "fit-content",
-                alignSelf: "start",
-                mt: 1,
-                borderRadius: "50%",
-                backgroundColor: (theme) => theme.palette.color.yellow,
-              }}
-            />
-            <Typography
-              variant="subtitle1"
-              sx={{
-                fontWeight: 500,
-                color: (theme) => theme.palette.color.secondary,
-                "& span": {
-                  mx: 0.5,
-                  color: (theme) => theme.palette.color.primary,
-                },
-              }}
-            >
-              {item.name && (
-                <span>
-                  {item.name} {"  "}
-                </span>
-              )}{" "}
-              {item.message1}
-              {"  "}
-              <span>{item.account}</span> {item.message2}
-            </Typography>
-          </Box>
-          <Typography
-            variant="caption"
-            sx={{
-              fontSize: "11px",
-              "& span": {
-                mr: 1,
-                fontSize: "12px",
-              },
-            }}
-          >
-            <span>•</span> {item.time}
-          </Typography>
-          <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
-            {item.buttons.map((button, index) => (
-              <Button
-                key={index}
-                sx={{
-                  padding: "4px 10px",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  transition: "all 500ms ease-in-out",
-                  borderRadius: "sm",
-                  outline: "none",
-                  opacity: 1,
-                  "&:hover": {
-                    opacity: 0.35,
-                  },
-                  ...(button.color === "blue" && {
-                    color: (theme) => theme.palette.color.blue,
-                    backgroundColor: (theme) =>
-                      alpha(theme.palette.color.blue, 0.1),
-                  }),
-                  ...(button.color === "gray" && {
-                    color: (theme) => theme.palette.color.secondary,
-                    backgroundColor: (theme) =>
-                      alpha(theme.palette.color.secondary, 0.1),
-                  }),
-                  ...(button.color === "red" && {
-                    color: (theme) => theme.palette.color.red,
-                    backgroundColor: (theme) =>
-                      alpha(theme.palette.color.red, 0.1),
-                  }),
-                }}
-              >
-                {button.text}
-              </Button>
-            ))}
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
-};

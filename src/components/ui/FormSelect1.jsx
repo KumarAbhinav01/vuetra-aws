@@ -75,23 +75,10 @@ const FormSelect = ({
           {checkbox && <CustomSwitch />}
         </Stack>
       )}
-      {/* <StyledInput
-        sx={{
-          border: (theme) => `1px solid ${theme.palette.color.border}`,
-          transition: "all 300ms ease-in-out",
-          ":focus-within": {
-            border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.5)}`,
-          },
-        }}
-        placeholder="Enter "
-        {...rest}
-      /> */}
 
       <Select
         fullWidth
         sx={{
-          // border: (theme) => `1px solid ${theme.palette.color.border}`,
           transition: "all 300ms ease-in-out",
           ":focus-within": {
             border: (theme) =>

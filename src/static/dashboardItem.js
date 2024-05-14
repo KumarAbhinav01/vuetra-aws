@@ -53,7 +53,7 @@ export const ticketItems = [
     time: "1h ago",
     icon: TbRepeat,
     buttons: [
-      { text: "Reject", color: "gray" },
+      { text: "Reject", color: "secondary" },
       { text: "Review", color: "blue" },
     ],
     access: [0, 2],
@@ -67,8 +67,8 @@ export const ticketItems = [
     time: "1h ago",
 
     buttons: [
+      { text: "Close", color: "secondary" },
       { text: "Resolve", color: "blue" },
-      { text: "Close", color: "gray" },
     ],
     access: [0, 1],
   },
@@ -78,7 +78,7 @@ export const ticketItems = [
     time: "1h ago",
     icon: PiFlagPennantFill,
     buttons: [
-      { text: "Ignore", color: "gray" },
+      { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },
     ],
     access: [0, 2, 3],
@@ -89,7 +89,7 @@ export const ticketItems = [
     time: "1h ago",
     icon: PiFlagPennantFill,
     buttons: [
-      { text: "Ignore", color: "gray" },
+      { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },
     ],
     access: [0, 1, 3],
@@ -100,7 +100,7 @@ export const ticketItems = [
     time: "1h ago",
     icon: PiFlagPennantFill,
     buttons: [
-      { text: "Ignore", color: "gray" },
+      { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },
     ],
     access: [0, 1, 2, 3],
