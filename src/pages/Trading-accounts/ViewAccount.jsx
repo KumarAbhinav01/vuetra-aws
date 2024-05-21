@@ -6,7 +6,6 @@ import WestIcon from "@mui/icons-material/West";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 
 import {
-  Button,
   Divider,
   Grid,
   IconButton,
@@ -15,14 +14,10 @@ import {
   Tab,
   Tabs,
   Typography,
-  alpha,
 } from "@mui/material";
-import { BsSquareHalf, BsThreeDotsVertical } from "react-icons/bs";
-import { HiOutlineArchiveBoxArrowDown } from "react-icons/hi2";
-import { MdDeleteOutline } from "react-icons/md";
-import { TbLink } from "react-icons/tb";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { toggleOpen } from "../../slices/openModalSlice";
-import { FaKey } from "react-icons/fa6";
 import { IoKeyOutline } from "react-icons/io5";
 import GeneralTab from "./generalTab";
 import TradersActivity from "./TradersActivity";
@@ -97,7 +92,11 @@ const ViewAccount = () => {
             }}
           >
             <Stack direction="row" spacing={0}>
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  dispatch(toggleOpen());
+                }}
+              >
                 <WestIcon
                   sx={{
                     color: (theme) => theme.palette.color.secondary,

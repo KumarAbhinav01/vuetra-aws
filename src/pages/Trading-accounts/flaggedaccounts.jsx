@@ -5,8 +5,50 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Card, Grid, IconButton, Stack, Tooltip, alpha } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
-import { PiWarningDiamondBold } from "react-icons/pi";
+import { PiIntersectThree, PiWarningDiamondBold } from "react-icons/pi";
 import { MdDone } from "react-icons/md";
+import FormSelect from "../../components/ui/FormSelect";
+import Searchbar from "../../components/ui/Searchbar";
+import ExportSection from "../../components/ui/ExportSection";
+import DisplayColumns from "../../components/ui/DisplayColumns";
+
+const headcells = [
+  {
+    id: "name",
+    label: "Name",
+    getCell: (row) => row.name,
+  },
+  {
+    id: "customerId",
+    label: "Customer ID",
+    getCell: (row) => (
+      <Stack direction="row" spacing={1} alignItems="center">
+        <PiIntersectThree size={16} />
+        <p>{row.platform}</p>
+      </Stack>
+    ),
+  },
+  {
+    id: "email",
+    label: "Email",
+    getCell: (row) => row.email,
+  },
+  {
+    id: "validationDate",
+    label: "Validation Date",
+    getCell: (row) => row.validationDate,
+  },
+  {
+    id: "action",
+    label: "Action",
+    getCell: (row) => row.action,
+  },
+  {
+    id: "ip-address",
+    label: "IP-Address",
+    getCell: (row) => row.ip,
+  },
+];
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +101,7 @@ const items = [
 
 export default function FlaggedAccounts() {
   const [value, setValue] = React.useState(0);
+  const [selectedColumns, setSelectedColumns] = React.useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -66,16 +109,56 @@ export default function FlaggedAccounts() {
 
   return (
     <Box sx={{ width: "100%", p: "24px" }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="basic tabs example"
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ pr: "48px" }}
       >
-        <Tab label="Copy traders" {...a11yProps(0)} />
-        <Tab label="HFT" {...a11yProps(1)} />
-        <Tab label="Hedge" {...a11yProps(2)} />
-        <Tab label="IP-addresses" {...a11yProps(2)} />
-      </Tabs>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Copy traders" {...a11yProps(0)} />
+          <Tab label="HFT" {...a11yProps(1)} />
+          <Tab label="Hedge" {...a11yProps(2)} />
+          <Tab label="IP-addresses" {...a11yProps(2)} />
+        </Tabs>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="flex-end"
+          sx={{
+            mb: "24px",
+            fontSize: "11.5px",
+            color: (theme) => theme.palette.color.secondary,
+          }}
+        >
+          <Searchbar />
+          <ExportSection />
+
+          <FormSelect
+            options={[
+              { value: "thisWeek", label: "This Week" },
+              { value: "lastWeek", label: "Last Week" },
+              { value: "thisMonth", label: "This Month" },
+            ]}
+            value={"thisWeek"}
+            onChange={(e) => {}}
+          />
+          <DisplayColumns
+            columns={headcells}
+            selectedColumns={selectedColumns}
+            setSelectedColumns={setSelectedColumns}
+          />
+          <FormSelect
+            options={[{ value: "all", label: "All" }]}
+            defaultValue="all"
+          />
+        </Stack>
+      </Stack>
 
       <CustomTabPanel value={value} index={0}>
         <Grid container spacing={2}>

@@ -341,7 +341,19 @@ const Page1 = () => {
               background: (theme) => theme.palette.color.yellow,
             }}
           ></Box>
-          <Typography variant="h4">Customer name</Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              transition: "all 0.3s",
+              cursor: "pointer",
+              ":hover": {
+                opacity: 0.35,
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Customer name
+          </Typography>
         </Stack>
         <Typography
           variant="h4"

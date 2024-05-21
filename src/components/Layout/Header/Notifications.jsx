@@ -16,7 +16,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import { FaBell } from "react-icons/fa6";
 import { ticketItems } from "../../../static/dashboardItem";
-import Notification from "../../Home/NotificationSection";
+import Notification from "../../Home/Notification";
 
 const iconStyle = {
   color: (theme) => theme.palette.color.secondary,
@@ -150,8 +150,6 @@ export default function Notifications() {
               </CustomTabPanel>
             ))}
           </Stack>
-
-          {/* <NotificationSection divider noBorder noBg /> */}
         </Paper>
       </Drawer>
     </Box>

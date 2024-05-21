@@ -25,8 +25,9 @@ const Notification = ({ item, selected, index, divider }) => {
             p: 0.9,
             borderRadius: "50%",
             height: "fit-content",
-            backgroundColor: (theme) => alpha(theme.palette.color.blue, 0.17),
-            color: (theme) => theme.palette.color.blue,
+            backgroundColor: (theme) =>
+              alpha(theme.palette.color.buttonbg, 0.17),
+            color: (theme) => theme.palette.color.buttonbg,
           }}
         >
           <item.icon size={16} />

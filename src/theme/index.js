@@ -11,6 +11,7 @@ export const theme = (mode) => {
   const color = {
     primary: getColor(mode, "#FFFFFF", "#2E3E61"),
     secondary: "#8A96A6",
+    tertiary: getColor(mode, "#FFFFFF", "#0E1011"),
     blue: "#8DADFF",
     blue1: "#8CADFF",
     red: "#F55F82",
@@ -48,6 +49,7 @@ export const theme = (mode) => {
         main: themeOption.colors.green,
       },
     },
+
     mixins: {
       toolbar: {
         minHeight: "48px",

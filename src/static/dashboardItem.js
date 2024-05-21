@@ -5,7 +5,7 @@ import { HiPencilAlt } from "react-icons/hi";
 import { HiMiniChartBar } from "react-icons/hi2";
 import { IoNotifications } from "react-icons/io5";
 import { MdOutlinePercent } from "react-icons/md";
-import { PiFlagPennantFill } from "react-icons/pi";
+import { PiFlagPennantBold } from "react-icons/pi";
 import { RiShoppingBag2Fill } from "react-icons/ri";
 import { TbRepeat } from "react-icons/tb";
 
@@ -76,7 +76,7 @@ export const ticketItems = [
     account: "Account Number",
     message2: "flagged for",
     time: "1h ago",
-    icon: PiFlagPennantFill,
+    icon: PiFlagPennantBold,
     buttons: [
       { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },
@@ -87,7 +87,7 @@ export const ticketItems = [
     account: "Account Number",
     message2: "flagged for",
     time: "1h ago",
-    icon: PiFlagPennantFill,
+    icon: PiFlagPennantBold,
     buttons: [
       { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },
@@ -98,7 +98,7 @@ export const ticketItems = [
     account: "Account Number",
     message2: "flagged for",
     time: "1h ago",
-    icon: PiFlagPennantFill,
+    icon: PiFlagPennantBold,
     buttons: [
       { text: "Ignore", color: "secondary" },
       { text: "Review", color: "red" },

@@ -2,38 +2,14 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Input,
-  InputBase,
   Radio,
   RadioGroup,
   Stack,
   Typography,
-  alpha,
-  styled,
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import React from "react";
 import CustomSwitch from "./Switch";
-
-const StyledInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(2),
-  },
-  "& .MuiInputBase-input": {
-    // borderRadius: 4,
-    // backgroundColor: theme.palette.color.bg2,
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    fontSize: "inherit",
-    padding: "11px",
-    color:
-      theme.palette.mode === "dark"
-        ? theme.palette.color.secondary
-        : theme.palette.color.primary,
-    border: (theme) => `1px solid ${theme.palette.color.inputborder}`,
-  },
-  borderRadius: "7px",
-  // background: theme.palette.color.bg2,
-}));
 
 const FormRadio = ({
   label,

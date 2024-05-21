@@ -23,17 +23,7 @@ const AddProduct = () => {
 
   return (
     <React.Fragment>
-      <Drawer
-        sx={
-          {
-            // borderRadius: "14px 0 14px 0",
-            // overflow: "hidden",
-          }
-        }
-        open={open}
-        onClose={() => dispatch(toggleOpen())}
-        anchor="right"
-      >
+      <Drawer open={open} onClose={() => dispatch(toggleOpen())} anchor="right">
         <Paper
           sx={{
             width: "644px",

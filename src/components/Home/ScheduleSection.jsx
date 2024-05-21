@@ -139,6 +139,8 @@ const ScheduleSection = () => {
                   opacity: 1,
                   "&:hover": {
                     opacity: 0.35,
+                    background: (theme) =>
+                      alpha(theme.palette.color.secondary, 0.1),
                   },
                   color: (theme) => theme.palette.color.secondary,
                   backgroundColor: (theme) =>

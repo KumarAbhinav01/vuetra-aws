@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { ticketItems } from "../../static/dashboardItem";
-import Notification from "./NotificationSection";
+import Notification from "./Notification";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
