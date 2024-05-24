@@ -1,5 +1,25 @@
 export default function componentStyleOverrides(theme) {
   return {
+    MuiSlider: {
+      styleOverrides: {
+        root: {
+          "& .MuiSlider-rail": {
+            background: "rgba(0, 149, 255, 0.5)",
+          },
+          "& .MuiSlider-track": {
+            background: theme.colors.blue,
+            border: "none",
+          },
+          "& .MuiSlider-thumb": {
+            width: "12px",
+            height: "12px",
+
+            backgroundColor: theme.colors.blue,
+            border: `1px solid ${theme.colors.border}`,
+          },
+        },
+      },
+    },
     MuiFormControlLabel: {
       styleOverrides: {
         root: {

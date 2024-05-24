@@ -16,7 +16,7 @@ export default function Layout() {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        backgroundColor: (theme) => theme.palette.color.bg3,
+        backgroundColor: (theme) => theme.palette.color.bg,
       }}
     >
       <SideBar />

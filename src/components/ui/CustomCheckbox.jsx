@@ -2,10 +2,10 @@ import { Done } from "@mui/icons-material";
 import { Box, Stack, Typography, alpha } from "@mui/material";
 import React from "react";
 
-const CustomCheckbox = ({ variant, label, checked, onChange }) => {
+const CustomCheckbox = ({ variant, label, checked, onChange, spacing = 2 }) => {
   console.log("checked", checked);
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
+    <Stack direction="row" spacing={spacing} alignItems="center">
       <Box
         sx={{
           display: "flex",
