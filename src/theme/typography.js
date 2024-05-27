@@ -36,6 +36,7 @@ export default function themeTypography(theme) {
       color: theme.colors.primary,
       fontWeight: 600,
     },
+
     subtitle1: {
       fontSize: "13px",
       fontWeight: 600,

@@ -67,7 +67,7 @@ export default function ToggleColumns({
             borderRadius: "10px",
             p: "10px",
             background: (theme) => theme.palette.color.bg2,
-            border: (theme) => `1px solid ${theme.palette.color.border}`,
+            // border: (theme) => `1px solid ${theme.palette.color.border}`,
             width: "300px",
             mr: "10px",
             maxHeight: "400px",

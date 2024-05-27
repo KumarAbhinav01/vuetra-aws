@@ -20,9 +20,11 @@ export const theme = (mode) => {
     orange: "#E69122",
     purple: "#7E83FF",
     darkblue: "#2196f3",
+    bgblue: getColor(mode, "#121929", "#EDF3FF"),
     inputborder: getColor(mode, "transparent", "#e4e4e4"),
     border2: "#ced4da",
-    border: getColor(mode, "#2E3E612B", "#EDEFF2"),
+    border: getColor(mode, "#2E3E612B", "#EEEEEE"),
+    border3: getColor(mode, "#647DB52B", "#EDEFF2"),
     paper: getColor(mode, "#0E1011", "#F7F9FA"),
     bg: getColor(mode, "#000000", "#FFFFFF"),
     bg2: getColor(mode, "#131517", "#FFFFFFBF"),
@@ -47,6 +49,9 @@ export const theme = (mode) => {
       color: themeOption.colors,
       success: {
         main: themeOption.colors.green,
+      },
+      primary: {
+        main: themeOption.colors.blue,
       },
     },
 
