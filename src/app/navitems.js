@@ -23,6 +23,7 @@ import General from "../pages/Settings/general";
 import Domains from "../pages/Settings/domains";
 import Videos from "../pages/Firm/Content-management/Collections/videos";
 import Collections from "../pages/Firm/Content-management/Collections/collections";
+import Programs from "../pages/Affiliates/programs";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -205,7 +206,7 @@ export const navItems = [
   },
   {
     path: "/affiliate-center/programs",
-    element: <div></div>,
+    element: <Programs />,
     isPrivate: true,
     layout: true,
   },
