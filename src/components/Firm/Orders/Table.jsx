@@ -24,8 +24,9 @@ function EnhancedTableHead(props) {
     checkbox,
     allSelected,
   } = props;
+
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
+    onRequestSort(property);
   };
 
   return (
@@ -36,9 +37,7 @@ function EnhancedTableHead(props) {
             <CustomCheckbox
               variant="contained"
               checked={allSelected}
-              onChange={() => {
-                onSelectAllClick();
-              }}
+              onChange={onSelectAllClick}
               background="bg2"
             />
           </TableCell>
@@ -60,7 +59,14 @@ function EnhancedTableHead(props) {
               >
                 {headCell.label}
               </Typography>
-              {headCell.label && <RxCaretSort size={15} />}
+              <RxCaretSort
+                size={15}
+                onClick={createSortHandler(headCell.id)}
+                style={{
+                  cursor: 'pointer',
+                  color: orderBy === headCell.id ? 'blue' : 'inherit',
+                }}
+              />
             </Stack>
           </TableCell>
         ))}
@@ -72,24 +78,24 @@ function EnhancedTableHead(props) {
 const CustomTable = ({
   headcells,
   rows,
+  onRequestSort,
+  order,
+  orderBy,
   onRowClick,
   fontSize,
   checkbox,
   selected = [],
   setSelected,
 }) => {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const handleRequestSort = (event, property) => {
+
+  const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+    onRequestSort(isAsc ? "desc" : "asc", property);
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = () => {
     if (selected.length !== rows.length) {
       const newSelected = rows.map((n, index) => index);
       setSelected(newSelected);
@@ -123,76 +129,92 @@ const CustomTable = ({
     () => rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [page, rowsPerPage, rows]
   );
-  return (
-    <TableContainer
-      sx={{
-        // maxWidth: "60%",
-        my: 3,
-      }}
-    >
-      <Table
-        sx={{ minWidth: 750, maxWidth: "100%", overflowX: "auto" }}
-        aria-labelledby="tableTitle"
-        size="medium"
-      >
-        <EnhancedTableHead
-          numSelected={selected.length}
-          order={order}
-          orderBy={orderBy}
-          onSelectAllClick={handleSelectAllClick}
-          onRequestSort={handleRequestSort}
-          rowCount={rows.length}
-          headcells={headcells}
-          fontSize={fontSize}
-          checkbox={checkbox}
-          allSelected={selected.length === rows.length}
-        />
-        <TableBody>
-          {rows.map((row, index) => {
-            const isItemSelected = isSelected(index);
-            const labelId = `enhanced-table-checkbox-${index}`;
 
-            return (
-              <TableRow
-                hover
-                onClick={(event) => {
-                  if (onRowClick) onRowClick(row);
-                }}
-                aria-checked={isItemSelected}
-                tabIndex={-1}
-                key={row.id}
-                selected={isItemSelected}
-                sx={{ cursor: "pointer" }}
-              >
-                {checkbox && (
-                  <TableCell>
-                    <CustomCheckbox
-                      variant="contained"
-                      checked={isItemSelected}
-                      onChange={() => {
-                        handleClick(index);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  return (
+    <>
+      <TableContainer
+        sx={{
+          my: 3,
+        }}
+      >
+        <Table
+          sx={{ minWidth: 750, maxWidth: "100%", overflowX: "auto" }}
+          aria-labelledby="tableTitle"
+          size="medium"
+        >
+          <EnhancedTableHead
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+            headcells={headcells}
+            fontSize={fontSize}
+            checkbox={checkbox}
+            allSelected={selected.length === rows.length}
+          />
+          <TableBody>
+            {visibleRows.map((row, index) => {
+              const isItemSelected = isSelected(index);
+              const labelId = `enhanced-table-checkbox-${index}`;
+
+              return (
+                <TableRow
+                  hover
+                  onClick={() => onRowClick && onRowClick(row)}
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.id}
+                  selected={isItemSelected}
+                  sx={{ cursor: "pointer" }}
+                >
+                  {checkbox && (
+                    <TableCell>
+                      <CustomCheckbox
+                        variant="contained"
+                        checked={isItemSelected}
+                        onChange={() => handleClick(index)}
+                        background="bg2"
+                      />
+                    </TableCell>
+                  )}
+                  {headcells.map((headcell) => (
+                    <TableCell
+                      key={headcell.id}
+                      align={headcell.align || "left"}
+                      sx={{
+                        ...(fontSize && { fontSize: fontSize + " !important" }),
                       }}
-                      background="bg2"
-                    />
-                  </TableCell>
-                )}
-                {headcells.map((headcell) => (
-                  <TableCell
-                    key={headcell.id}
-                    align={headcell.align || "left"}
-                    sx={{
-                      ...(fontSize && { fontSize: fontSize + " !important" }),
-                    }}
-                  >
-                    {headcell.getCell(row, index)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                    >
+                      {headcell.getCell(row, index)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {/* <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      /> */}
+    </>
   );
 };
 
