@@ -17,6 +17,7 @@ export const getChildNavItem = (pathname) => {
     if (path === "/") return pathname === path;
     return pathname.startsWith(path);
   };
+
   const navItem = [...navItems, ...navItems2].find((item) =>
     isPathMatching(item.path)
   );

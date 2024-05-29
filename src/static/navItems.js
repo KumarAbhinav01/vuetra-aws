@@ -24,6 +24,7 @@ export const navItems = [
     children: [
       {
         title: "Firm",
+        path: "/firm",
         children: [
           {
             title: "Products",
@@ -46,6 +47,7 @@ export const navItems = [
       },
       {
         title: "Content Management",
+        path: "/firm/content-management",
         children: [
           {
             title: "Help Center",
@@ -110,6 +112,7 @@ export const navItems = [
     children: [
       {
         title: "Accounts",
+        path: "/trading-accounts",
         children: [
           { title: "All Accounts", path: "/trading-accounts/all" },
           {
@@ -120,6 +123,7 @@ export const navItems = [
       },
       {
         title: "Platforms",
+        path: "/trading-accounts",
         children: [
           { title: "Metatrader", path: "/trading-accounts/metatrader" },
           { title: "CTrader", path: "/trading-accounts/ctrader" },
@@ -138,11 +142,13 @@ export const navItems = [
     icon: HiMiniChartBar,
     path: "/statistics",
     tooltip: "Statistics",
+    to: "/statistics/store-performance",
     children: [
       {
         title: "Statistics",
+        path: "/statistics",
         children: [
-          { title: "Store performance", path: "/statistics" },
+          { title: "Store performance", path: "/statistics/store-performance" },
           { title: "Traders", path: "/statistics/traders" },
           { title: "Customer service", path: "/statistics/customer-service" },
         ],
@@ -163,6 +169,7 @@ export const navItems = [
     children: [
       {
         title: "Tickets",
+        path: "/customer-services",
         children: [
           { title: "Open Tickets", path: "/customer-services/open-tickets" },
           { title: "All Tickets", path: "/customer-services/all" },
@@ -203,6 +210,7 @@ export const navItems = [
     children: [
       {
         title: "All",
+        path: "/affiliate-center",
         children: [
           {
             title: "Overview",
@@ -218,6 +226,7 @@ export const navItems = [
             title: "Programs",
             path: "/affiliate-center/programs",
             icon: TbLayoutList,
+            heading: "Programs",
           },
           {
             title: "Reports",

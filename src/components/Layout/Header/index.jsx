@@ -11,6 +11,7 @@ import SearchSection from "./SearchSection";
 export default function Header() {
   const pathname = window.location.pathname;
   const { id } = useParams();
+  const paths = pathname.split("/");
   const { navItem, childItem, nestedChildItem } = getChildNavItem(pathname);
   return (
     <Box
@@ -90,7 +91,7 @@ export default function Header() {
                 style={{ textDecoration: "none" }}
               >
                 <Typography variant="subtitle1">
-                  {id || nestedChildItem.title}
+                  {id || nestedChildItem?.title || paths[paths.length - 1]}
                 </Typography>
               </Link>
             )}

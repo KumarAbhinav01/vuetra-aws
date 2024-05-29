@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 
 import React from "react";
 import { RxCaretSort } from "react-icons/rx";
+import CustomCheckbox from "../../ui/CustomCheckbox";
 
 function EnhancedTableHead(props) {
   const {
@@ -20,6 +21,8 @@ function EnhancedTableHead(props) {
     onRequestSort,
     headcells,
     fontSize,
+    checkbox,
+    allSelected,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -28,6 +31,18 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
+        {checkbox && (
+          <TableCell>
+            <CustomCheckbox
+              variant="contained"
+              checked={allSelected}
+              onChange={() => {
+                onSelectAllClick();
+              }}
+              background="bg2"
+            />
+          </TableCell>
+        )}
         {headcells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -54,10 +69,18 @@ function EnhancedTableHead(props) {
   );
 }
 
-const CustomTable = ({ headcells, rows, onRowClick, fontSize }) => {
+const CustomTable = ({
+  headcells,
+  rows,
+  onRowClick,
+  fontSize,
+  checkbox,
+  selected = [],
+  setSelected,
+}) => {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
+  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const handleRequestSort = (event, property) => {
@@ -67,15 +90,15 @@ const CustomTable = ({ headcells, rows, onRowClick, fontSize }) => {
   };
 
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+    if (selected.length !== rows.length) {
+      const newSelected = rows.map((n, index) => index);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
+  const handleClick = (id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -121,17 +144,18 @@ const CustomTable = ({ headcells, rows, onRowClick, fontSize }) => {
           rowCount={rows.length}
           headcells={headcells}
           fontSize={fontSize}
+          checkbox={checkbox}
+          allSelected={selected.length === rows.length}
         />
         <TableBody>
           {rows.map((row, index) => {
-            const isItemSelected = isSelected(row.id);
+            const isItemSelected = isSelected(index);
             const labelId = `enhanced-table-checkbox-${index}`;
 
             return (
               <TableRow
                 hover
                 onClick={(event) => {
-                  handleClick(event, row.id);
                   if (onRowClick) onRowClick(row);
                 }}
                 aria-checked={isItemSelected}
@@ -140,6 +164,18 @@ const CustomTable = ({ headcells, rows, onRowClick, fontSize }) => {
                 selected={isItemSelected}
                 sx={{ cursor: "pointer" }}
               >
+                {checkbox && (
+                  <TableCell>
+                    <CustomCheckbox
+                      variant="contained"
+                      checked={isItemSelected}
+                      onChange={() => {
+                        handleClick(index);
+                      }}
+                      background="bg2"
+                    />
+                  </TableCell>
+                )}
                 {headcells.map((headcell) => (
                   <TableCell
                     key={headcell.id}
@@ -148,7 +184,7 @@ const CustomTable = ({ headcells, rows, onRowClick, fontSize }) => {
                       ...(fontSize && { fontSize: fontSize + " !important" }),
                     }}
                   >
-                    {headcell.getCell(row)}
+                    {headcell.getCell(row, index)}
                   </TableCell>
                 ))}
               </TableRow>

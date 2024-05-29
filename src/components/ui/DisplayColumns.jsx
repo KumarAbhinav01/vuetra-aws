@@ -93,7 +93,8 @@ const DraggableColumn = ({ column, index, moveColumn }) => {
         label={column.label}
         checked={column.checked}
         onChange={column.onChange}
-        variant="body1"
+        variant="contained"
+        textVariant="body1"
       />
     </Stack>
   );

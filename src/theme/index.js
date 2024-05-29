@@ -16,6 +16,7 @@ export const theme = (mode) => {
     blue1: "#8CADFF",
     red: "#F55F82",
     green: "#07B869",
+    darkgreen: "#102E23",
     yellow: "#F5CF11",
     orange: "#E69122",
     purple: "#7E83FF",

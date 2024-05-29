@@ -6,6 +6,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function NavGroup({ navItem }) {
   const pathname = window.location.pathname;
+  const isPathMatching = (path) => {
+    if (path === "/") return pathname === path;
+    return pathname.startsWith(path);
+  };
   return (
     <Accordion
       defaultExpanded
@@ -42,7 +46,7 @@ export default function NavGroup({ navItem }) {
                 position: "relative",
                 p: 0.8,
                 paddingLeft: 4,
-                ...(subChild.path === pathname && {
+                ...(isPathMatching(subChild.path) && {
                   borderLeft: (theme) =>
                     `2px solid ${theme.palette.color.primary}`,
                 }),
@@ -51,7 +55,7 @@ export default function NavGroup({ navItem }) {
                 cursor: "pointer",
               }}
             >
-              {subChild.path !== pathname && (
+              {!isPathMatching(subChild.path) && (
                 <Box
                   sx={{
                     position: "absolute",
@@ -71,10 +75,10 @@ export default function NavGroup({ navItem }) {
                   sx={{
                     color: (theme) =>
                       theme.palette.color[
-                        subChild.path === pathname ? "blue" : "secondary"
+                        isPathMatching(subChild.path) ? "blue" : "secondary"
                       ],
                     mr: 1,
-                    ml: subChild.path === pathname ? "-16px" : 0,
+                    ml: isPathMatching(subChild.path) ? "-16px" : 0,
                   }}
                 >
                   <subChild.icon size={16} />

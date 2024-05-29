@@ -18,6 +18,21 @@ import {
 import { BiChevronDown } from "react-icons/bi";
 import SearchIcon from "@mui/icons-material/Search";
 import CustomCheckbox from "../ui/CustomCheckbox";
+import { HorizontalRule } from "@mui/icons-material";
+
+const RangeInput = styled(InputBase)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    borderRadius: 4,
+    backgroundColor: theme.palette.color.bg3,
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    fontSize: "13px",
+    boxShadow:
+      "rgba(10, 10, 11, 0.06) 0px 1px 1px 0px, rgba(10, 10, 46, 0.16) 0px 0px 0px 1px inset",
+    padding: "8px",
+    color: theme.palette.color.secondary,
+  },
+  background: theme.palette.color.bg3,
+}));
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -89,7 +104,7 @@ export default function FilterPopup({ rangeFilter, accordions }) {
           sx={{
             borderRadius: "10px",
             p: "10px",
-            background: (theme) => theme.palette.color.bg2,
+            background: (theme) => theme.palette.color.bg4,
             width: "300px",
             mr: "10px",
             maxHeight: "500px",
@@ -106,7 +121,12 @@ export default function FilterPopup({ rangeFilter, accordions }) {
               placeholder="Search"
               startAdornment={
                 <InputAdornment position="start">
-                  <SearchIcon sx={{ fontSize: "13px" }} />
+                  <SearchIcon
+                    sx={{
+                      fontSize: "13px",
+                      color: (theme) => theme.palette.color.secondary,
+                    }}
+                  />
                 </InputAdornment>
               }
               value={searchValue}
@@ -128,13 +148,7 @@ export default function FilterPopup({ rangeFilter, accordions }) {
                 justifyContent="space-between"
                 alignItems={"center"}
               >
-                <TextField
-                  sx={{
-                    mr: 1,
-                    "& input": {
-                      p: "8px",
-                    },
-                  }}
+                <RangeInput
                   value={rangeFilter.value[0]}
                   onChange={(e) =>
                     handleRangeChange(null, [
@@ -144,17 +158,22 @@ export default function FilterPopup({ rangeFilter, accordions }) {
                   }
                   type="number"
                 />
-                -
-                <TextField
+                <HorizontalRule
                   sx={{
-                    ml: 1,
-                    "& input": {
-                      p: "8px",
-                    },
-                    "& .MuiInputBase-input": {
-                      borderRadius: "8px",
-                    },
+                    color: (theme) => alpha(theme.palette.color.secondary, 0.5),
+                    mx: 1,
                   }}
+                />
+                <RangeInput
+                  // sx={{
+                  //   ml: 1,
+                  //   "& input": {
+                  //     p: "8px",
+                  //   },
+                  //   "& .MuiInputBase-input": {
+                  //     borderRadius: "8px",
+                  //   },
+                  // }}
                   value={rangeFilter.value[1]}
                   onChange={(e) =>
                     handleRangeChange(null, [
@@ -202,6 +221,7 @@ export default function FilterPopup({ rangeFilter, accordions }) {
                   <Stack spacing={1}>
                     {accordion.items.map((item, idx) => (
                       <CustomCheckbox
+                        variant="contained"
                         key={idx}
                         spacing={1}
                         label={item}

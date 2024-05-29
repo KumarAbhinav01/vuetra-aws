@@ -15,6 +15,7 @@ export default function Overview() {
                 border: "none !important",
                 overflow: "hidden",
                 padding: "24px",
+                borderRadius: "0",
               }}
             >
               <Stack spacing={3}>

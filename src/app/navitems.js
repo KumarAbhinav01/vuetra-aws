@@ -23,6 +23,8 @@ import General from "../pages/Settings/general";
 import Domains from "../pages/Settings/domains";
 import Videos from "../pages/Firm/Content-management/Collections/videos";
 import Collections from "../pages/Firm/Content-management/Collections/collections";
+import Announcements from "../pages/Affiliates/announcements";
+import AffiliatePayouts from "../pages/Affiliates/payouts";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -149,7 +151,7 @@ export const navItems = [
     layout: true,
   },
   {
-    path: "/statistics",
+    path: "/statistics/store-performance",
     element: <Statistics />,
     isPrivate: true,
     layout: true,
@@ -173,7 +175,7 @@ export const navItems = [
     layout: true,
   },
   {
-    path: "/customer-services",
+    path: "/customer-services/all",
     element: <AllTickets />,
     isPrivate: true,
     layout: true,
@@ -210,6 +212,12 @@ export const navItems = [
     layout: true,
   },
   {
+    path: "/affiliate-center/programs/test",
+    element: <div></div>,
+    isPrivate: true,
+    layout: true,
+  },
+  {
     path: "/affiliate-center/affiliates",
     element: <Affiliates />,
     isPrivate: true,
@@ -229,7 +237,13 @@ export const navItems = [
   },
   {
     path: "/affiliate-center/payouts",
-    element: <div></div>,
+    element: <AffiliatePayouts />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/affiliate-center/announcement",
+    element: <Announcements />,
     isPrivate: true,
     layout: true,
   },

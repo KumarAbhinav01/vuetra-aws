@@ -126,7 +126,7 @@ const HFT = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
   const [columns, setColumns] = useState(headcells);
-  const filteredHeadcells = headcells.filter((cell) => heads.includes(cell.id));
+  const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
   const [rangeValue, setRangeValue] = useState([20, 37]);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
