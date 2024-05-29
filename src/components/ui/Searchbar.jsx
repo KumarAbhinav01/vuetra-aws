@@ -50,10 +50,7 @@ const style = {
   width: "512px",
   border: (theme) => `1px solid ${theme.palette.color.border}`,
   borderRadius: "5px",
-  background: (theme) =>
-    theme.palette.mode === "dark"
-      ? theme.palette.color.bg2
-      : theme.palette.color.bg,
+  background: (theme) => theme.palette.color.bg2,
 };
 
 const StyledInput = styled(InputBase)({
@@ -132,7 +129,11 @@ export default function Searchbar() {
           </Stack>
           <Divider />
           <Stack
-            sx={{ p: "12px", height: "300px", overflowY: "auto" }}
+            sx={{
+              p: "12px",
+              overflowY: "auto",
+              background: (theme) => theme.palette.color.bg,
+            }}
             spacing={2}
           >
             <Stack spacing={1}>

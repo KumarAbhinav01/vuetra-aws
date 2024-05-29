@@ -137,8 +137,8 @@ const AffiliatePayouts = () => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [rangeValue, setRangeValue] = useState([20, 37]);
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
+  const [selectedPaidEarning, setSelectedPaidEarning] = useState([]);
+  const [selectedPaidCommission, setSelectedPaidCommission] = useState([]);
   const [selected, setSelected] = useState([]);
 
   const headcells = [
@@ -294,22 +294,18 @@ const AffiliatePayouts = () => {
             }}
             accordions={[
               {
-                title: "Customer Id",
+                title: "Paid Earning",
                 defaultExpanded: true,
-                items: [
-                  "111110 - 000001",
-                  "111110 - 000002",
-                  "111110 - 000003",
-                ],
-                selectedItems: selectedCustomerIds,
-                onChange: setSelectedCustomerIds,
+                items: ["$0 - $1000", "$100 - $300", "$300 - $600"],
+                selectedItems: selectedPaidEarning,
+                onChange: setSelectedPaidEarning,
               },
               {
-                title: "Voilation Date",
+                title: "Paid Commission",
                 defaultExpanded: true,
-                items: ["0 - 10", "10 - 20", "20 - 30"],
-                selectedItems: selectedOrderStatus,
-                onChange: setSelectedOrderStatus,
+                items: ["$0 - $1000", "$100 - $300", "$300 - $500"],
+                selectedItems: selectedPaidCommission,
+                onChange: setSelectedPaidCommission,
               },
             ]}
           />
