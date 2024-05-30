@@ -354,7 +354,7 @@ const Announcements = () => {
                 onChange: setSelectedCustomerIds,
               },
               {
-                title: "Voilation Date",
+                title: "Validation Date",
                 defaultExpanded: true,
                 items: ["0 - 10", "10 - 20", "20 - 30"],
                 selectedItems: selectedOrderStatus,

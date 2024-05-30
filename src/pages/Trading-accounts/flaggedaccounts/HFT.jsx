@@ -37,49 +37,57 @@ const data = [
     name: "Kristin Watson",
     customerId: "123456",
     email: "danghoang87hl@gmail.com",
-    voilationDate: "11:05 5 Apr, 2024",
+    validationDate: "11:05 5 June, 2024",
+    account: "467328649",
   },
   {
     name: "Marvin McKinney",
     customerId: "69548215",
     email: "thuhang.nute@gmail.com",
-    voilationDate: "11:05 5 Apr, 2024",
+    validationDate: "11:05 5 Apr, 2024",
+    account: "467328649",
   },
   {
     name: "Darlene Robertson",
     customerId: "32654817",
     email: "manhhachkt08@gmail.com",
-    voilationDate: "11:05 5 Apr, 2024",
+    validationDate: "11:05 5 Apr, 2024",
+    account: "217328649",
   },
   {
     name: "Leslie Alexander",
     customerId: "65986412",
     email: "binhan628@gmail.com",
-    voilationDate: "11:05 5 Apr, 2024",
+    validationDate: "11:05 5 Apr, 2024",
+    account: "107328649",
   },
   {
     name: "Kristin Watson",
     customerId: "123456",
     email: "danghoang87hl@gmail.com",
-    voilationDate: "11:05 25 May, 2024",
+    validationDate: "11:05 25 May, 2024",
+    account: "107328649",
   },
   {
     name: "Marvin McKinney",
     customerId: "69548215",
     email: "thuhang.nute@gmail.com",
-    voilationDate: "11:05 25 May, 2024",
+    validationDate: "11:05 25 May, 2024",
+    account: "107328649",
   },
   {
     name: "Darlene Robertson",
     customerId: "32654817",
     email: "manhhachkt08@gmail.com",
-    voilationDate: "11:05 25 May, 2024",
+    validationDate: "11:05 31 May, 2024",
+    account: "217328649",
   },
   {
     name: "Leslie Alexander",
     customerId: "65986412",
     email: "binhan628@gmail.com",
-    voilationDate: "11:05 25 May, 2024",
+    validationDate: "11:05 1 June, 2024",
+    account: "107328649",
   },
 ];
 
@@ -96,12 +104,18 @@ const headcells = [
     default: true,
     getCell: (row) => row.customerId,
   },
+  {
+    id: "account",
+    label: "Account",
+    default: true,
+    getCell: (row) => row.account,
+  },
   { id: "email", label: "Email", default: true, getCell: (row) => row.email },
   {
-    id: "voilationDate",
-    label: "Voilation Date",
+    id: "validationDate",
+    label: "Validation Date",
     default: true,
-    getCell: (row) => row.voilationDate,
+    getCell: (row) => row.validationDate,
   },
 
   {
@@ -126,10 +140,43 @@ const HFT = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
   const [columns, setColumns] = useState(headcells);
+  const [selectedCustomerids, setSelectedCustomerids] = useState([]);
+  const [selectedAccounts, setSelectedAccounts] = useState([]);
+  const [name, setName] = useState("");
   const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
-  const [rangeValue, setRangeValue] = useState([20, 37]);
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
+
+  const parseRange = (rangeStr) => {
+    const [min, max] = rangeStr.split(" - ");
+    return { min, max };
+  };
+
+  const filterData = () => {
+    return data.filter((row) => {
+      if (startDate && dayjs(row.validationDate).isBefore(startDate))
+        return false;
+      if (endDate && dayjs(row.validationDate).isAfter(endDate)) return false;
+      if (selectedAccounts.length > 0) {
+        const accountMatch = selectedAccounts.some((range) => {
+          const { min, max } = parseRange(range);
+          return row.account >= min && row.account <= max;
+        });
+        if (!accountMatch) return false;
+      }
+
+      if (selectedCustomerids.length > 0) {
+        const customerIds = selectedCustomerids.some((range) => {
+          const { min, max } = parseRange(range);
+          return row.customerId >= min && row.customerId <= max;
+        });
+        if (!customerIds) return false;
+      }
+
+      if (name && !row.name.toLowerCase().includes(name.toLowerCase()))
+        return false;
+
+      return true;
+    });
+  };
   return (
     <div>
       <Stack
@@ -146,7 +193,7 @@ const HFT = () => {
           right: "48px",
         }}
       >
-        <Searchbar />
+        <Searchbar value={name} setValue={setName} />
         <ExportSection />
         <CalendarPopup
           mainEndDate={endDate}
@@ -161,26 +208,24 @@ const HFT = () => {
           setSelectedColumns={setHeads}
         />
         <FilterPopup
-          rangeFilter={{
-            label: "Countries",
-            ariaLabel: "Countries",
-            value: rangeValue,
-            onChange: setRangeValue,
-          }}
           accordions={[
+            {
+              title: "Account",
+              defaultExpanded: true,
+              items: [
+                "000000000 - 111111111",
+                "111111111 - 222222222",
+                "222222222 - 999999999",
+              ],
+              selectedItems: selectedAccounts,
+              onChange: setSelectedAccounts,
+            },
             {
               title: "Customer Id",
               defaultExpanded: true,
-              items: ["111110 - 000001", "111110 - 000002", "111110 - 000003"],
-              selectedItems: selectedCustomerIds,
-              onChange: setSelectedCustomerIds,
-            },
-            {
-              title: "Voilation Date",
-              defaultExpanded: true,
-              items: ["0 - 10", "10 - 20", "20 - 30"],
-              selectedItems: selectedOrderStatus,
-              onChange: setSelectedOrderStatus,
+              items: ["000000 - 111111", "111111 - 222222", "222222 - 999999"],
+              selectedItems: selectedCustomerids,
+              onChange: setSelectedCustomerids,
             },
           ]}
         />
@@ -230,73 +275,7 @@ const HFT = () => {
           </Grid>
         ))}
       </Grid>
-      {/* <Stack spacing={1} sx={{ py: "16px", width: "100%" }}>
-        <Grid
-          container
-          columns={{ xs: heads.length }}
-          sx={{
-            border: (theme) => `1px solid ${theme.palette.color.border}`,
-            padding: "4px 12px",
-          }}
-          columnSpacing={1}
-        >
-          {filteredHeadcells.map((head) => (
-            <Grid item xs={1}>
-              <Typography variant="body1">{head.label}</Typography>
-            </Grid>
-          ))}
-        </Grid>
-        {data.map((item) => (
-          <Grid
-            container
-            columns={{ xs: heads.length }}
-            sx={{
-              border: (theme) => `1px solid ${theme.palette.color.border}`,
-              padding: "6px",
-            }}
-            spacing={1}
-          >
-            <Grid
-              item
-              xs={heads.length}
-              sx={{
-                pb: "16px",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "5px 16px",
-                  borderRadius: "4px",
-                  gap: "4px",
-                  background: (theme) => alpha(theme.palette.color.red, 0.2),
-                  color: (theme) => theme.palette.color.red,
-                  width: "fit-content",
-                }}
-              >
-                <PiWarningDiamond />
-                <Typography
-                  sx={{
-                    color: "inherit",
-                    fontSize: "8px",
-                  }}
-                >
-                  {item.match} Match
-                </Typography>
-              </Box>
-            </Grid>
-            {item.rows.map((row) =>
-              filteredHeadcells.map((head) => (
-                <Grid item xs={1} sx={{ pb: "3px" }}>
-                  {head.cell(row)}
-                </Grid>
-              ))
-            )}
-          </Grid>
-        ))}
-      </Stack> */}
-      <CustomTable headcells={filteredHeadcells} rows={data} />
+      <CustomTable headcells={filteredHeadcells} rows={filterData()} />
     </div>
   );
 };

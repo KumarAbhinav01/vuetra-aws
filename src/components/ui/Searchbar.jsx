@@ -11,7 +11,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FiSearch } from "react-icons/fi";
 import Search from "@mui/icons-material/Search";
 
@@ -50,7 +50,10 @@ const style = {
   width: "512px",
   border: (theme) => `1px solid ${theme.palette.color.border}`,
   borderRadius: "5px",
-  background: (theme) => theme.palette.color.bg2,
+  background: (theme) =>
+    theme.palette.mode === "dark"
+      ? theme.palette.color.bg2
+      : theme.palette.color.bg,
 };
 
 const StyledInput = styled(InputBase)({
@@ -73,14 +76,33 @@ const StyledInput = styled(InputBase)({
   },
 });
 
-export default function Searchbar() {
+export default function Searchbar({ value = "", setValue }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState(value);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    setValue("");
+    // setValue("");
   };
+
+  const debounceTimeoutRef = useRef(null);
+
+  const debounce = (callback, delay) => {
+    return (...args) => {
+      clearTimeout(debounceTimeoutRef.current);
+      debounceTimeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    };
+  };
+
+  const debouncedSetValue = debounce(setValue, 300);
+
+  useEffect(() => {
+    if (setValue) {
+      debouncedSetValue(inputValue);
+    }
+  }, [inputValue, debouncedSetValue]);
   return (
     <div>
       <Search
@@ -115,10 +137,16 @@ export default function Searchbar() {
                   <FiSearch size={20} />
                 </InputAdornment>
               }
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
-            <IconButton onClick={handleClose}>
+            <IconButton
+              onClick={() => {
+                setInputValue("");
+                if (setValue) setValue("");
+                handleClose();
+              }}
+            >
               <Close
                 sx={{
                   color: (theme) => theme.palette.color.secondary,
@@ -162,7 +190,9 @@ export default function Searchbar() {
                             mb: "14px",
                             cursor: "pointer",
                           }}
-                          onClick={() => setValue(item)}
+                          onClick={() => {
+                            setInputValue(item);
+                          }}
                         >
                           {item}
                         </Box>

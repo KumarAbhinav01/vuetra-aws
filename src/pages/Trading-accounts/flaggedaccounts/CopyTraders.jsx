@@ -10,6 +10,7 @@ import ExportSection from "../../../components/ui/ExportSection";
 import CalendarPopup from "../../../components/ui/CalendarPopup";
 import DisplayColumns from "../../../components/ui/DisplayColumns";
 import dayjs from "dayjs";
+import FilterPopup from "../../../components/ui/FilterPopup";
 
 const items = [
   {
@@ -38,33 +39,14 @@ const data = [
     match: "100%",
     rows: [
       {
-        customer: "#918742",
+        customer: "918742",
         account: "467328649",
         name: "John Doe",
         balance: "$100.000",
         equity: "$100.000",
       },
       {
-        customer: "#918742",
-        account: "467328649",
-        name: "John Doe",
-        balance: "$100.000",
-        equity: "$100.000",
-      },
-    ],
-  },
-  {
-    match: "100%",
-    rows: [
-      {
-        customer: "#918742",
-        account: "467328649",
-        name: "John Doe",
-        balance: "$100.000",
-        equity: "$100.000",
-      },
-      {
-        customer: "#918742",
+        customer: "918742",
         account: "467328649",
         name: "John Doe",
         balance: "$100.000",
@@ -76,15 +58,53 @@ const data = [
     match: "100%",
     rows: [
       {
-        customer: "#918742",
+        customer: "918742",
         account: "467328649",
         name: "John Doe",
         balance: "$100.000",
         equity: "$100.000",
       },
       {
-        customer: "#918742",
+        customer: "918742",
         account: "467328649",
+        name: "John Doe",
+        balance: "$100.000",
+        equity: "$100.000",
+      },
+    ],
+  },
+  {
+    match: "100%",
+    rows: [
+      {
+        customer: "218742",
+        account: "217328649",
+        name: "Harry Woods",
+        balance: "$100.000",
+        equity: "$100.000",
+      },
+      {
+        customer: "218742",
+        account: "217328649",
+        name: "Harry Woods",
+        balance: "$100.000",
+        equity: "$100.000",
+      },
+    ],
+  },
+  {
+    match: "100%",
+    rows: [
+      {
+        customer: "108742",
+        account: "107328649",
+        name: "John Doe",
+        balance: "$100.000",
+        equity: "$100.000",
+      },
+      {
+        customer: "108742",
+        account: "107328649",
         name: "John Doe",
         balance: "$100.000",
         equity: "$100.000",
@@ -107,7 +127,7 @@ const headcells = [
           width: "fit-content",
         }}
       >
-        {row.customer}
+        {"#" + row.customer}
       </Typography>
     ),
   },
@@ -150,7 +170,44 @@ const CopyTraders = () => {
   const [columns, setColumns] = useState(headcells);
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
+  const [selectedCustomerids, setSelectedCustomerids] = useState([]);
+  const [selectedAccounts, setSelectedAccounts] = useState([]);
+  const [name, setName] = useState("");
   const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
+
+  const parseRange = (rangeStr) => {
+    const [min, max] = rangeStr.split(" - ");
+    return { min, max };
+  };
+
+  const filterData = () => {
+    return data.filter((d) => {
+      const rows = d.rows.filter((row) => {
+        if (selectedAccounts.length > 0) {
+          const accountMatch = selectedAccounts.some((range) => {
+            const { min, max } = parseRange(range);
+            return row.account >= min && row.account <= max;
+          });
+          if (!accountMatch) return false;
+        }
+
+        if (selectedCustomerids.length > 0) {
+          const customerIds = selectedCustomerids.some((range) => {
+            const { min, max } = parseRange(range);
+            return row.customer >= min && row.customer <= max;
+          });
+          if (!customerIds) return false;
+        }
+
+        if (name && !row.name.toLowerCase().includes(name.toLowerCase()))
+          return false;
+
+        return true;
+      });
+      return rows.length > 0;
+    });
+  };
+
   return (
     <div>
       <Stack
@@ -167,7 +224,7 @@ const CopyTraders = () => {
           right: "48px",
         }}
       >
-        <Searchbar />
+        <Searchbar value={name} setValue={setName} />
         <ExportSection />
         <CalendarPopup
           mainEndDate={endDate}
@@ -181,10 +238,29 @@ const CopyTraders = () => {
           selectedColumns={heads}
           setSelectedColumns={setHeads}
         />
-        {/* <FormSelect
-          options={[{ value: "all", label: "All" }]}
-          defaultValue="all"
-        /> */}
+
+        <FilterPopup
+          accordions={[
+            {
+              title: "Account",
+              defaultExpanded: true,
+              items: [
+                "000000000 - 111111111",
+                "111111111 - 222222222",
+                "222222222 - 999999999",
+              ],
+              selectedItems: selectedAccounts,
+              onChange: setSelectedAccounts,
+            },
+            {
+              title: "Customer Id",
+              defaultExpanded: true,
+              items: ["000000 - 111111", "111111 - 222222", "222222 - 999999"],
+              selectedItems: selectedCustomerids,
+              onChange: setSelectedCustomerids,
+            },
+          ]}
+        />
       </Stack>
 
       <Grid container spacing={2}>
@@ -265,7 +341,7 @@ const CopyTraders = () => {
             </Grid>
           ))}
         </Grid>
-        {data.map((item) => (
+        {filterData().map((item) => (
           <Grid
             container
             columns={{ xs: heads.length }}

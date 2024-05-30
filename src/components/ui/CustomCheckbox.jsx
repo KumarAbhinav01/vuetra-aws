@@ -42,10 +42,7 @@ const CustomCheckbox = ({
               background: (theme) => theme.palette.color.green,
             }),
             ...(variant === "outlined" && {
-              border: (theme) =>
-                theme.palette.mode === "dark"
-                  ? `2px solid ${theme.palette.color.green}`
-                  : "2px solid #d4d4d8",
+              border: (theme) => `2px solid ${theme.palette.color.green}`,
               background: (theme) => alpha(theme.palette.color.green, 0.15),
             }),
           }),

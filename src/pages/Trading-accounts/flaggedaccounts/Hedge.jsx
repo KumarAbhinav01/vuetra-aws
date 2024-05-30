@@ -23,10 +23,10 @@ import Searchbar from "../../../components/ui/Searchbar";
 import ExportSection from "../../../components/ui/ExportSection";
 import CalendarPopup from "../../../components/ui/CalendarPopup";
 import DisplayColumns from "../../../components/ui/DisplayColumns";
-import FormSelect from "../../../components/ui/FormSelect";
 import dayjs from "dayjs";
 import { IoMdTime } from "react-icons/io";
 import { FiDownloadCloud } from "react-icons/fi";
+import FilterPopup from "../../../components/ui/FilterPopup";
 
 const items = [
   {
@@ -64,7 +64,7 @@ const data = [
     rows: [
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$100.000",
@@ -73,7 +73,7 @@ const data = [
       ],
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$1,500.50",
@@ -88,7 +88,7 @@ const data = [
     rows: [
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$100.000",
@@ -97,7 +97,7 @@ const data = [
       ],
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$1,500.50",
@@ -112,7 +112,7 @@ const data = [
     rows: [
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$100.000",
@@ -121,7 +121,7 @@ const data = [
       ],
       [
         {
-          customer: "#918742",
+          customer: "918742",
           account: "467328649",
           name: "John Doe",
           balance: "$1,500.50",
@@ -146,7 +146,7 @@ const headcells = [
           width: "fit-content",
         }}
       >
-        {row.customer}
+        {"#" + row.customer}
       </Typography>
     ),
   },
@@ -186,9 +186,47 @@ const Hedge = () => {
   const [heads, setHeads] = React.useState(
     headcells.filter((cell) => cell.default).map((cell) => cell.id)
   );
+  const [columns, setColumns] = useState(headcells);
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
-  const filteredHeadcells = headcells.filter((cell) => heads.includes(cell.id));
+  const [selectedCustomerids, setSelectedCustomerids] = useState([]);
+  const [selectedAccounts, setSelectedAccounts] = useState([]);
+  const [name, setName] = useState("");
+  const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
+
+  const parseRange = (rangeStr) => {
+    const [min, max] = rangeStr.split(" - ");
+    return { min, max };
+  };
+
+  const filterData = data.filter((d) => {
+    const rows = d.rows.filter((row) => {
+      if (selectedAccounts.length > 0) {
+        const accountMatch = selectedAccounts.some((range) => {
+          const { min, max } = parseRange(range);
+          console.log(min, max, row);
+          return row[0].account >= min && row[0].account <= max;
+        });
+        if (!accountMatch) return false;
+      }
+
+      if (selectedCustomerids.length > 0) {
+        const customerIds = selectedCustomerids.some((range) => {
+          const { min, max } = parseRange(range);
+          console.log(min, max, row[0].customer);
+          return row[0].customer >= min && row[0].customer <= max;
+        });
+        if (!customerIds) return false;
+      }
+
+      if (name && !row[0].name.toLowerCase().includes(name.toLowerCase()))
+        return false;
+
+      return true;
+    });
+    return rows.length > 0;
+  });
+
   return (
     <div>
       <Stack
@@ -205,7 +243,7 @@ const Hedge = () => {
           right: "48px",
         }}
       >
-        <Searchbar />
+        <Searchbar value={name} setValue={setName} />
         <ExportSection />
         <CalendarPopup
           mainEndDate={endDate}
@@ -214,13 +252,33 @@ const Hedge = () => {
           setMainStartDate={setStartDate}
         />
         <DisplayColumns
-          columns={headcells}
+          columns={columns}
+          setColumns={setColumns}
           selectedColumns={heads}
           setSelectedColumns={setHeads}
         />
-        <FormSelect
-          options={[{ value: "all", label: "All" }]}
-          defaultValue="all"
+
+        <FilterPopup
+          accordions={[
+            {
+              title: "Account",
+              defaultExpanded: true,
+              items: [
+                "000000000 - 111111111",
+                "111111111 - 222222222",
+                "222222222 - 999999999",
+              ],
+              selectedItems: selectedAccounts,
+              onChange: setSelectedAccounts,
+            },
+            {
+              title: "Customer Id",
+              defaultExpanded: true,
+              items: ["000000 - 111111", "111111 - 222222", "222222 - 999999"],
+              selectedItems: selectedCustomerids,
+              onChange: setSelectedCustomerids,
+            },
+          ]}
         />
       </Stack>
 
@@ -287,7 +345,7 @@ const Hedge = () => {
         ))}
       </Grid>
       <Stack spacing={2} sx={{ py: "16px", width: "100%" }}>
-        {data.map((item) => (
+        {filterData.map((item) => (
           <Box
             sx={{
               border: (theme) => `1px solid ${theme.palette.color.border3}`,

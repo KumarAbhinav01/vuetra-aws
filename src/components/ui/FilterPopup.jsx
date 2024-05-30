@@ -10,7 +10,6 @@ import {
   Menu,
   Slider,
   Stack,
-  TextField,
   Typography,
   alpha,
   styled,
@@ -133,58 +132,54 @@ export default function FilterPopup({ rangeFilter, accordions }) {
               onChange={handleSearchChange}
             />
 
-            <Stack spacing={1} sx={{ px: 1 }}>
-              <Typography variant="body3">{rangeFilter.label}</Typography>
+            {rangeFilter && (
+              <>
+                <Stack spacing={1} sx={{ px: 1 }}>
+                  <Typography variant="body3">{rangeFilter.label}</Typography>
 
-              <Slider
-                getAriaLabel={() => rangeFilter.ariaLabel}
-                value={rangeFilter.value}
-                onChange={handleRangeChange}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
-              />
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems={"center"}
-              >
-                <RangeInput
-                  value={rangeFilter.value[0]}
-                  onChange={(e) =>
-                    handleRangeChange(null, [
-                      Number(e.target.value),
-                      rangeFilter.value[1],
-                    ])
-                  }
-                  type="number"
-                />
-                <HorizontalRule
-                  sx={{
-                    color: (theme) => alpha(theme.palette.color.secondary, 0.5),
-                    mx: 1,
-                  }}
-                />
-                <RangeInput
-                  // sx={{
-                  //   ml: 1,
-                  //   "& input": {
-                  //     p: "8px",
-                  //   },
-                  //   "& .MuiInputBase-input": {
-                  //     borderRadius: "8px",
-                  //   },
-                  // }}
-                  value={rangeFilter.value[1]}
-                  onChange={(e) =>
-                    handleRangeChange(null, [
-                      rangeFilter.value[0],
-                      Number(e.target.value),
-                    ])
-                  }
-                />
-              </Stack>
-            </Stack>
-            <Divider />
+                  <Slider
+                    getAriaLabel={() => rangeFilter.ariaLabel}
+                    value={rangeFilter.value}
+                    onChange={handleRangeChange}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={valuetext}
+                  />
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems={"center"}
+                  >
+                    <RangeInput
+                      value={rangeFilter.value[0]}
+                      onChange={(e) =>
+                        handleRangeChange(null, [
+                          Number(e.target.value),
+                          rangeFilter.value[1],
+                        ])
+                      }
+                      type="number"
+                    />
+                    <HorizontalRule
+                      sx={{
+                        color: (theme) =>
+                          alpha(theme.palette.color.secondary, 0.5),
+                        mx: 1,
+                      }}
+                    />
+                    <RangeInput
+                      value={rangeFilter.value[1]}
+                      onChange={(e) =>
+                        handleRangeChange(null, [
+                          rangeFilter.value[0],
+                          Number(e.target.value),
+                        ])
+                      }
+                    />
+                  </Stack>
+                </Stack>
+                <Divider />
+              </>
+            )}
           </Stack>
           {accordions
             .filter((a) =>
