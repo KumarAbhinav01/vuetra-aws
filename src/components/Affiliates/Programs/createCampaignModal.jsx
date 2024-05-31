@@ -11,14 +11,12 @@ import {
     Radio,
     RadioGroup,
     Stack,
-    TextField,
     Tooltip,
     Typography
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import FormInput from '../../ui/FormInput';
 import HelpIcon from "@mui/icons-material/Help";
-import { green } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
 
@@ -184,22 +182,22 @@ const CreateCampaignModal = ({ open, handleClose }) => {
                                             </Tooltip>
                                         </Stack>
                                         <RadioGroup row >
-                                        <Stack direction="row" spacing={4}>
-                                            <FormControlLabel
-                                                value="yes"
-                                                control={<BpRadio />}
-                                                label="Yes"
-                                            />
-                                            <FormControlLabel
-                                                value="no"
-                                                control={<BpRadio />}
-                                                label="No"
-                                            />
-                                            <FormControlLabel
-                                                value="no"
-                                                control={<BpRadio />}
-                                                label={<>Default<span style={{ color: 'grey' }}> (No)</span></>}
-                                            />
+                                            <Stack direction="row" spacing={4}>
+                                                <FormControlLabel
+                                                    value="yes"
+                                                    control={<BpRadio />}
+                                                    label="Yes"
+                                                />
+                                                <FormControlLabel
+                                                    value="no"
+                                                    control={<BpRadio />}
+                                                    label="No"
+                                                />
+                                                <FormControlLabel
+                                                    value="no"
+                                                    control={<BpRadio />}
+                                                    label={<>Default<span style={{ color: 'grey' }}> (No)</span></>}
+                                                />
                                             </Stack>
                                         </RadioGroup>
                                     </Box>
@@ -213,21 +211,21 @@ const CreateCampaignModal = ({ open, handleClose }) => {
                                         </Stack>
                                         <RadioGroup row>
                                             <Stack direction="row" spacing={4}>
-                                            <FormControlLabel
-                                                value="yes"
-                                                control={<BpRadio />}
-                                                label="Yes"
-                                            />
-                                            <FormControlLabel
-                                                value="no"
-                                                control={<BpRadio />}
-                                                label="No"
-                                            />
-                                            <FormControlLabel
-                                                value="no"
-                                                control={<BpRadio />}
-                                                label={<>Default<span style={{ color: 'grey' }}> (No)</span></>}
-                                            />
+                                                <FormControlLabel
+                                                    value="yes"
+                                                    control={<BpRadio />}
+                                                    label="Yes"
+                                                />
+                                                <FormControlLabel
+                                                    value="no"
+                                                    control={<BpRadio />}
+                                                    label="No"
+                                                />
+                                                <FormControlLabel
+                                                    value="no"
+                                                    control={<BpRadio />}
+                                                    label={<>Default<span style={{ color: 'grey' }}> (No)</span></>}
+                                                />
                                             </Stack>
 
                                         </RadioGroup>
@@ -305,20 +303,13 @@ const CreateCampaignModal = ({ open, handleClose }) => {
                         </Box>
 
 
-
-
-
-                        {/* <Stack direction="row" spacing={2} justifyContent="flex-end">
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button variant="contained">Create</Button>
-                    </Stack> */}
                     </Stack>
                 </Box>
                 <Box sx={{ position: 'sticky', bottom: 0, backgroundColor: "#131517", p: 2 }}>
                     <Stack direction="row" spacing={2} justifyContent="flex-end">
-                    <Button 
-                     onClick={handleClose}
-                    sx={{ 
+                        <Button
+                            onClick={handleClose}
+                            sx={{
                                 background: (theme) =>
                                     alpha(theme.palette.color.secondary, 0.15),
                                 color: (theme) => theme.palette.color.primary,
@@ -327,8 +318,9 @@ const CreateCampaignModal = ({ open, handleClose }) => {
                                     background: (theme) =>
                                         alpha(theme.palette.color.secondary, 0.15),
                                 },
-                            px: 4}}>Cancel</Button>
-                        <Button variant="contained" sx={{px: 4}}>Create</Button>
+                                px: 4
+                            }}>Cancel</Button>
+                        <Button variant="contained" sx={{ px: 4 }}>Create</Button>
                     </Stack>
                 </Box>
             </Box>

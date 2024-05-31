@@ -26,6 +26,9 @@ import Collections from "../pages/Firm/Content-management/Collections/collection
 import Announcements from "../pages/Affiliates/announcements";
 import AffiliatePayouts from "../pages/Affiliates/payouts";
 import Programs from "../pages/Affiliates/programs";
+import EditCampaign from "../pages/Affiliates/EditCampaign";
+import Stats from "../pages/Affiliates/stats";
+import Commissions from "../pages/Affiliates/commissions";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -213,8 +216,20 @@ export const navItems = [
     layout: true,
   },
   {
-    path: "/affiliate-center/programs/test",
-    element: <div></div>,
+    path: "/affiliate-center/programs/edit-campaign",
+    element: <EditCampaign />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/affiliate-center/programs/stats",
+    element: <Stats />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/affiliate-center/programs/commissions",
+    element: <Commissions />,
     isPrivate: true,
     layout: true,
   },
