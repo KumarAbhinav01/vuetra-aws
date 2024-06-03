@@ -1,174 +1,456 @@
-import { Box, Button, Paper, Stack, Typography, alpha } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+  alpha,
+} from "@mui/material";
 import React, { useState } from "react";
-import CustomTable from "../../components/Firm/Orders/Table";
-import { Search } from "@mui/icons-material";
-import { BiExport, BiImport } from "react-icons/bi";
-import { IoMdAdd } from "react-icons/io";
-import ToggleColumns from "../../components/ui/ToggleColumns";
-import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { FiEdit } from "react-icons/fi";
 import FormSelect from "../../components/ui/FormSelect";
-import { filterData } from "../../utils/filterByDate";
+import { BiExport } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
+import { IoCopyOutline } from "react-icons/io5";
+import { IoLockClosedOutline } from "react-icons/io5";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { Search } from "@mui/icons-material";
+import { HiOutlineTrash } from "react-icons/hi2";
+import CustomTable from "../../components/Firm/Orders/Table";
+import DeletePopup from "../../components/ui/DeletePopup";
 import CreateCampaignModal from "../../components/Affiliates/Programs/createCampaignModal";
+import { useNavigate } from "react-router-dom";
+
+const statutes = [
+  { value: "active", label: "Active", color: "green" },
+  { value: "deactive", label: "Deactive", color: "red" },
+];
+
+const defaults = [
+  { value: "yes", label: "Yes", color: "green" },
+  { value: "no", label: "No", color: "red" },
+];
 
 const headcells = [
   {
-    id: "name",
-    label: "Name",
-    getCell: (row) => row.name,
+    id: "id",
+    label: "Id",
+    default: true,
+    getCell: (row) => row.id,
   },
   {
-    id: "company",
-    label: "Company",
-    getCell: (row) => row.company,
+    id: "campaignName",
+    label: "Campaign Name",
+    default: true,
+    getCell: (row) => row.title,
   },
   {
-    id: "country",
-    label: "Country",
+    id: "title",
+    label: "Title",
+    default: true,
+    getCell: (row) => row.title,
+  },
+  {
+    id: "description",
+    label: "Description",
+    default: true,
+    getCell: (row) => row.description,
+  },
+  { id: "name", label: "Name", default: true, getCell: (row) => row.name },
+  {
+    id: "status",
+    label: "Status",
+    default: true,
+    getCell: (row) => {
+      const status = statutes.find((statute) => statute.value === row.status);
+      return (
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent={"center"}
+          sx={{
+            borderRadius: "7px",
+            width: "91px",
+
+            background: (theme) =>
+              alpha(theme.palette.color[status.color], 0.15),
+          }}
+        >
+          <Box
+            sx={{
+              width: "9px",
+              height: "9px",
+              borderRadius: "50%",
+              background: (theme) => theme.palette.color[status.color],
+            }}
+          ></Box>
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.color[status.color],
+              lineHeight: "2.2em",
+            }}
+          >
+            {status.label}
+          </Typography>
+        </Stack>
+      );
+    },
+  },
+  {
+    id: "action",
+    label: "Action",
+    default: true,
     getCell: (row) => (
       <Stack
         direction="row"
-        spacing={1}
-        alignItems="center"
-        sx={{ my: "10px" }}
+        spacing={1.5}
+        sx={{
+          color: (theme) => theme.palette.color.secondary,
+        }}
       >
-        <p>{row.country}</p>
+        <FiEdit size={17} />
+        <Divider
+          orientation="vertical"
+          sx={{
+            height: "18px",
+          }}
+        />
+        <HiOutlineTrash size={18} />
       </Stack>
     ),
-  },
-  {
-    id: "email",
-    label: "Email address",
-    getCell: (row) => row.email,
-  },
-  {
-    id: "phone",
-    label: "Phone",
-    getCell: (row) => row.phone,
-  },
-  {
-    id: "parent",
-    label: "Parent",
-    getCell: (row) => row.parent,
-  },
-  {
-    id: "createdAt",
-    label: "Created",
-    getCell: (row) => row.createdAt,
-  },
-  {
-    id: "account",
-    label: "Account",
-    getCell: (row) => row.account,
   },
 ];
 
 const data = [
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "24 Apr 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Initial phase of Project Alpha",
+    name: "John Doe",
+    status: "active",
+    default: "yes",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "24 Apr 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Beta testing phase",
+    name: "Jane Smith",
+    status: "deactive",
+    default: "no",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "24 Apr 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Research and development",
+    name: "Alice Johnson",
+    status: "active",
+    default: "yes",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Marketing campaign",
+    name: "Bob Brown",
+    status: "deactive",
+    default: "no",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Client feedback collection",
+    name: "Charlie Davis",
+    status: "active",
+    default: "yes",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Implementation phase",
+    name: "Diana Evans",
+    status: "deactive",
+    default: "no",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Design phase",
+    name: "Evan Harris",
+    status: "active",
+    default: "yes",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "User training",
+    name: "Fiona Garcia",
+    status: "deactive",
+    default: "no",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
   {
-    name: "Jens V.",
-    country: "NL",
-    email: "example@gmail.com",
-    phone: "+31 433242455",
-    createdAt: "2 May 2024, 11:04",
-    parent: "parent",
-    company: "Company",
-    account: "account",
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Testing and QA",
+    name: "George Hall",
+    status: "active",
+    default: "yes",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
+  },
+  {
+    id: 95482164,
+    campaignName: "Campaign1",
+    title: "Frist Campaign",
+    perClick: "$0.05",
+    perSale: "30%/10%",
+    description: "Final review",
+    name: "Helen King",
+    status: "deactive",
+    default: "no",
+    createDate: "11:05 5 Apr, 2024",
+    action: "",
   },
 ];
 
 const Programs = () => {
-  const [selectedColumns, setSelectedColumns] = useState(
-    headcells.map((h) => h.id)
-  );
+  const [startDate, setStartDate] = useState(dayjs().startOf("week"));
+  const [endDate, setEndDate] = useState(dayjs().endOf("week"));
+  const [open, setOpen] = useState(false);
+  const [deletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [rangeValue, setRangeValue] = useState([20, 37]);
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
+  const [value, setValue] = React.useState(0);
+  const [selected, setSelected] = useState([]);
   const [type, setType] = useState("active");
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
 
+  const headcells = [
+    {
+      id: "id",
+      label: "Id",
+      default: true,
+      getCell: (row) => row.id,
+    },
+    {
+      id: "campaignName",
+      label: "Campaign Name",
+      default: true,
+      getCell: (row) => row.title,
+    },
+    {
+      id: "commissions",
+      label: "Commissions",
+      default: true,
+      getCell: (row) => {
+        return (
+          <Stack direction={"row"} alignItems={"center"} gap={2}>
+            <MdOutlineRemoveRedEye size={14}/>
+            <Box>
+              <Typography>per Click : {row.perClick}</Typography>
+              <Typography>per Sale : {row.perSale}</Typography>
+            </Box>
+          </Stack>
+        );
+      },
+    },
+    {
+      id: "status",
+      label: "Status",
+      default: true,
+      getCell: (row) => {
+        const status = statutes.find((statute) => statute.value === row.status);
+        return (
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            justifyContent={"center"}
+            sx={{
+              borderRadius: "7px",
+              width: "91px",
+
+              background: (theme) =>
+                alpha(theme.palette.color[status.color], 0.15),
+            }}
+          >
+            <Box
+              sx={{
+                width: "9px",
+                height: "9px",
+                borderRadius: "50%",
+                background: (theme) => theme.palette.color[status.color],
+              }}
+            ></Box>
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.color[status.color],
+                lineHeight: "2.2em",
+              }}
+            >
+              {status.label}
+            </Typography>
+          </Stack>
+        );
+      },
+    },
+    {
+      id: "createDate",
+      label: "Create date",
+      default: true,
+      getCell: (row) => row.createDate,
+    },
+    {
+      id: "default",
+      label: "Default",
+      default: true,
+      getCell: (row) => {
+        const status = defaults.find((defaults) => defaults.value === row.default);
+        return (
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            justifyContent={"center"}
+            sx={{
+              borderRadius: "7px",
+              width: "91px",
+
+              background: (theme) =>
+                alpha(theme.palette.color[status.color], 0.15),
+            }}
+          >
+            <Box
+              sx={{
+                width: "9px",
+                height: "9px",
+                borderRadius: "50%",
+                background: (theme) => theme.palette.color[status.color],
+              }}
+            ></Box>
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.color[status.color],
+                lineHeight: "2.2em",
+              }}
+            >
+              {status.label}
+            </Typography>
+          </Stack>
+        );
+      },
+    },
+    {
+      id: "action",
+      label: "Action",
+      default: true,
+      getCell: (row, index) => (
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{
+            color: (theme) => theme.palette.color.secondary,
+          }}
+        >
+          <FiEdit size={14} onClick={() => { navigate("/affiliate-center/programs/edit-campaign") }} />
+          <Divider
+            orientation="vertical"
+            sx={{
+              height: "18px",
+            }}
+          />
+          <IoCopyOutline
+            size={14}
+          />
+          <Divider
+            orientation="vertical"
+            sx={{
+              height: "18px",
+            }}
+          />
+          <IoLockClosedOutline
+            size={14}
+          />
+          <Divider
+            orientation="vertical"
+            sx={{
+              height: "18px",
+            }}
+          />
+          <HiOutlineTrash
+            onClick={() => {
+              setSelected([index]);
+              setDeletePopupOpen(true);
+            }}
+            size={14}
+          />
+        </Stack>
+      ),
+    },
+  ];
+
+  const [columns, setColumns] = useState(headcells);
+  const [heads, setHeads] = React.useState(
+    headcells.filter((cell) => cell.default).map((cell) => cell.id)
+  );
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
   return (
-    <Paper
+    <Container
       sx={{
-        px: "12px",
-        py: "24px",
-        width: "100%",
+        p: "24px",
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -179,7 +461,7 @@ const Programs = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" sx={{marginLeft: "10px"}}>
+          <Typography variant="h2" sx={{ marginLeft: "10px" }}>
             Your Campaigns
           </Typography>
         </Box>
@@ -236,25 +518,53 @@ const Programs = () => {
               fontWeight: "500",
             }}
             variant="contained"
-            onClick={()=>{setOpen(true)}}
+            onClick={() => { setOpen(true) }}
           >
             <IoMdAdd style={{ marginRight: "5px" }} size={17} />
             Add Campaign
           </Button>
         </Stack>
       </Stack>
+
+      {selected.length > 0 && (
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          sx={{ mt: "24px", ml: "12px" }}
+        >
+          <Typography variant="caption_500">
+            {selected.length} selected
+          </Typography>
+          <IconButton
+            sx={{
+              border: "1px solid #E4E4E7",
+              borderRadius: "6px",
+              color: (theme) => theme.palette.color.red,
+            }}
+            onClick={handleOpen}
+          >
+            <HiOutlineTrash size={14} />
+          </IconButton>
+        </Stack>
+      )}
+
+
       <CustomTable
-        headcells={headcells.filter((headcell) =>
-          selectedColumns.includes(headcell.id)
-        )}
+        headcells={filteredHeadcells}
         rows={data}
-        onRowClick={(row) => {
-          navigate(`/firm/customers/${row.name}`);
-        }}
-        fontSize="13px"
+        checkbox={true}
+        selected={selected}
+        setSelected={setSelected}
       />
-      <CreateCampaignModal open={open} handleClose={()=>{setOpen(false)}} />
-    </Paper>
+      <DeletePopup
+        open={deletePopupOpen}
+        handleClose={() => { setDeletePopupOpen(false) }}
+        title={"Delete Campaign"}
+        description={`Are you sure you want to delete ${selected.length} campaign?`}
+      />
+      <CreateCampaignModal open={open} handleClose={() => { setOpen(false) }} />
+    </Container>
   );
 };
 
