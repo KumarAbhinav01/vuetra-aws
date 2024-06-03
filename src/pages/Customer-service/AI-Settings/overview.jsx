@@ -18,7 +18,7 @@ import {
   styled,
 } from "@mui/material";
 import React from "react";
-import { BiLogoDeviantart } from "react-icons/bi";
+import { BiLogoDeviantart, BiMessageSquareDetail } from "react-icons/bi";
 import { FaBookOpen, FaLink } from "react-icons/fa6";
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
@@ -54,7 +54,7 @@ const items = [
     title: "Use custom content",
     subtitle: "Create your own custom content.",
     link: "How to add external content to Vue Brain",
-    icon: <FaBookOpen size={16} />,
+    icon: <BiMessageSquareDetail size={16} />,
     button: "Create",
     content:
       "Create your own custom content. You can create your own content from scratch or import an existing document to Vue Brain.",
@@ -70,7 +70,13 @@ const items = [
     title: "Use Custom Answers",
     subtitle: "Let Vue Brain learn how you talk and respond to questions",
     link: "How to add external content to Vue Brain",
-    icon: <Help size={16} />,
+    icon: (
+      <Help
+        sx={{
+          fontSize: "20px",
+        }}
+      />
+    ),
     button: "Create",
   },
   {
@@ -78,7 +84,7 @@ const items = [
     subtitle:
       "Let Vue Brain learn from the support content in your Help Center",
     link: "How to add external content to Vue Brain",
-    icon: <Help size={16} />,
+    icon: <FaBookOpen size={16} />,
     button: "Create",
   },
 ];
@@ -178,7 +184,7 @@ const SettingsOverview = () => {
                   id="panel1-header"
                 >
                   <Stack direction="row" spacing={2} alignItems="center">
-                    <FaLink size={16} />
+                    {item.icon && item.icon}
                     <Stack spacing={1}>
                       <Typography
                         sx={{
