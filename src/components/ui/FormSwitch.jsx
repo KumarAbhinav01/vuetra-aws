@@ -3,7 +3,15 @@ import HelpIcon from "@mui/icons-material/Help";
 import React from "react";
 import CustomSwitch from "./Switch";
 
-const FormSwitch = ({ label, label2, helperTexts, sx, flex, ...rest }) => {
+const FormSwitch = ({
+  label,
+  label2,
+  helperTexts,
+  sx,
+  flex,
+  labelsx,
+  ...rest
+}) => {
   return (
     <FormControl fullWidth>
       <Box
@@ -21,6 +29,7 @@ const FormSwitch = ({ label, label2, helperTexts, sx, flex, ...rest }) => {
             sx={{
               fontSize: "14px",
               fontWeight: "600",
+              ...labelsx,
             }}
           >
             {label}
@@ -35,7 +44,9 @@ const FormSwitch = ({ label, label2, helperTexts, sx, flex, ...rest }) => {
               color: (theme) => theme.palette.color.secondary,
             }}
           >
-            <Typography variant="caption">{label2}</Typography>
+            <Typography variant="caption" sx={labelsx}>
+              {label2}
+            </Typography>
             <HelpIcon sx={{ fontSize: "15px" }} />
           </Stack>
         )}

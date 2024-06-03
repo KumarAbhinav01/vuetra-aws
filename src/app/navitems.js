@@ -29,6 +29,8 @@ import Programs from "../pages/Affiliates/programs";
 import EditCampaign from "../pages/Affiliates/EditCampaign";
 import Stats from "../pages/Affiliates/stats";
 import Commissions from "../pages/Affiliates/commissions";
+import Conversations from "../pages/Customer-service/Conversations";
+import SettingsOverview from "../pages/Customer-service/AI-Settings/overview";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -185,6 +187,12 @@ export const navItems = [
     layout: true,
   },
   {
+    path: "/customer-services/conversation",
+    element: <Conversations />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
     path: "/customer-services/open-tickets",
     element: <OpenTickets />,
     isPrivate: true,
@@ -200,6 +208,12 @@ export const navItems = [
   {
     path: "/customer-services/closed-tickets",
     element: <ClosedTickets />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/customer-services/settings/overview",
+    element: <SettingsOverview />,
     isPrivate: true,
     layout: true,
   },

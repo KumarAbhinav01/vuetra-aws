@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Divider,
+  Stack,
   Tooltip,
   Typography,
   alpha,
@@ -33,6 +34,8 @@ export default function SideBar() {
   const [navItem, setNavItem] = React.useState(
     childItem?.children ? childItem : parentItem
   );
+
+  console.log(navItem, parentItem, childItem);
 
   return (
     <Box
@@ -177,7 +180,7 @@ export default function SideBar() {
           <ProfileSection />
         </Box>
       </Box>
-      {navItem?.children && (
+      {navItem?.children && !childItem?.noSidebar && (
         <Box
           sx={{
             display: "flex",
@@ -298,38 +301,64 @@ export default function SideBar() {
                   )
                 )}
             </div>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                gap: "8px",
-                p: "16px",
-              }}
-            ></Box>
           </Box>
-          {childItem.button && (
-            <Button
-              variant="contained"
-              sx={{
-                mx: 2,
-                fontSize: "13px",
-                background: (theme) => theme.palette.color.buttonbg,
-                color: (theme) => theme.palette.color.button,
-                ":hover": {
+          <Stack>
+            {navItem.children2 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2",
+                  p: "16px",
+                }}
+              >
+                {parentItem.children2.map((child) => (
+                  <Box
+                    key={child.title}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      color: (theme) => theme.palette.color.primary,
+                      ":hover": { opacity: 0.35 },
+                      transition: "opacity 0.5s",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {child.icon && <child.icon size={15} />}
+                    <a
+                      style={{ textDecoration: "none" }}
+                      href={child.to ?? child.path}
+                    >
+                      <Typography variant="caption">{child.title}</Typography>
+                    </a>
+                  </Box>
+                ))}
+              </Box>
+            )}
+            {childItem?.button && (
+              <Button
+                variant="contained"
+                sx={{
+                  mx: 2,
+                  fontSize: "13px",
                   background: (theme) => theme.palette.color.buttonbg,
                   color: (theme) => theme.palette.color.button,
-                },
-              }}
-              onClick={() => dispatch(toggleOpen())}
-            >
-              <BiPlus
-                size={18}
-                sx={{ color: (theme) => theme.palette.lightText }}
-              />
-              {childItem.button}
-            </Button>
-          )}
+                  ":hover": {
+                    background: (theme) => theme.palette.color.buttonbg,
+                    color: (theme) => theme.palette.color.button,
+                  },
+                }}
+                onClick={() => dispatch(toggleOpen())}
+              >
+                <BiPlus
+                  size={18}
+                  sx={{ color: (theme) => theme.palette.lightText }}
+                />
+                {childItem.button}
+              </Button>
+            )}
+          </Stack>
         </Box>
       )}
     </Box>

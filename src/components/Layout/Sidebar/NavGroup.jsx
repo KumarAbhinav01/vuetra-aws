@@ -38,61 +38,66 @@ export default function NavGroup({ navItem }) {
       </AccordionSummary>
       <AccordionDetails sx={{ pt: 0 }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          {navItem.children.map((subChild) => (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                position: "relative",
-                p: 0.8,
-                paddingLeft: 4,
-                ...(isPathMatching(subChild.path) && {
-                  borderLeft: (theme) =>
-                    `2px solid ${theme.palette.color.primary}`,
-                }),
-                ":hover": { opacity: 0.35 },
-                transition: "opacity 0.5s",
-                cursor: "pointer",
-              }}
-            >
-              {!isPathMatching(subChild.path) && (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    width: 10,
-                    height: 18,
-                    border: (theme) =>
-                      `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-                    borderTop: 0,
-                    borderRight: 0,
-                    top: "0",
-                    left: "12px",
-                  }}
-                ></Box>
-              )}
-              {subChild.icon && (
-                <Box
-                  sx={{
-                    color: (theme) =>
-                      theme.palette.color[
-                        isPathMatching(subChild.path) ? "blue" : "secondary"
-                      ],
-                    mr: 1,
-                    ml: isPathMatching(subChild.path) ? "-16px" : 0,
-                  }}
-                >
-                  <subChild.icon size={16} />
-                </Box>
-              )}
-
-              <a
-                style={{ textDecoration: "none" }}
-                href={subChild.to ?? subChild.path}
+          {navItem.children
+            .filter((subChild) => !subChild.notVisible)
+            .map((subChild) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  p: 0.8,
+                  paddingLeft: 4,
+                  ...(isPathMatching(subChild.path) && {
+                    borderLeft: (theme) =>
+                      `2px solid ${theme.palette.color.primary}`,
+                  }),
+                  ":hover": { opacity: 0.35 },
+                  transition: "opacity 0.5s",
+                  cursor: "pointer",
+                }}
               >
-                <Typography variant="caption">{subChild.title}</Typography>
-              </a>
-            </Box>
-          ))}
+                {!isPathMatching(subChild.path) && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      width: 10,
+                      height: 18,
+                      border: (theme) =>
+                        `1px solid ${alpha(
+                          theme.palette.color.secondary,
+                          0.15
+                        )}`,
+                      borderTop: 0,
+                      borderRight: 0,
+                      top: "0",
+                      left: "12px",
+                    }}
+                  ></Box>
+                )}
+                {subChild.icon && (
+                  <Box
+                    sx={{
+                      color: (theme) =>
+                        theme.palette.color[
+                          isPathMatching(subChild.path) ? "blue" : "secondary"
+                        ],
+                      mr: 1,
+                      ml: isPathMatching(subChild.path) ? "-16px" : 0,
+                    }}
+                  >
+                    <subChild.icon size={16} />
+                  </Box>
+                )}
+
+                <a
+                  style={{ textDecoration: "none" }}
+                  href={subChild.to ?? subChild.path}
+                >
+                  <Typography variant="caption">{subChild.title}</Typography>
+                </a>
+              </Box>
+            ))}
         </Box>
       </AccordionDetails>
     </Accordion>

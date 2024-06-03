@@ -25,10 +25,15 @@ export const getChildNavItem = (pathname) => {
   let childItem;
   let nestedChildItem;
 
-  navItem?.children?.forEach((child) => {
+  const ch = navItem?.children || [];
+  const ch2 = navItem.children2 || [];
+  ch.push(...ch2);
+
+  ch?.forEach((child) => {
     if (child.path === pathname) {
       childItem = child;
     }
+
     // console.log(child, pathname);
     // if (child.path === pathname) {
     //   childItem = child;
@@ -40,6 +45,7 @@ export const getChildNavItem = (pathname) => {
     //   };
     // }
     child.children?.forEach((child) => {
+      console.log(child.children, "child.children", child);
       if (child.children) {
         child.children.forEach((c) => {
           if (c.children) {

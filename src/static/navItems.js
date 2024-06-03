@@ -171,7 +171,11 @@ export const navItems = [
         title: "Tickets",
         path: "/customer-services",
         children: [
-          { title: "Open Tickets", path: "/customer-services/open-tickets" },
+          {
+            title: "Open Tickets",
+            path: "/customer-services/open-tickets",
+            button: "Add new account",
+          },
           { title: "All Tickets", path: "/customer-services/all" },
           {
             title: "Assigned to me",
@@ -180,6 +184,13 @@ export const navItems = [
           {
             title: "Closed Tickets",
             path: "/customer-services/closed-tickets",
+          },
+          {
+            title: "Conversations",
+            path: "/customer-services/conversation",
+            notVisible: true,
+            noSidebar: true,
+            noHeader: true,
           },
         ],
       },
@@ -198,6 +209,60 @@ export const navItems = [
           },
           { title: "Bug", path: "/customer-services/bug" },
         ],
+      },
+    ],
+    children2: [
+      {
+        title: "Settings",
+        path: "/customer-services/settings",
+        to: "/customer-services/settings/overview",
+        icon: IoSettings,
+        children: [
+          {
+            title: "Settings",
+            path: "/customer-services/settings/overview",
+            noHeader: true,
+            children: [
+              {
+                title: "Overview",
+                path: "/customer-services/settings/overview",
+                noHeader: true,
+              },
+              {
+                title: "Data sources",
+                path: "/customer-services/settings/data-sources",
+              },
+              {
+                title: "Custome answers",
+                path: "/customer-services/settings/custom-answers",
+              },
+              {
+                title: "Settings",
+                path: "/customer-services/settings/settings",
+              },
+            ],
+          },
+          {
+            title: "Collections",
+            path: "/firm/content-management/collections",
+            children: [
+              {
+                title: "Collections",
+                path: "/firm/content-management/collections",
+              },
+              {
+                title: "Videos",
+                path: "/firm/content-management/videos",
+              },
+            ],
+          },
+        ],
+        // children: [
+        //   {
+        //     title: "Overview",
+        //     path: "/customer-services/settings/overview",
+        //   },
+        // ],
       },
     ],
   },

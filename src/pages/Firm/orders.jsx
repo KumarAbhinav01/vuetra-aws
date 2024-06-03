@@ -89,7 +89,7 @@ const data = [
     value: "$250.00",
     product: "Elite - $250,000.00",
     customerId: "102911065",
-    createdAt: "3 May 2024, 10:00",
+    createdAt: "3 June 2024, 10:00",
   },
   {
     id: "102911066",
@@ -99,7 +99,7 @@ const data = [
     value: "$260.00",
     product: "Elite - $260,000.00",
     customerId: "102911066",
-    createdAt: "5 May 2024, 11:30",
+    createdAt: "5 June 2024, 11:30",
   },
   {
     id: "102911067",
@@ -109,7 +109,7 @@ const data = [
     value: "$270.00",
     product: "Elite - $270,000.00",
     customerId: "102911067",
-    createdAt: "7 May 2024, 12:45",
+    createdAt: "7 June 2024, 12:45",
   },
   {
     id: "102911068",
@@ -119,7 +119,7 @@ const data = [
     value: "$280.00",
     product: "Elite - $280,000.00",
     customerId: "102911068",
-    createdAt: "9 May 2024, 09:15",
+    createdAt: "9 June 2024, 09:15",
   },
   {
     id: "102911069",
@@ -129,7 +129,7 @@ const data = [
     value: "$290.00",
     product: "Elite - $290,000.00",
     customerId: "102911069",
-    createdAt: "11 May 2024, 08:30",
+    createdAt: "11 June 2024, 08:30",
   },
   {
     id: "102911070",
@@ -139,7 +139,7 @@ const data = [
     value: "$300.00",
     product: "Elite - $300,000.00",
     customerId: "102911070",
-    createdAt: "13 May 2024, 14:20",
+    createdAt: "13 June 2024, 14:20",
   },
   {
     id: "102911071",
@@ -149,7 +149,7 @@ const data = [
     value: "$310.00",
     product: "Elite - $310,000.00",
     customerId: "102911071",
-    createdAt: "15 May 2024, 16:45",
+    createdAt: "15 June 2024, 16:45",
   },
   {
     id: "102911072",
@@ -159,7 +159,7 @@ const data = [
     value: "$320.00",
     product: "Elite - $320,000.00",
     customerId: "102911072",
-    createdAt: "17 May 2024, 11:55",
+    createdAt: "17 June 2024, 11:55",
   },
   {
     id: "102911073",
@@ -169,7 +169,7 @@ const data = [
     value: "$330.00",
     product: "Elite - $330,000.00",
     customerId: "102911073",
-    createdAt: "19 May 2024, 15:40",
+    createdAt: "19 June 2024, 15:40",
   },
   {
     id: "102911074",
@@ -179,7 +179,7 @@ const data = [
     value: "$340.00",
     product: "Elite - $340,000.00",
     customerId: "102911074",
-    createdAt: "21 May 2024, 09:10",
+    createdAt: "21 June 2024, 09:10",
   },
   {
     id: "102911075",
@@ -189,7 +189,7 @@ const data = [
     value: "$350.00",
     product: "Elite - $350,000.00",
     customerId: "102911075",
-    createdAt: "23 May 2024, 13:25",
+    createdAt: "23 June 2024, 13:25",
   },
   {
     id: "102911076",
@@ -199,7 +199,7 @@ const data = [
     value: "$360.00",
     product: "Elite - $360,000.00",
     customerId: "102911076",
-    createdAt: "25 May 2024, 12:10",
+    createdAt: "25 June 2024, 12:10",
   },
   {
     id: "102911077",
@@ -209,7 +209,7 @@ const data = [
     value: "$370.00",
     product: "Elite - $370,000.00",
     customerId: "102911077",
-    createdAt: "27 May 2024, 11:05",
+    createdAt: "27 June 2024, 11:05",
   },
   {
     id: "102911078",
@@ -219,7 +219,7 @@ const data = [
     value: "$380.00",
     product: "Elite - $380,000.00",
     customerId: "102911078",
-    createdAt: "29 May 2024, 14:50",
+    createdAt: "29 June 2024, 14:50",
   },
   {
     id: "102911079",
@@ -229,9 +229,9 @@ const data = [
     value: "$390.00",
     product: "Elite - $390,000.00",
     customerId: "102911079",
-    createdAt: "31 May 2024, 09:20",
+    createdAt: "31 June 2024, 09:20",
   },
-]
+];
 
 const Orders = () => {
   const [selectedColumns, setSelectedColumns] = useState(
@@ -248,7 +248,7 @@ const Orders = () => {
   };
 
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("id"); 
+  const [orderBy, setOrderBy] = useState("id");
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -258,15 +258,17 @@ const Orders = () => {
 
   const sortedData = [...data].sort((a, b) => {
     if (orderBy === "value") {
-      const valueA = parseFloat(a[orderBy].replace(/[$,]/g, ''));
-      const valueB = parseFloat(b[orderBy].replace(/[$,]/g, ''));
+      const valueA = parseFloat(a[orderBy].replace(/[$,]/g, ""));
+      const valueB = parseFloat(b[orderBy].replace(/[$,]/g, ""));
       return (valueA < valueB ? -1 : 1) * (order === "asc" ? 1 : -1);
     } else {
       return (a[orderBy] < b[orderBy] ? -1 : 1) * (order === "asc" ? 1 : -1);
     }
   });
 
-  const filteredData = sortedData.filter((d) => filterData(duration, d.createdAt));
+  const filteredData = sortedData.filter((d) =>
+    filterData(duration, d.createdAt)
+  );
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     Math.min(currentPage * itemsPerPage, filteredData.length)
@@ -438,14 +440,28 @@ const Orders = () => {
               key={index}
               onClick={() => handleChangePage(index + 1)}
               sx={{
-                mx: 1, p: 1, borderRadius: "50%", width: "36px", height: "36px",
+                mx: 1,
+                p: 1,
+                borderRadius: "50%",
+                width: "36px",
+                height: "36px",
                 backgroundColor:
                   currentPage === index + 1
                     ? (theme) => theme.palette.primary.main
                     : "transparent",
               }}
             >
-              <Typography sx={{ fontSize: "14px", color: currentPage === index + 1 ? (theme) => theme.palette.primary.darkText : (theme) => theme.palette.primary.lightText}} >{index + 1}</Typography>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color:
+                    currentPage === index + 1
+                      ? (theme) => theme.palette.primary.darkText
+                      : (theme) => theme.palette.primary.lightText,
+                }}
+              >
+                {index + 1}
+              </Typography>
             </IconButton>
           ))}
           <IconButton
