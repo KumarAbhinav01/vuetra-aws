@@ -23,6 +23,10 @@ import CustomTable from "../../components/Firm/Orders/Table";
 import DeletePopup from "../../components/ui/DeletePopup";
 import CreateCampaignModal from "../../components/Affiliates/Programs/createCampaignModal";
 import { useNavigate } from "react-router-dom";
+import Searchbar from "../../components/ui/Searchbar";
+import ExportSection from "../../components/ui/ExportSection";
+import DisplayColumns from "../../components/ui/DisplayColumns";
+import FilterPopup from "../../components/ui/FilterPopup";
 
 const statutes = [
   { value: "active", label: "Active", color: "green" },
@@ -34,96 +38,6 @@ const defaults = [
   { value: "no", label: "No", color: "red" },
 ];
 
-const headcells = [
-  {
-    id: "id",
-    label: "Id",
-    default: true,
-    getCell: (row) => row.id,
-  },
-  {
-    id: "campaignName",
-    label: "Campaign Name",
-    default: true,
-    getCell: (row) => row.title,
-  },
-  {
-    id: "title",
-    label: "Title",
-    default: true,
-    getCell: (row) => row.title,
-  },
-  {
-    id: "description",
-    label: "Description",
-    default: true,
-    getCell: (row) => row.description,
-  },
-  { id: "name", label: "Name", default: true, getCell: (row) => row.name },
-  {
-    id: "status",
-    label: "Status",
-    default: true,
-    getCell: (row) => {
-      const status = statutes.find((statute) => statute.value === row.status);
-      return (
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          justifyContent={"center"}
-          sx={{
-            borderRadius: "7px",
-            width: "91px",
-
-            background: (theme) =>
-              alpha(theme.palette.color[status.color], 0.15),
-          }}
-        >
-          <Box
-            sx={{
-              width: "9px",
-              height: "9px",
-              borderRadius: "50%",
-              background: (theme) => theme.palette.color[status.color],
-            }}
-          ></Box>
-          <Typography
-            sx={{
-              color: (theme) => theme.palette.color[status.color],
-              lineHeight: "2.2em",
-            }}
-          >
-            {status.label}
-          </Typography>
-        </Stack>
-      );
-    },
-  },
-  {
-    id: "action",
-    label: "Action",
-    default: true,
-    getCell: (row) => (
-      <Stack
-        direction="row"
-        spacing={1.5}
-        sx={{
-          color: (theme) => theme.palette.color.secondary,
-        }}
-      >
-        <FiEdit size={17} />
-        <Divider
-          orientation="vertical"
-          sx={{
-            height: "18px",
-          }}
-        />
-        <HiOutlineTrash size={18} />
-      </Stack>
-    ),
-  },
-];
 
 const data = [
   {
@@ -264,9 +178,11 @@ const Programs = () => {
   const [open, setOpen] = useState(false);
   const [deletePopupOpen, setDeletePopupOpen] = useState(false);
   const [rangeValue, setRangeValue] = useState([20, 37]);
+  const [selectedPaidEarning, setSelectedPaidEarning] = useState([]);
+  const [selectedPaidCommission, setSelectedPaidCommission] = useState([]);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [selected, setSelected] = useState([]);
   const [type, setType] = useState("active");
   const navigate = useNavigate();
@@ -440,12 +356,7 @@ const Programs = () => {
     headcells.filter((cell) => cell.default).map((cell) => cell.id)
   );
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
   return (
     <Container
@@ -477,43 +388,41 @@ const Programs = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <Search sx={{ fontSize: "16px" }} />
-          {/* <Typography
-            sx={{
-              color: (theme) => theme.palette.color.secondary,
-              fontSize: "11.5px",
-              py: "3px",
-              px: "8px",
-              border: (theme) =>
-                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-            }}
-          >
-            <BiImport /> Import
-          </Typography> */}
-          <Typography
-            sx={{
-              color: (theme) => theme.palette.color.secondary,
-              fontSize: "11.5px",
-              py: "3px",
-              px: "8px",
-              border: (theme) =>
-                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-            }}
-          >
-            <BiExport /> Export
-          </Typography>
-          <FormSelect
-            options={[{ value: "active", label: "Display" }]}
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+          <Searchbar />
+          <ExportSection />
+          <DisplayColumns
+            columns={columns}
+            setColumns={setColumns}
+            selectedColumns={heads}
+            setSelectedColumns={setHeads}
           />
-          <FormSelect
-            options={[{ value: "active", label: "All" }]}
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+          <FilterPopup
+            rangeFilter={{
+              label: "Countries",
+              ariaLabel: "Countries",
+              value: rangeValue,
+              onChange: setRangeValue,
+            }}
+            accordions={[
+              {
+                title: "Paid Earning",
+                defaultExpanded: true,
+                items: ["$0 - $1000", "$100 - $300", "$300 - $600"],
+                selectedItems: selectedPaidEarning,
+                onChange: setSelectedPaidEarning,
+              },
+              {
+                title: "Paid Commission",
+                defaultExpanded: true,
+                items: ["$0 - $1000", "$100 - $300", "$300 - $500"],
+                selectedItems: selectedPaidCommission,
+                onChange: setSelectedPaidCommission,
+              },
+            ]}
           />
           <Button
             sx={{
+              padding: "2px 7px",
               color: (theme) => theme.palette.color.bg3,
               fontWeight: "500",
             }}
