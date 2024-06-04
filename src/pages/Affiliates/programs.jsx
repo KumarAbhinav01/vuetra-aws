@@ -542,7 +542,10 @@ const Programs = () => {
               borderRadius: "6px",
               color: (theme) => theme.palette.color.red,
             }}
-            onClick={handleOpen}
+            onClick={() => {
+              setOpen(false);
+              setDeletePopupOpen(true);
+            }}
           >
             <HiOutlineTrash size={14} />
           </IconButton>
