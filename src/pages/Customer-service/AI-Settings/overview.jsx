@@ -14,29 +14,33 @@ import {
   Tab,
   Tabs,
   Typography,
-  alpha,
   styled,
 } from "@mui/material";
 import React from "react";
 import { BiLogoDeviantart, BiMessageSquareDetail } from "react-icons/bi";
 import { FaBookOpen, FaLink } from "react-icons/fa6";
+import CreateSnippetPopup from "../../../components/AI-Settings/Overview/createSnippetPopup";
+import CreateContent from "../../../components/AI-Settings/Overview/CreateContent";
+import NewDataSource from "../../../components/AI-Settings/Overview/NewDataSource";
+import PublicResources from "../../../components/AI-Settings/Overview/PublicResources";
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   background: "rgb(14, 16, 17)",
-  border: `1px solid ${theme.palette.divider}`,
-  padding: theme.spacing(1),
-  borderRadius: theme.shape.borderRadius,
-  color: "white",
+  padding: "8px 20px",
+  borderRadius: "8px",
+  color: theme.palette.color.secondary,
   width: "100%",
+
   input: {
-    "&::placeholder": {
-      color: "black !important",
+    "::placeholder": {
+      color: theme.palette.color.secondary,
     },
   },
 
   "&:hover": {
     background: "rgb(14, 16, 17)",
   },
+  fontSize: "14px",
 }));
 
 const items = [
@@ -89,23 +93,6 @@ const items = [
   },
 ];
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      style={{ marginTop: "0" }}
-      {...other}
-    >
-      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -116,6 +103,8 @@ function a11yProps(index) {
 const SettingsOverview = () => {
   const [value, setValue] = React.useState(0);
   const [accordion, setAccordion] = React.useState([0]);
+  const [newDataSourceOpen, setNewDataSourceOpen] = React.useState(false);
+  const [popupType, setPopupType] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -212,8 +201,18 @@ const SettingsOverview = () => {
                     <Box
                       sx={{
                         py: "24px",
-                        borderTop: (theme) => `1px solid #e8e8e8`,
-                        borderBottom: (theme) => `1px solid #e8e8e8`,
+                        borderTop: (theme) =>
+                          `1px solid ${
+                            theme.palette.mode === "dark"
+                              ? theme.palette.color.border
+                              : "#e8e8e8"
+                          }`,
+                        borderBottom: (theme) =>
+                          `1px solid ${
+                            theme.palette.mode === "dark"
+                              ? theme.palette.color.border
+                              : "#e8e8e8"
+                          }`,
                       }}
                     >
                       <Typography
@@ -253,7 +252,7 @@ const SettingsOverview = () => {
                       <Button
                         sx={{
                           background: "#222",
-                          color: (theme) => theme.palette.color.bg,
+                          color: "white",
                           borderRadius: "8px",
                           padding: "5px 12px",
                           ":hover": {
@@ -261,25 +260,27 @@ const SettingsOverview = () => {
                           },
                         }}
                         variant="contained"
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            p: "1px",
-                            background: "white",
-                            borderRadius: "50%",
-                            mr: "4px",
-                          }}
-                        >
-                          <Add
+                        onClick={() => setNewDataSourceOpen(true)}
+                        startIcon={
+                          <Box
                             sx={{
-                              fontSize: "13px",
-                              color: "black",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              p: "1px",
+                              background: "white",
+                              borderRadius: "50%",
                             }}
-                          />
-                        </Box>
+                          >
+                            <Add
+                              sx={{
+                                fontSize: "13px",
+                                color: "black",
+                              }}
+                            />
+                          </Box>
+                        }
+                      >
                         {item.button}
                       </Button>
                     </Stack>
@@ -408,12 +409,22 @@ const SettingsOverview = () => {
                 mt: "12px",
               }}
             >
-              <Typography variant="subtitle1_500" sx={{ textAlign: "right" }}>
+              <Typography
+                variant="subtitle1_500"
+                sx={{
+                  textAlign: "right",
+                  color: (theme) => theme.palette.color.lightText,
+                }}
+              >
                 I want to have a refund for order <br /> number: #10525.
               </Typography>
               <Typography
                 variant="subtitle1_500"
-                sx={{ textAlign: "right", lineHeight: "18px" }}
+                sx={{
+                  textAlign: "right",
+                  lineHeight: "18px",
+                  color: (theme) => theme.palette.color.lightText,
+                }}
               >
                 The reason for refund is that I don’t like trading and I feel I
                 bought it with excident.
@@ -422,10 +433,41 @@ const SettingsOverview = () => {
           </Box>
           <Stack direction="row" alignItems="center" spacing={1}>
             <StyledInput placeholder="/type a command or send..." />
-            <Button variant="contained">Send</Button>
+            <Button
+              sx={{
+                borderRadius: "8px",
+              }}
+              variant="contained"
+            >
+              Send
+            </Button>
           </Stack>
         </Box>
       </Stack>
+      <CreateSnippetPopup
+        open={popupType === "snippets"}
+        handleClose={() => {
+          setPopupType("");
+        }}
+      />
+      <CreateContent
+        open={popupType === "pdf"}
+        handleClose={() => {
+          setPopupType("");
+        }}
+      />
+      <PublicResources
+        open={popupType === "publicresources"}
+        handleClose={() => {
+          setPopupType("");
+        }}
+      />
+
+      <NewDataSource
+        open={newDataSourceOpen}
+        setOpen={setNewDataSourceOpen}
+        setPopupType={setPopupType}
+      />
     </Paper>
   );
 };

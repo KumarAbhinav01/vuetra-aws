@@ -44,7 +44,7 @@ const CustomSwitch = styled((props) => (
   },
   "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+    backgroundColor: theme.palette.color.secondary,
     opacity: 1,
     transition: theme.transitions.create(["background-color"], {
       duration: 500,

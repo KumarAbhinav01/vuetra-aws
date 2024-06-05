@@ -32,7 +32,16 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
   // background: theme.palette.color.bg2,
 }));
 
-const FormInput = ({ label, label2, helperTexts, sx, checkbox, ...rest }) => {
+const FormInput = ({
+  label,
+  label2,
+  helperTexts,
+  sx,
+  checkbox,
+  spacing = "12px",
+  labelStyle,
+  ...rest
+}) => {
   return (
     <FormControl fullWidth>
       {label && (
@@ -49,7 +58,7 @@ const FormInput = ({ label, label2, helperTexts, sx, checkbox, ...rest }) => {
         <Stack
           direction="row"
           justifyContent={"space-between"}
-          sx={{ mb: "12px" }}
+          sx={{ mb: spacing }}
         >
           <Stack
             direction="row"
@@ -59,7 +68,9 @@ const FormInput = ({ label, label2, helperTexts, sx, checkbox, ...rest }) => {
               color: (theme) => theme.palette.color.secondary,
             }}
           >
-            <Typography variant="caption">{label2}</Typography>
+            <Typography variant="caption" sx={labelStyle}>
+              {label2}
+            </Typography>
             <HelpIcon sx={{ fontSize: "15px" }} />
           </Stack>
           {checkbox && <CustomSwitch />}

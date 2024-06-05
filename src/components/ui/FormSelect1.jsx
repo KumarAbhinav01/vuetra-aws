@@ -40,84 +40,99 @@ const FormSelect = ({
   fullWidth = false,
   label2,
   checkbox,
+  labelStyle,
+  spacing = "12px",
+  flexDirection = "column",
   sx = {},
   ...rest
 }) => {
   return (
     <FormControl fullWidth={fullWidth}>
-      {label && (
-        <FormLabel
-          sx={{
-            fontSize: "14px",
-            fontWeight: "600",
-          }}
-        >
-          {label}
-        </FormLabel>
-      )}
-      {label2 && (
-        <Stack
-          direction="row"
-          justifyContent={"space-between"}
-          sx={{ mb: "12px", width: "100%" }}
-        >
+      <Stack
+        direction={flexDirection}
+        sx={{
+          ...(flexDirection === "row" && {
+            justifyContent: "space-between",
+          }),
+        }}
+      >
+        {label && (
+          <FormLabel
+            sx={{
+              fontSize: "14px",
+              fontWeight: "600",
+            }}
+          >
+            {label}
+          </FormLabel>
+        )}
+        {label2 && (
           <Stack
             direction="row"
-            spacing={1}
-            sx={{
-              alignItems: "center",
-              color: (theme) => theme.palette.color.secondary,
-            }}
+            justifyContent={"space-between"}
+            sx={{ mb: spacing, width: "100%" }}
           >
-            <Typography variant="caption">{label2}</Typography>
-            <HelpIcon sx={{ fontSize: "15px" }} />
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                alignItems: "center",
+                color: (theme) => theme.palette.color.secondary,
+              }}
+            >
+              <Typography variant="caption" sx={labelStyle}>
+                {label2}
+              </Typography>
+              <HelpIcon sx={{ fontSize: "15px" }} />
+            </Stack>
+            {checkbox && <CustomSwitch />}
           </Stack>
-          {checkbox && <CustomSwitch />}
-        </Stack>
-      )}
-
-      <Select
-        fullWidth
-        sx={{
-          transition: "all 300ms ease-in-out",
-          ":focus-within": {
-            border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.5)}`,
-          },
-          fontSize: "14px",
-          background: (theme) => theme.palette.color.bg2,
-
-          ...sx,
-        }}
-        IconComponent={() => (
-          <ExpandMoreIcon
-            sx={{
-              color: (theme) => theme.palette.color.secondary,
-              fontSize: "15px",
-              position: "absolute",
-              right: "8px",
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
-          />
         )}
-        input={<StyledInput />}
-        {...rest}
-      >
-        {options.map((option) => (
-          <MenuItem
-            key={option.value}
-            sx={{
-              fontSize: "13px",
-              fontWeight: "500",
-              color: (theme) => theme.palette.color.secondary,
-            }}
-            value={option.value}
-          >
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
+
+        <Select
+          fullWidth={fullWidth}
+          sx={{
+            transition: "all 300ms ease-in-out",
+            ":focus-within": {
+              border: (theme) =>
+                `1px solid ${alpha(theme.palette.color.secondary, 0.5)}`,
+            },
+            fontSize: "14px",
+            background: (theme) => theme.palette.color.bg2,
+            border: (theme) => `1px solid ${theme.palette.color.inputborder}`,
+
+            ...sx,
+          }}
+          IconComponent={() => (
+            <ExpandMoreIcon
+              sx={{
+                color: (theme) => theme.palette.color.secondary,
+                fontSize: "15px",
+                position: "absolute",
+                right: "8px",
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            />
+          )}
+          input={<StyledInput />}
+          {...rest}
+        >
+          {options.map((option) => (
+            <MenuItem
+              key={option.value}
+              sx={{
+                fontSize: "13px",
+                fontWeight: "500",
+                color: (theme) => theme.palette.color.secondary,
+              }}
+              value={option.value}
+            >
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </Stack>
       {helperTexts && helperTexts.length > 0 && (
         <Stack spacing={2} sx={{ mt: "14px" }}>
           {helperTexts.map((text, index) => (

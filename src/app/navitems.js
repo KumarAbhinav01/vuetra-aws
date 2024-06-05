@@ -31,6 +31,7 @@ import Stats from "../pages/Affiliates/stats";
 import Commissions from "../pages/Affiliates/commissions";
 import Conversations from "../pages/Customer-service/Conversations";
 import SettingsOverview from "../pages/Customer-service/AI-Settings/overview";
+import CustomAnswers from "../pages/Customer-service/AI-Settings/custom-answers";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -214,6 +215,12 @@ export const navItems = [
   {
     path: "/customer-services/settings/overview",
     element: <SettingsOverview />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/customer-services/settings/custom-answers",
+    element: <CustomAnswers />,
     isPrivate: true,
     layout: true,
   },

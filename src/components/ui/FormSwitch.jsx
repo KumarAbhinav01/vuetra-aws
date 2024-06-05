@@ -10,6 +10,8 @@ const FormSwitch = ({
   sx,
   flex,
   labelsx,
+  spacing = "12px",
+
   ...rest
 }) => {
   return (
