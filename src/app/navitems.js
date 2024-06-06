@@ -31,6 +31,7 @@ import Stats from "../pages/Affiliates/stats";
 import Commissions from "../pages/Affiliates/commissions";
 import Conversations from "../pages/Customer-service/Conversations";
 import SettingsOverview from "../pages/Customer-service/AI-Settings/overview";
+import Reports from "../pages/Affiliates/reports";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -261,7 +262,7 @@ export const navItems = [
   },
   {
     path: "/affiliate-center/reports",
-    element: <div></div>,
+    element: <Reports />,
     isPrivate: true,
     layout: true,
   },
