@@ -28,85 +28,6 @@ const statutes = [
   { value: "rightnow", label: "Right Now", color: "green" },
 ];
 
-const headcells = [
-  {
-    id: "title",
-    label: "Title",
-    default: true,
-    getCell: (row) => row.title,
-  },
-  {
-    id: "description",
-    label: "Description",
-    default: true,
-    getCell: (row) => row.description,
-  },
-  { id: "name", label: "Name", default: true, getCell: (row) => row.name },
-  {
-    id: "status",
-    label: "Status",
-    default: true,
-    getCell: (row) => {
-      const status = statutes.find((statute) => statute.value === row.status);
-      return (
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          justifyContent={"center"}
-          sx={{
-            borderRadius: "7px",
-            width: "91px",
-
-            background: (theme) =>
-              alpha(theme.palette.color[status.color], 0.15),
-          }}
-        >
-          <Box
-            sx={{
-              width: "9px",
-              height: "9px",
-              borderRadius: "50%",
-              background: (theme) => theme.palette.color[status.color],
-            }}
-          ></Box>
-          <Typography
-            sx={{
-              color: (theme) => theme.palette.color[status.color],
-              lineHeight: "2.2em",
-            }}
-          >
-            {status.label}
-          </Typography>
-        </Stack>
-      );
-    },
-  },
-  {
-    id: "action",
-    label: "Action",
-    default: true,
-    getCell: (row) => (
-      <Stack
-        direction="row"
-        spacing={1.5}
-        sx={{
-          color: (theme) => theme.palette.color.secondary,
-        }}
-      >
-        <FiEdit size={17} />
-        <Divider
-          orientation="vertical"
-          sx={{
-            height: "18px",
-          }}
-        />
-        <HiOutlineTrash size={18} />
-      </Stack>
-    ),
-  },
-];
-
 const data = [
   {
     title: "Title1",
@@ -365,12 +286,12 @@ const Announcements = () => {
           <Button
             startIcon={<Add sx={{ fontSize: "14px" }} />}
             sx={{
-              color: "white",
-              background: (theme) => theme.palette.color.lightText,
+              background: (theme) => theme.palette.color.primary,
+              color: (theme) => theme.palette.color.bg,
               ":hover": {
-                background: (theme) => theme.palette.color.lightText,
+                background: (theme) => theme.palette.color.primary,
               },
-              py: 0.5,
+              py: 0.4,
               fontSize: "11.5px",
               fontWeight: 400,
             }}

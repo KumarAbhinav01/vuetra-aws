@@ -233,7 +233,7 @@ export const navItems = [
                 path: "/customer-services/settings/data-sources",
               },
               {
-                title: "Custome answers",
+                title: "Custom answers",
                 path: "/customer-services/settings/custom-answers",
               },
               {
@@ -242,27 +242,7 @@ export const navItems = [
               },
             ],
           },
-          {
-            title: "Collections",
-            path: "/firm/content-management/collections",
-            children: [
-              {
-                title: "Collections",
-                path: "/firm/content-management/collections",
-              },
-              {
-                title: "Videos",
-                path: "/firm/content-management/videos",
-              },
-            ],
-          },
         ],
-        // children: [
-        //   {
-        //     title: "Overview",
-        //     path: "/customer-services/settings/overview",
-        //   },
-        // ],
       },
     ],
   },
