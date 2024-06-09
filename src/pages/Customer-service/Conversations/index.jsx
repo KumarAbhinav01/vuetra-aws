@@ -4,6 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   Divider,
   Paper,
   Stack,
@@ -12,6 +13,24 @@ import {
 import React from "react";
 import FormSwitch from "../../../components/ui/FormSwitch";
 import { BiChevronDown } from "react-icons/bi";
+import CustomerDetails from "../../../components/Customer-service/Conversations/CustomerDetails";
+import AiAssistant from "../../../components/Customer-service/Conversations/AiAssistant";
+import ClientConversation from "../../../components/Customer-service/Conversations/ClientConversation";
+
+const customerData = {
+  verified: true,
+  platform: 'Dashboard',
+  firstName: 'Jens',
+  lastName: 'van der Blij',
+  country: 'Netherlands',
+  city: 'Hardenberg',
+  zip: '7772NM',
+  email: 'sales@vuetra.com',
+  phone: '+3160000000',
+  timezone: '+1 CET',
+  activeAccounts: 1,
+  kyc: 'Successful',
+};
 
 const Conversations = () => {
   return (
@@ -25,7 +44,7 @@ const Conversations = () => {
         sx={{
           width: "236px",
           height: "100vh",
-          background: (theme) => theme.palette.color.bg3,
+          background: (theme) => theme.palette.background.default,
         }}
       >
         <Stack
@@ -178,14 +197,57 @@ const Conversations = () => {
             </Stack>
           </AccordionDetails>
         </Accordion>
+
+        
+        <Button
+            variant="contained"
+            sx={{
+                position: 'fixed',
+                bottom: '20px',
+                mx: '12px',
+                px: '50px',
+                backgroundColor: '#F6F9FA',
+                color: '#9CA3AF',
+                borderRadius: '8px',
+                textTransform: 'none',
+                boxShadow: 'none',
+                '&:hover': {
+                    backgroundColor: '#F6F9FA',
+                    boxShadow: 'none',
+                },
+                '&:active': {
+                    boxShadow: 'none',
+                },
+                '&:focus': {
+                    boxShadow: 'none',
+                },
+            }}
+        >
+            Close ticket
+        </Button>
       </Paper>
+
       <Box
         sx={{
           display: "flex",
+          flexDirection: "row",
           maxHeight: "100vh",
           overflowY: "auto",
+          width: "100%",
         }}
-      ></Box>
+      >
+          <Box flex={3}>
+            <ClientConversation />
+          </Box>
+          <Box flex={3}>
+            <AiAssistant />
+          </Box>
+          <Box flex={2}>
+            <CustomerDetails customer={customerData}/>
+          </Box>
+
+
+      </Box>
     </Box>
   );
 };
