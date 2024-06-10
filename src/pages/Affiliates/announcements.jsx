@@ -22,6 +22,7 @@ import { HiOutlineTrash } from "react-icons/hi2";
 import CustomTable from "../../components/Firm/Orders/Table";
 import { Add } from "@mui/icons-material";
 import DeletePopup from "../../components/ui/DeletePopup";
+import CreateCampaignModal from "../../components/Affiliates/Programs/createCampaignModal";
 
 const statutes = [
   { value: "planned", label: "Planned", color: "yellow" },
@@ -112,6 +113,7 @@ const Announcements = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
   const [open, setOpen] = useState(false);
+  const [createAnnouncementModal, setCreateAnnouncementModal] = useState(false);
   const [rangeValue, setRangeValue] = useState([20, 37]);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [selectedOrderStatus, setSelectedOrderStatus] = useState([]);
@@ -285,6 +287,7 @@ const Announcements = () => {
           />
           <Button
             startIcon={<Add sx={{ fontSize: "14px" }} />}
+            onClick={() => { setCreateAnnouncementModal(true) }}
             sx={{
               background: (theme) => theme.palette.color.primary,
               color: (theme) => theme.palette.color.bg,
@@ -335,6 +338,7 @@ const Announcements = () => {
         title={"Delete Campaign"}
         description={`Are you sure you want to delete ${selected.length} campaign?`}
       />
+      <CreateCampaignModal open={createAnnouncementModal} handleClose={() => { setCreateAnnouncementModal(false) }} />
     </Container>
   );
 };

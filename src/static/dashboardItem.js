@@ -38,8 +38,8 @@ export const dashboardItems3 = [
     tooltip: "Amount of unresolved open tickets",
   },
   {
-    title: "Todays sales",
-    value: "145",
+    title: "Profit - Payout",
+    value: "$150,105.00",
     tooltip: "Amount of unresolved open tickets",
   },
 ];
