@@ -10,10 +10,10 @@ import { RiShoppingBag2Fill } from "react-icons/ri";
 import { TbRepeat } from "react-icons/tb";
 
 export const dashboardItems = [
-  { title: "Statistics", icon: HiMiniChartBar },
-  { title: "Orders", icon: RiShoppingBag2Fill },
-  { title: "Manage Payouts", icon: FaRegCreditCard },
-  { title: "Tickets", icon: BiSolidNavigation },
+  { title: "Statistics", icon: HiMiniChartBar, page: "/statistics/store-performance" },
+  { title: "Orders", icon: RiShoppingBag2Fill, page: "/firm/orders" },
+  { title: "Manage Payouts", icon: FaRegCreditCard, page: "/firm/payouts" },
+  { title: "Tickets", icon: BiSolidNavigation, page: "/customer-services/open-tickets" },
 ];
 
 export const dashboardItems2 = [
@@ -21,13 +21,15 @@ export const dashboardItems2 = [
     title: "New notification",
     icon: IoNotifications,
     tooltip: "Add new system notification to all or specific trader",
+    page: "/firm/content-management/all-articles",
   },
-  { title: "New Article", icon: HiPencilAlt, tooltip: "Post a new article" },
-  { title: "New Coupon", icon: FiGift, tooltip: "Create a new coupon code" },
+  { title: "New Article", icon: HiPencilAlt, tooltip: "Post a new article", page: "/firm/content-management/all-articles"},
+  { title: "New Coupon", icon: FiGift, tooltip: "Create a new coupon code", page: "/firm/discounts" },
   {
     title: "New Sale",
     icon: MdOutlinePercent,
     tooltip: "Launch or schedule a new sale",
+    page: "/firm/discounts",
   },
 ];
 

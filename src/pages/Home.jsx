@@ -15,9 +15,11 @@ import HelpIcon from "@mui/icons-material/Help";
 import TicketSection from "../components/Home/TicketSection";
 import ScheduleSection from "../components/Home/ScheduleSection";
 import FourthSection from "../components/Statistics/StorePerformance/FourthSection";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   return (
     <div>
       <HeroSection />
@@ -41,6 +43,7 @@ const Home = () => {
                   width: "100%",
                   cursor: "pointer",
                 }}
+                onClick={() => navigate(item.page)}
               >
                 <item.icon size={16} />
                 <Typography variant="subtitle1">{item.title}</Typography>

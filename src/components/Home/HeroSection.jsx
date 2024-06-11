@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Card, Typography } from "@mui/material";
 import { dashboardItems } from "../../static/dashboardItem";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -20,8 +22,9 @@ const HeroSection = () => {
           padding: "24px",
         }}
       >
-        {dashboardItems.map((item) => (
+        {dashboardItems.map((item, index) => (
           <Card
+            key={item.title}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -29,7 +32,9 @@ const HeroSection = () => {
               gap: "12px",
               height: "120px",
               width: "100%",
+              cursor: "pointer",
             }}
+            onClick={() => navigate(item.page)}
           >
             <item.icon size={20} />
             <Typography variant="h6">{item.title}</Typography>
