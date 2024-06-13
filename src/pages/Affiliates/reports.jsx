@@ -221,7 +221,7 @@ const Reports = () => {
 
             <Box sx={{ p: 3 }}>
                 <PayoutsChart />
-                {/* <GroupedBarChart />
+                <GroupedBarChart />
                 <Stack display={"flex"} direction={"row"} gap={5} mt={3}>
                     <Box flex={3}>
                     <ConversationRate />
@@ -229,7 +229,7 @@ const Reports = () => {
                     <Box flex={2}>
                     <Clicks />
                     </Box>
-                </Stack> */}
+                </Stack>
             </Box>
         </Box>
     );
