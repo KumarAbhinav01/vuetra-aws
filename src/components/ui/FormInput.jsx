@@ -12,9 +12,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import React from "react";
 import CustomSwitch from "./Switch";
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
+const StyledInput = styled(InputBase)(({ theme, spacing }) => ({
   "label + &": {
-    marginTop: theme.spacing(2),
+    marginTop: spacing || theme.spacing(2),
   },
   "& .MuiInputBase-input": {
     // borderRadius: 4,
@@ -89,6 +89,7 @@ const FormInput = ({
           ...sx,
         }}
         placeholder="Enter "
+        spacing={spacing}
         {...rest}
       />
       {helperTexts && (

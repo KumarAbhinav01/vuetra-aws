@@ -204,7 +204,6 @@ const Hedge = () => {
       if (selectedAccounts.length > 0) {
         const accountMatch = selectedAccounts.some((range) => {
           const { min, max } = parseRange(range);
-          console.log(min, max, row);
           return row[0].account >= min && row[0].account <= max;
         });
         if (!accountMatch) return false;

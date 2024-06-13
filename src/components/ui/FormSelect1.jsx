@@ -13,9 +13,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HelpIcon from "@mui/icons-material/Help";
 import CustomSwitch from "./Switch";
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
+const StyledInput = styled(InputBase)(({ theme, spacing }) => ({
   "label + &": {
-    marginTop: theme.spacing(2),
+    marginTop: spacing || theme.spacing(2),
   },
   "& .MuiInputBase-input": {
     // borderRadius: 4,
@@ -41,7 +41,7 @@ const FormSelect = ({
   label2,
   checkbox,
   labelStyle,
-  spacing = "12px",
+  spacing,
   flexDirection = "column",
   sx = {},
   ...rest
@@ -70,7 +70,7 @@ const FormSelect = ({
           <Stack
             direction="row"
             justifyContent={"space-between"}
-            sx={{ mb: spacing, width: "100%" }}
+            sx={{ mb: "12px", width: "100%" }}
           >
             <Stack
               direction="row"
@@ -115,7 +115,7 @@ const FormSelect = ({
               }}
             />
           )}
-          input={<StyledInput />}
+          input={<StyledInput spacing={spacing} />}
           {...rest}
         >
           {options.map((option) => (

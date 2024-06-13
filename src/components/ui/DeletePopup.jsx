@@ -67,7 +67,15 @@ const DeletePopup = ({ open, handleClose, title, description }) => {
           >
             {title}
           </Typography>
-          <Typography variant="body3">{description}</Typography>
+          <Typography
+            variant="body3"
+            sx={{
+              lineHeight: "2em",
+              textAlign: "center",
+            }}
+          >
+            {description}
+          </Typography>
         </Stack>
         <Stack
           direction="row"

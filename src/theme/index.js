@@ -20,6 +20,9 @@ export const theme = (mode) => {
     yellow: "#F5CF11",
     orange: "#E69122",
     purple: "#7E83FF",
+    cyan: "#19F3EE",
+    pink: "#F000FF",
+
     darkblue: "#2196f3",
     bgblue: getColor(mode, "#121929", "#EDF3FF"),
     inputborder: getColor(mode, "transparent", "#e4e4e4"),

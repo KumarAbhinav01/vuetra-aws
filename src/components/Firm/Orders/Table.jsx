@@ -63,8 +63,8 @@ function EnhancedTableHead(props) {
                 size={15}
                 onClick={createSortHandler(headCell.id)}
                 style={{
-                  cursor: 'pointer',
-                  color: orderBy === headCell.id ? 'blue' : 'inherit',
+                  cursor: "pointer",
+                  color: orderBy === headCell.id ? "blue" : "inherit",
                 }}
               />
             </Stack>
@@ -202,6 +202,23 @@ const CustomTable = ({
                 </TableRow>
               );
             })}
+            {rows.length === 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={headcells.length}
+                  align="left"
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    color: (theme) => theme.palette.color.primary,
+                  }}
+                >
+                  <Typography variant="caption_500">
+                    No data available
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

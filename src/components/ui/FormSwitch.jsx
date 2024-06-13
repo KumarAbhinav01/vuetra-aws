@@ -11,18 +11,21 @@ const FormSwitch = ({
   flex,
   labelsx,
   spacing = "12px",
+  flexDirection = "row",
+  fullWidth = true,
 
   ...rest
 }) => {
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth={fullWidth}>
       <Box
         sx={{
           ...(flex && {
             display: "flex",
-            flexDirection: "row",
+            // flexDirection: flexDirection,
             alignItems: "center",
             justifyContent: "space-between",
+            gap: 2,
           }),
         }}
       >

@@ -52,7 +52,11 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function FilterPopup({ rangeFilter, accordions }) {
+export default function FilterPopup({
+  rangeFilter,
+  accordions,
+  height = "26px",
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, onSearchChange] = useState("");
 
@@ -88,8 +92,8 @@ export default function FilterPopup({ rangeFilter, accordions }) {
             background: "transparent",
           },
           fontSize: "11.5px",
-          height: "26px",
-          px: "4px",
+          height: { height },
+          padding: "6px 11px",
         }}
       >
         All <BiChevronDown size={18} style={{ marginLeft: "4px" }} />
@@ -98,6 +102,11 @@ export default function FilterPopup({ rangeFilter, accordions }) {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
+        sx={{
+          "& .MuiMenu-paper": {
+            background: "transparent",
+          },
+        }}
       >
         <Stack
           sx={{

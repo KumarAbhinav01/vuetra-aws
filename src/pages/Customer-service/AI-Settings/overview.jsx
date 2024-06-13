@@ -155,6 +155,7 @@ const SettingsOverview = () => {
                 ...(accordion.includes(index) && {
                   border: (theme) => `1px solid ${theme.palette.color.purple}`,
                 }),
+                overflow: "hidden",
               }}
             >
               <Accordion

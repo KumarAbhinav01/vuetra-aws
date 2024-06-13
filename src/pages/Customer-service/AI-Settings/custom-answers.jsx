@@ -17,13 +17,28 @@ import DeletePopup from "../../../components/ui/DeletePopup";
 import Searchbar from "../../../components/ui/Searchbar";
 import CalendarPopup from "../../../components/ui/CalendarPopup";
 import DisplayColumns from "../../../components/ui/DisplayColumns";
+import AddNewAnswer from "../../../components/AI-Settings/Custom-answers/addNewAnswer";
 
-const statutes = [{ value: "draft", label: "Draft", color: "secondary" }];
+const statutes = [
+  { value: "live", label: "Live", color: "green" },
+  { value: "draft", label: "Draft", color: "secondary" },
+
+  { value: "paused", label: "Paused", color: "orange" },
+];
 
 const data = [
   {
     title: "Title 1",
     status: "draft",
+    language: "English",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "2 min ago",
+    created: "5 Jun 2024",
+  },
+  {
+    title: "Title 1",
+    status: "live",
     language: "English",
     sent: "0",
     resolved: "0",
@@ -40,8 +55,35 @@ const data = [
     created: "4 Jun 2024",
   },
   {
+    title: "Title 2",
+    status: "paused",
+    language: "Spanish",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "10 min ago",
+    created: "4 Jun 2024",
+  },
+  {
     title: "Title 3",
     status: "draft",
+    language: "French",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "5 min ago",
+    created: "3 Jun 2024",
+  },
+  {
+    title: "Title 4",
+    status: "paused",
+    language: "German",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "1 min ago",
+    created: "2 Jun 2024",
+  },
+  {
+    title: "Title 3",
+    status: "live",
     language: "French",
     sent: "0",
     resolved: "0",
@@ -66,6 +108,96 @@ const data = [
     labelEdited: "3 min ago",
     created: "1 Jun 2024",
   },
+  {
+    title: "Title 1",
+    status: "draft",
+    language: "English",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "2 min ago",
+    created: "15 Jun 2024",
+  },
+  {
+    title: "Title 5",
+    status: "live",
+    language: "Chinese",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "3 min ago",
+    created: "1 Jun 2024",
+  },
+  {
+    title: "Title 1",
+    status: "live",
+    language: "English",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "2 min ago",
+    created: "15 Jun 2024",
+  },
+  {
+    title: "Title 2",
+    status: "draft",
+    language: "Spanish",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "10 min ago",
+    created: "14 Jun 2024",
+  },
+  {
+    title: "Title 3",
+    status: "draft",
+    language: "French",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "5 min ago",
+    created: "13 Jun 2024",
+  },
+  {
+    title: "Title 4",
+    status: "paused",
+    language: "German",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "1 min ago",
+    created: "12 Jun 2024",
+  },
+  {
+    title: "Title 3",
+    status: "live",
+    language: "French",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "5 min ago",
+    created: "13 Jun 2024",
+  },
+  {
+    title: "Title 4",
+    status: "paused",
+    language: "German",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "1 min ago",
+    created: "12 Jun 2024",
+  },
+  {
+    title: "Title 5",
+    status: "draft",
+    language: "Chinese",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "3 min ago",
+    created: "11 Jun 2024",
+  },
+  {
+    title: "Title 5",
+    status: "paused",
+    language: "Chinese",
+    sent: "0",
+    resolved: "0",
+    labelEdited: "3 min ago",
+    created: "11 Jun 2024",
+  },
 ];
 
 function a11yProps(index) {
@@ -79,9 +211,11 @@ const CustomAnswers = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
   const [open, setOpen] = useState(false);
+  const [addNewPopup, setAddNewPopup] = useState(false);
 
   const [value, setValue] = React.useState(0);
   const [selected, setSelected] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const headcells = [
     {
@@ -181,6 +315,23 @@ const CustomAnswers = () => {
     setValue(newValue);
   };
   const filteredHeadcells = columns.filter((cell) => heads.includes(cell.id));
+
+  const filterData = () => {
+    return data.filter((row) => {
+      if (value && row.status !== statutes[value - 1].value) return false;
+      if (startDate && dayjs(row.created).isBefore(startDate)) return false;
+      if (endDate && dayjs(row.created).isAfter(endDate)) return false;
+
+      if (
+        searchValue &&
+        !row.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+        return false;
+
+      return true;
+    });
+  };
+
   return (
     <Container
       sx={{
@@ -195,8 +346,8 @@ const CustomAnswers = () => {
         >
           <Tab label="All" {...a11yProps(0)} />
           <Tab label="Live" {...a11yProps(1)} />
-          <Tab label="Draft" {...a11yProps(1)} />
-          <Tab label="Paused" {...a11yProps(1)} />
+          <Tab label="Draft" {...a11yProps(2)} />
+          <Tab label="Paused" {...a11yProps(3)} />
         </Tabs>
         <Stack
           direction="row"
@@ -209,7 +360,7 @@ const CustomAnswers = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <Searchbar />
+          <Searchbar value={searchValue} setValue={setSearchValue} />
           <CalendarPopup
             mainEndDate={endDate}
             mainStartDate={startDate}
@@ -235,15 +386,16 @@ const CustomAnswers = () => {
               fontSize: "11.5px",
               fontWeight: 400,
             }}
+            onClick={() => setAddNewPopup(true)}
           >
-            Create Answer
+            New Answer
           </Button>
         </Stack>
       </Stack>
 
       <CustomTable
         headcells={filteredHeadcells}
-        rows={data}
+        rows={filterData()}
         checkbox={false}
         selected={selected}
         setSelected={setSelected}
@@ -253,6 +405,10 @@ const CustomAnswers = () => {
         handleClose={handleClose}
         title={"Delete Answer"}
         description={`Are you sure you want to delete ${selected.length} answer?`}
+      />
+      <AddNewAnswer
+        open={addNewPopup}
+        handleClose={() => setAddNewPopup(false)}
       />
     </Container>
   );
