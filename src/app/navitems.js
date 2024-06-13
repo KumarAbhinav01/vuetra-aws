@@ -35,6 +35,7 @@ import Reports from "../pages/Affiliates/reports";
 import CustomAnswers from "../pages/Customer-service/AI-Settings/custom-answers";
 import DataSources from "../pages/Customer-service/AI-Settings/data-sources";
 import AISettings from "../pages/Customer-service/AI-Settings/settings";
+import AiAssistant from "../pages/AI-Assistant/aiAssistant";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
@@ -180,7 +181,7 @@ export const navItems = [
   },
   {
     path: "/statistics/ai-assistant",
-    element: <div></div>,
+    element: <AiAssistant />,
     isPrivate: true,
     layout: true,
   },
