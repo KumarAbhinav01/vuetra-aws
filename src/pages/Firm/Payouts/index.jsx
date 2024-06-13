@@ -173,6 +173,13 @@ const Payouts = () => {
   );
   const [status, setStatus] = useState("all");
   const dispatch = useDispatch();
+  const [orderBy, setOrderBy] = React.useState();
+  const [order, setOrder] = React.useState("asc");
+
+  const handleRequestSort = (o, property) => {
+    setOrder(o);
+    setOrderBy(property);
+  };
   return (
     <Paper
       sx={{
@@ -229,6 +236,9 @@ const Payouts = () => {
           )}
           rows={data.filter((d) => d.status === status || status === "all")}
           onRowClick={() => dispatch(toggleOpen())}
+          onRequestSort={handleRequestSort}
+          order={order}
+          orderBy={orderBy}
         />
       </Box>
       <ViewPayout />

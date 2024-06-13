@@ -1,37 +1,13 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Stack,
-  Typography,
-  alpha,
-  styled,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Stack, Typography, alpha, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
-import FormInput from "../../../../components/ui/FormInput";
 import FormSelect from "../../../../components/ui/FormSelect1";
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
 const SecondSection = () => {
-  const chatContainerRef = useRef(null);
   const bottomRef = useRef(null);
 
   const theme = useTheme();
 
   useEffect(() => {
-    // Scroll to the bottom when the component mounts
     bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
   return (

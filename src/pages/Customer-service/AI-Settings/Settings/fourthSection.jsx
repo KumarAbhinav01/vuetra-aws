@@ -1,30 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Stack,
-  Typography,
-  alpha,
-  styled,
-} from "@mui/material";
+import { Box, Button, Stack, Typography, alpha } from "@mui/material";
 import React from "react";
-import FormInput from "../../../../components/ui/FormInput";
-import FormSwitch from "../../../../components/ui/FormSwitch";
+
 import CustomCheckbox from "../../../../components/ui/CustomCheckbox";
 import { HiMiniExclamationCircle } from "react-icons/hi2";
 import FormSelect from "../../../../components/ui/FormSelect1";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
 
 const FourthSection = () => {
   const [selected, setSelected] = React.useState([]);

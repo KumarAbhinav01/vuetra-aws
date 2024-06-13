@@ -218,47 +218,47 @@ export const navItems = [
         to: "/customer-services/settings/overview",
         icon: IoSettings,
         children: [
-          // {
-          //   title: "Settings",
-          //   path: "/customer-services/settings/overview",
-          //   noHeader: true,
-          //   children: [
-          //     {
-          //       title: "Overview",
-          //       path: "/customer-services/settings/overview",
-          //       noHeader: true,
-          //     },
-          //     {
-          //       title: "Data sources",
-          //       path: "/customer-services/settings/data-sources",
-          //     },
-          //     {
-          //       title: "Custom answers",
-          //       path: "/customer-services/settings/custom-answers",
-          //     },
-          //     {
-          //       title: "Settings",
-          //       path: "/customer-services/settings/settings",
-          //     },
-          //   ],
-          // },
-          {
-            title: "Overview",
-            path: "/customer-services/settings/overview",
-            noHeader: true,
-          },
-          {
-            title: "Data sources",
-            path: "/customer-services/settings/data-sources",
-          },
-          {
-            title: "Custom answers",
-            path: "/customer-services/settings/custom-answers",
-          },
           {
             title: "Settings",
-            path: "/customer-services/settings/settings",
+            path: "/customer-services/settings/overview",
+            noHeader: true,
+            children: [
+              {
+                title: "Overview",
+                path: "/customer-services/settings/overview",
+                noHeader: true,
+              },
+              {
+                title: "Data sources",
+                path: "/customer-services/settings/data-sources",
+              },
+              {
+                title: "Custom answers",
+                path: "/customer-services/settings/custom-answers",
+              },
+              {
+                title: "Settings",
+                path: "/customer-services/settings/settings",
+              },
+            ],
           },
+          // {
+          //   title: "Overview",
+          //   path: "/customer-services/settings/overview",
+          //   noHeader: true,
+          // },
+          // {
+          //   title: "Data sources",
+          //   path: "/customer-services/settings/data-sources",
+          // },
+          // {
+          //   title: "Custom answers",
+          //   path: "/customer-services/settings/custom-answers",
+          // },
+          // {
+          //   title: "Settings",
+          //   path: "/customer-services/settings/settings",
+          // },
         ],
       },
     ],

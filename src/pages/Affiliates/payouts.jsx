@@ -1,26 +1,20 @@
 import {
   Box,
-  Button,
   Container,
   Divider,
   IconButton,
   Stack,
-  Tab,
-  Tabs,
   Typography,
   alpha,
 } from "@mui/material";
 import React, { useState } from "react";
 import Searchbar from "../../components/ui/Searchbar";
 import ExportSection from "../../components/ui/ExportSection";
-import CalendarPopup from "../../components/ui/CalendarPopup";
 import DisplayColumns from "../../components/ui/DisplayColumns";
 import FilterPopup from "../../components/ui/FilterPopup";
-import dayjs from "dayjs";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlineTrash } from "react-icons/hi2";
 import CustomTable from "../../components/Firm/Orders/Table";
-import { Add } from "@mui/icons-material";
 import DeletePopup from "../../components/ui/DeletePopup";
 import EditPayout from "./EditPayout";
 
@@ -253,6 +247,13 @@ const AffiliatePayouts = () => {
   const [heads, setHeads] = React.useState(
     headcells.filter((cell) => cell.default).map((cell) => cell.id)
   );
+  const [orderBy, setOrderBy] = React.useState();
+  const [order, setOrder] = React.useState("asc");
+
+  const handleRequestSort = (o, property) => {
+    setOrder(o);
+    setOrderBy(property);
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -339,6 +340,9 @@ const AffiliatePayouts = () => {
         checkbox={true}
         selected={selected}
         setSelected={setSelected}
+        onRequestSort={handleRequestSort}
+        order={order}
+        orderBy={orderBy}
       />
       <DeletePopup
         open={open}

@@ -11,6 +11,34 @@ import React from "react";
 import { RxCaretSort } from "react-icons/rx";
 import CustomCheckbox from "../../ui/CustomCheckbox";
 
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -92,7 +120,7 @@ const CustomTable = ({
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
-    onRequestSort(isAsc ? "desc" : "asc", property);
+    if (onRequestSort) onRequestSort(isAsc ? "desc" : "asc", property);
   };
 
   const handleSelectAllClick = () => {
@@ -126,18 +154,24 @@ const CustomTable = ({
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const visibleRows = React.useMemo(
-    () => rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, rowsPerPage, rows]
+    () =>
+      orderBy
+        ? stableSort(rows, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage
+          )
+        : rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [order, orderBy, page, rowsPerPage, rows]
   );
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
   return (
     <>
