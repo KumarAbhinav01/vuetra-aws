@@ -23,6 +23,7 @@ export const theme = (mode) => {
     cyan: "#19F3EE",
     pink: "#F000FF",
     active: "#5F55EE",
+    sidebar: getColor(mode, "#0E1015", "#F7F9FA"),
     gray: getColor(mode, "#13161A", "#1D232B"),
     darkblue: "#2196f3",
     bgblue: getColor(mode, "#121929", "#EDF3FF"),

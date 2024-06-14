@@ -7,6 +7,9 @@ import ToggleColumns from "../../components/ui/ToggleColumns";
 import { useNavigate } from "react-router-dom";
 import FormSelect from "../../components/ui/FormSelect";
 import { filterData } from "../../utils/filterByDate";
+import SearchBar from "../../components/Affiliates/searchBar";
+import ExportSection from "../../components/ui/ExportSection";
+import DisplayColumns from "../../components/ui/DisplayColumns";
 
 const headcells = [
   {
@@ -154,10 +157,8 @@ const data = [
 ];
 
 const Customers = () => {
-  const [selectedColumns, setSelectedColumns] = useState(
-    headcells.map((h) => h.id)
-  );
-  const [type, setType] = useState("active");
+  const [columns, setColumns] = useState(headcells);
+  const [selectedColumns, setSelectedColumns] = useState(columns.map((col) => col.id));
   const navigate = useNavigate();
 
   return (
@@ -179,16 +180,6 @@ const Customers = () => {
           <Typography variant="subtitle1">
             {data.length} affiliates match of {data.length}
           </Typography>
-          <Button
-            sx={{
-              color: (theme) => theme.palette.color.bg3,
-              fontWeight: "500",
-            }}
-            variant="contained"
-          >
-            <BiExport style={{ marginRight: "5px" }} size={20} /> Spread
-            invitation URL
-          </Button>
         </Box>
         <Stack
           direction="row"
@@ -202,47 +193,26 @@ const Customers = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <Search sx={{ fontSize: "16px" }} />
-          <Typography
-            sx={{
-              color: (theme) => theme.palette.color.secondary,
-              fontSize: "11.5px",
-              py: "3px",
-              px: "8px",
-              border: (theme) =>
-                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-            }}
-          >
-            <BiImport /> Import
-          </Typography>
-          <Typography
-            sx={{
-              color: (theme) => theme.palette.color.secondary,
-              fontSize: "11.5px",
-              py: "3px",
-              px: "8px",
-              border: (theme) =>
-                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-            }}
-          >
-            <BiExport /> Export
-          </Typography>
-          <FormSelect
-            options={[{ value: "active", label: "Active affiliates" }]}
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+          <SearchBar />
+          <ExportSection />
+          <ExportSection />
+          <DisplayColumns
+            columns={columns}
+            setColumns={setColumns}
+            selectedColumns={selectedColumns}
+            setSelectedColumns={setSelectedColumns}
+            title={"Active"}
           />
-          <ToggleColumns
-            columns={headcells}
+          <DisplayColumns
+            columns={columns}
+            setColumns={setColumns}
             selectedColumns={selectedColumns}
             setSelectedColumns={setSelectedColumns}
           />
         </Stack>
       </Stack>
       <CustomTable
-        headcells={headcells.filter((headcell) =>
-          selectedColumns.includes(headcell.id)
-        )}
+        headcells={columns.filter((col) => selectedColumns.includes(col.id))}
         rows={data}
         onRowClick={(row) => {
           navigate(`/firm/customers/${row.name}`);

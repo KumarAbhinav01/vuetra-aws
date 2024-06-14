@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentIcon from '@mui/icons-material/Description';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DownloadIcon from '@mui/icons-material/Download';
 
@@ -29,12 +29,11 @@ const BackgroundImage = styled('div')({
     opacity: 0.1,
 });
 
-
 const IconCircle = styled(Box)(({ theme }) => ({
     top: theme.spacing(2),
     width: theme.spacing(6),
     height: theme.spacing(6),
-    backgroundColor: theme.palette.mode === 'dark' ? '#000' : 'transparent',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1D232B' : 'transparent',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -45,21 +44,34 @@ const IconCircle = styled(Box)(({ theme }) => ({
 const ReportCard = () => (
     <BackgroundBox>
         <BackgroundImage />
-        <Box zIndex={1}>
-        <IconCircle>
-                <DocumentIcon style={{ color: '#8CADFF' }} />
-            </IconCircle>
-            <Typography variant="h4" mt={2}>May Report</Typography>
-            <Typography variant="body1" width={"250px"} mt={2}>
-                This pro-add-on is available for people on a Professional license.
-            </Typography>
-            <Button
-                variant="contained"
-                startIcon={<DownloadIcon />}
-                sx={{ mt: 2, backgroundColor: '#fff', color: '#1E1E1E', '&:hover': { backgroundColor: '#fff' }}}
-            >
-                Download Report
-            </Button>
+        <Box zIndex={1} display="flex" flexDirection="column" flexGrow={1}>
+            <Box>
+                <IconCircle>
+                    <DocumentIcon style={{ color: '#5E54ED' }} />
+                </IconCircle>
+                <Stack sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="h6" mt={2} mr={2}>{"<"}</Typography>
+                    <Typography variant="h4" mt={2}>May Report</Typography>
+                </Stack>
+            </Box>
+            <Box flexGrow={1} />
+            <Box display="flex">
+                <Button
+                    variant="contained"
+                    startIcon={<DownloadIcon />}
+                    sx={{
+                        mt: 2,
+                        backgroundColor: (theme) => theme.palette.color.active,
+                        color: (theme) => theme.palette.color.primary,
+                        '&:hover': {
+                            color: (theme) => theme.palette.color.primary,
+                            backgroundColor: (theme) => theme.palette.color.active,
+                        }
+                    }}
+                >
+                    Download Report
+                </Button>
+            </Box>
         </Box>
     </BackgroundBox>
 );

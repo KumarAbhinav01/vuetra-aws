@@ -12,8 +12,8 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { FiEdit } from "react-icons/fi";
 import FormSelect from "../../components/ui/FormSelect";
-import { BiExport } from "react-icons/bi";
-import { IoMdAdd } from "react-icons/io";
+import { BiExport, BiMinus } from "react-icons/bi";
+import { IoMdAdd, IoMdCheckmark } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -27,10 +27,12 @@ import Searchbar from "../../components/ui/Searchbar";
 import ExportSection from "../../components/ui/ExportSection";
 import DisplayColumns from "../../components/ui/DisplayColumns";
 import FilterPopup from "../../components/ui/FilterPopup";
+import SearchBar from "../../components/Affiliates/searchBar";
+import CreateAnnouncementModal from "../../components/Affiliates/Programs/createAnnouncementModal";
 
 const statutes = [
   { value: "active", label: "Active", color: "green" },
-  { value: "deactive", label: "Deactive", color: "red" },
+  { value: "inactive", label: "inactive", color: "red" },
 ];
 
 const defaults = [
@@ -61,7 +63,7 @@ const data = [
     perSale: "30%/10%",
     description: "Beta testing phase",
     name: "Jane Smith",
-    status: "deactive",
+    status: "inactive",
     default: "no",
     createDate: "11:05 5 Apr, 2024",
     action: "",
@@ -87,7 +89,7 @@ const data = [
     perSale: "30%/10%",
     description: "Marketing campaign",
     name: "Bob Brown",
-    status: "deactive",
+    status: "inactive",
     default: "no",
     createDate: "11:05 5 Apr, 2024",
     action: "",
@@ -113,7 +115,7 @@ const data = [
     perSale: "30%/10%",
     description: "Implementation phase",
     name: "Diana Evans",
-    status: "deactive",
+    status: "inactive",
     default: "no",
     createDate: "11:05 5 Apr, 2024",
     action: "",
@@ -139,7 +141,7 @@ const data = [
     perSale: "30%/10%",
     description: "User training",
     name: "Fiona Garcia",
-    status: "deactive",
+    status: "inactive",
     default: "no",
     createDate: "11:05 5 Apr, 2024",
     action: "",
@@ -165,7 +167,7 @@ const data = [
     perSale: "30%/10%",
     description: "Final review",
     name: "Helen King",
-    status: "deactive",
+    status: "inactive",
     default: "no",
     createDate: "11:05 5 Apr, 2024",
     action: "",
@@ -206,13 +208,10 @@ const Programs = () => {
       default: true,
       getCell: (row) => {
         return (
-          <Stack direction={"row"} alignItems={"center"} gap={2}>
-            <MdOutlineRemoveRedEye size={14}/>
-            <Box>
+          <Box>
               <Typography>per Click : {row.perClick}</Typography>
               <Typography>per Sale : {row.perSale}</Typography>
-            </Box>
-          </Stack>
+          </Box>
         );
       },
     },
@@ -232,18 +231,9 @@ const Programs = () => {
               borderRadius: "7px",
               width: "91px",
 
-              background: (theme) =>
-                alpha(theme.palette.color[status.color], 0.15),
+              background: (theme) => theme.palette.color.border,
             }}
           >
-            <Box
-              sx={{
-                width: "9px",
-                height: "9px",
-                borderRadius: "50%",
-                background: (theme) => theme.palette.color[status.color],
-              }}
-            ></Box>
             <Typography
               sx={{
                 color: (theme) => theme.palette.color[status.color],
@@ -267,88 +257,69 @@ const Programs = () => {
       label: "Default",
       default: true,
       getCell: (row) => {
-        const status = defaults.find((defaults) => defaults.value === row.default);
+        const status = row.default === "yes" ? "yes" : "no";
+        const icon = status === "yes" ? <IoMdCheckmark size={14} /> : <BiMinus size={14} />;
+  
         return (
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            justifyContent={"center"}
-            sx={{
-              borderRadius: "7px",
-              width: "91px",
-
-              background: (theme) =>
-                alpha(theme.palette.color[status.color], 0.15),
-            }}
-          >
-            <Box
-              sx={{
-                width: "9px",
-                height: "9px",
-                borderRadius: "50%",
-                background: (theme) => theme.palette.color[status.color],
-              }}
-            ></Box>
-            <Typography
-              sx={{
-                color: (theme) => theme.palette.color[status.color],
-                lineHeight: "2.2em",
-              }}
-            >
-              {status.label}
+          <Typography>
+              {icon}
             </Typography>
-          </Stack>
         );
       },
     },
-    {
-      id: "action",
-      label: "Action",
-      default: true,
-      getCell: (row, index) => (
-        <Stack
-          direction="row"
-          spacing={1.5}
-          sx={{
-            color: (theme) => theme.palette.color.secondary,
-          }}
-        >
-          <FiEdit size={14} onClick={() => { navigate("/affiliate-center/programs/edit-campaign") }} />
-          <Divider
-            orientation="vertical"
-            sx={{
-              height: "18px",
-            }}
-          />
-          <IoCopyOutline
-            size={14}
-          />
-          <Divider
-            orientation="vertical"
-            sx={{
-              height: "18px",
-            }}
-          />
-          <IoLockClosedOutline
-            size={14}
-          />
-          <Divider
-            orientation="vertical"
-            sx={{
-              height: "18px",
-            }}
-          />
-          <HiOutlineTrash
-            onClick={() => {
-              setSelected([index]);
-              setDeletePopupOpen(true);
-            }}
-            size={14}
-          />
-        </Stack>
-      ),
-    },
+    // {
+    //   id: "add",
+    //   label: "+",
+    //   default: true,
+    //   getCell: (row) => row.createDate,
+    // },
+    // {
+    //   id: "action",
+    //   label: "Action",
+    //   default: true,
+    //   getCell: (row, index) => (
+    //     <Stack
+    //       direction="row"
+    //       spacing={1.5}
+    //       sx={{
+    //         color: (theme) => theme.palette.color.secondary,
+    //       }}
+    //     >
+    //       <FiEdit size={14} onClick={() => { navigate("/affiliate-center/programs/edit-campaign") }} />
+    //       <Divider
+    //         orientation="vertical"
+    //         sx={{
+    //           height: "18px",
+    //         }}
+    //       />
+    //       <IoCopyOutline
+    //         size={14}
+    //       />
+    //       <Divider
+    //         orientation="vertical"
+    //         sx={{
+    //           height: "18px",
+    //         }}
+    //       />
+    //       <IoLockClosedOutline
+    //         size={14}
+    //       />
+    //       <Divider
+    //         orientation="vertical"
+    //         sx={{
+    //           height: "18px",
+    //         }}
+    //       />
+    //       <HiOutlineTrash
+    //         onClick={() => {
+    //           setSelected([index]);
+    //           setDeletePopupOpen(true);
+    //         }}
+    //         size={14}
+    //       />
+    //     </Stack>
+    //   ),
+    // },
   ];
 
   const [columns, setColumns] = useState(headcells);
@@ -361,6 +332,8 @@ const Programs = () => {
   return (
     <Container
       sx={{
+        height: "100%",
+        backgroundColor: (theme) => theme.palette.color.bg,
         p: "24px",
       }}
     >
@@ -369,11 +342,11 @@ const Programs = () => {
           sx={{
             display: "flex",
             gap: "14px",
-            alignItems: "center",
+            alignItems: "start",
           }}
         >
-          <Typography variant="h2" sx={{ marginLeft: "10px" }}>
-            Your Campaigns
+          <Typography variant="h4" sx={{ marginLeft: "10px" }}>
+            Your Programs
           </Typography>
         </Box>
         <Stack
@@ -382,21 +355,29 @@ const Programs = () => {
           alignItems="center"
           justifyContent="flex-end"
           sx={{
-            mb: "24px",
+            mb: "5px",
             fontSize: "11.5px",
             pr: "24px",
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <Searchbar />
+          <SearchBar />
+          <ExportSection />
           <ExportSection />
           <DisplayColumns
             columns={columns}
             setColumns={setColumns}
             selectedColumns={heads}
             setSelectedColumns={setHeads}
+            title={"Active"}
           />
-          <FilterPopup
+          <DisplayColumns
+            columns={columns}
+            setColumns={setColumns}
+            selectedColumns={heads}
+            setSelectedColumns={setHeads}
+          />
+          {/* <FilterPopup
             rangeFilter={{
               label: "Countries",
               ariaLabel: "Countries",
@@ -419,18 +400,23 @@ const Programs = () => {
                 onChange: setSelectedPaidCommission,
               },
             ]}
-          />
+          /> */}
           <Button
             sx={{
-              padding: "2px 7px",
-              color: (theme) => theme.palette.color.bg3,
+              padding: "4px 10px",
+              color: (theme) => theme.palette.color.primary,
+              bgcolor: (theme) => theme.palette.color.active,
               fontWeight: "500",
+              ':hover': {
+                color: (theme) => theme.palette.color.primary,
+                bgcolor: (theme) => theme.palette.color.active,
+              }
             }}
             variant="contained"
             onClick={() => { setOpen(true) }}
           >
             <IoMdAdd style={{ marginRight: "5px" }} size={17} />
-            Add Campaign
+            Add Program
           </Button>
         </Stack>
       </Stack>
@@ -476,6 +462,7 @@ const Programs = () => {
         description={`Are you sure you want to delete ${selected.length} campaign?`}
       />
       <CreateCampaignModal open={open} handleClose={() => { setOpen(false) }} />
+      {/* <CreateAnnouncementModal open={open} handleClose={() => { setOpen(false) }} /> */}
     </Container>
   );
 };

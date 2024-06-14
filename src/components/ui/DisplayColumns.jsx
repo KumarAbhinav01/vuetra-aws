@@ -105,6 +105,7 @@ export default function DisplayColumns({
   setColumns,
   selectedColumns,
   setSelectedColumns,
+  title,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [value, setValue] = useState("");
@@ -126,20 +127,23 @@ export default function DisplayColumns({
         variant="outlined"
         onClick={(e) => setAnchorEl(e.currentTarget)}
         sx={{
-          background: "transparent",
           color: (theme) => theme.palette.color.secondary,
+          fontSize: "11.5px",
+          py: "7px",
+          px: "13px",
+          bgcolor: (theme) => theme.palette.color.bg2,
           border: (theme) =>
             `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+          borderRadius: "12px",
           ":hover": {
             border: (theme) =>
               `1px solid ${alpha(theme.palette.color.secondary, 0.45)}`,
-            background: "transparent",
+            backgroundColor: (theme) => theme.palette.color.bg2,
           },
-          fontSize: "11.5px",
           height: "26px",
         }}
       >
-        Display <BiChevronDown />
+        {title ? title : "Toggle Columns"} <BiChevronDown />
       </Button>
       <Menu
         anchorEl={anchorEl}
