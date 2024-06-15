@@ -3,14 +3,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import HelpIcon from "@mui/icons-material/Help";
 import React from "react";
 
-const InfoBox = ({ item, index, indices }) => {
-  const getBorder = (index) => {
-    if (indices) {
-      return indices.includes(index);
-    } else {
-      return index % 2 === 0;
-    }
-  };
+const InfoBox = ({ item }) => {
   return (
     <Box
       sx={{
@@ -20,10 +13,8 @@ const InfoBox = ({ item, index, indices }) => {
         p: "24px",
         width: "100%",
         height: "140px",
-        borderBottom: (theme) => `1px solid ${theme.palette.color.border}`,
-        ...(getBorder(index) && {
-          borderRight: (theme) => `1px solid ${theme.palette.color.border}`,
-        }),
+        background: (theme) => theme.palette.color.bg2,
+        borderRadius: "18px",
       }}
     >
       <Box
@@ -59,7 +50,7 @@ const InfoBox = ({ item, index, indices }) => {
             }}
           >
             <FiArrowUpRight size={16} />
-            <Typography variant="caption">+3.7%</Typography>
+            <Typography variant="caption">{item.percent || "+3.7%"}</Typography>
           </Stack>
         )}
       </Box>

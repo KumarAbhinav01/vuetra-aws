@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 import themeTypography from "./typography";
 import componentStyleOverrides from "./compStyleOverride";
+import { light } from "@mui/material/styles/createPalette";
 
 const getColor = (mode, darkColor, lightColor) => {
   return mode === "dark" ? darkColor : lightColor;
@@ -11,7 +12,7 @@ export const theme = (mode) => {
   const color = {
     primary: getColor(mode, "#FFFFFF", "#2E3E61"),
     secondary: "#8A96A6",
-    tertiary: getColor(mode, "#FFFFFF", "#0E1011"),
+    tertiary: getColor(mode, "#D7E4F5", "#0E1011"),
     blue: "#8DADFF",
     blue1: "#8CADFF",
     red: "#F55F82",
@@ -20,9 +21,11 @@ export const theme = (mode) => {
     yellow: "#F5CF11",
     orange: "#E69122",
     purple: "#7E83FF",
-    cyan: "#19F3EE",
+    cyan: "#38C7B6",
     pink: "#F000FF",
     active: "#5F55EE",
+    darkgray: "#13161A",
+    lightgray: "#1D232B",
     gray: getColor(mode, "#13161A", "#1D232B"),
     darkblue: "#2196f3",
     bgblue: getColor(mode, "#121929", "#EDF3FF"),
@@ -44,7 +47,7 @@ export const theme = (mode) => {
     mode: mode,
     colors: color,
     paper: color.bg3,
-    divider: color.border,
+    divider: "#1D232B",
     success: color.green,
   };
 

@@ -20,20 +20,8 @@ const Notification = ({ item, selected, index, divider }) => {
           gap: 2,
         }}
       >
-        <IconButton
-          sx={{
-            p: 0.9,
-            borderRadius: "50%",
-            height: "fit-content",
-            backgroundColor: (theme) =>
-              alpha(theme.palette.color.buttonbg, 0.17),
-            color: (theme) => theme.palette.color.buttonbg,
-          }}
-        >
-          <item.icon size={16} />
-        </IconButton>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Box
               sx={{
                 p: 0.5,
@@ -42,7 +30,7 @@ const Notification = ({ item, selected, index, divider }) => {
                 alignSelf: "start",
                 mt: 1,
                 borderRadius: "50%",
-                backgroundColor: (theme) => theme.palette.color.yellow,
+                backgroundColor: (theme) => theme.palette.color.active,
               }}
             />
             <Typography
@@ -64,6 +52,15 @@ const Notification = ({ item, selected, index, divider }) => {
               {item.message1}
               {"  "}
               <span>{item.account}</span> {item.message2}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "13px",
+                color: (theme) => theme.palette.color.active,
+                fontWeight: 500,
+              }}
+            >
+              {item.tag}
             </Typography>
           </Box>
           <Typography

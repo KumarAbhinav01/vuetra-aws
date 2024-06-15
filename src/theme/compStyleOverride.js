@@ -113,7 +113,19 @@ export default function componentStyleOverrides(theme) {
         },
 
         indicator: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.active,
+        },
+      },
+    },
+
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          "& .MuiPaper-root": {
+            background: theme.colors.bg2,
+            border: "1px solid rgba(49, 50, 54, 0.25)",
+            borderRadius: "18px",
+          },
         },
       },
     },
@@ -158,8 +170,10 @@ export default function componentStyleOverrides(theme) {
           padding: "24px",
           borderRadius: "20px",
           boxShadow: "none",
-          border: `1px solid ${theme.colors?.border}`,
+          border: `1px solid ${theme.colors?.lightgray}`,
+
           background: theme.colors?.bg3,
+          transition: "all 0.5s ease-in-out",
         },
       },
     },
@@ -167,7 +181,6 @@ export default function componentStyleOverrides(theme) {
     MuiDivider: {
       styleOverrides: {
         root: {
-          borderColor: theme.colors.border,
           opacity: 1,
         },
       },

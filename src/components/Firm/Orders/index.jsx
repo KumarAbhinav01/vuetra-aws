@@ -12,7 +12,7 @@ import React from "react";
 
 const Orders = () => {
   return (
-    <Paper sx={{ padding: "24px" }}>
+    <Paper sx={{ padding: "24px", background: "transparent" }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Card

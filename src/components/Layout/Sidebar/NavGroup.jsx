@@ -17,10 +17,6 @@ export default function NavGroup({ navItem }) {
       sx={{ background: "transparent" }}
     >
       <AccordionSummary
-        sx={{
-          ":hover": { opacity: 0.35 },
-          transition: "opacity 0.5s",
-        }}
         expandIcon={
           <ExpandMoreIcon
             sx={{
@@ -47,18 +43,29 @@ export default function NavGroup({ navItem }) {
                   alignItems: "center",
                   position: "relative",
                   p: 0.8,
-                  paddingLeft: 4,
-                  ...(isPathMatching(subChild.path) && {
+                  paddingLeft: "16px",
+                  borderLeft: `2px solid transparent`,
+                  ...(subChild.path === pathname && {
                     borderLeft: (theme) =>
-                      `2px solid ${theme.palette.color.primary}`,
+                      `2px solid ${theme.palette.color.active}`,
+                    background: (theme) => theme.palette.color.lightgray,
                   }),
-                  ":hover": { opacity: 0.35 },
+                  ":hover": {
+                    borderLeft: (theme) =>
+                      `2px solid ${theme.palette.color.active}`,
+                    background: (theme) => theme.palette.color.lightgray,
+                    ".border-box": {
+                      opacity: 0,
+                    },
+                  },
                   transition: "opacity 0.5s",
                   cursor: "pointer",
+                  borderRadius: "0px 8px 8px 0px",
                 }}
               >
                 {!isPathMatching(subChild.path) && (
                   <Box
+                    className="border-box"
                     sx={{
                       position: "absolute",
                       width: 10,
@@ -71,7 +78,8 @@ export default function NavGroup({ navItem }) {
                       borderTop: 0,
                       borderRight: 0,
                       top: "0",
-                      left: "12px",
+                      left: "0px",
+                      ":hover": { opacity: 0 },
                     }}
                   ></Box>
                 )}
@@ -94,7 +102,16 @@ export default function NavGroup({ navItem }) {
                   style={{ textDecoration: "none" }}
                   href={subChild.to ?? subChild.path}
                 >
-                  <Typography variant="caption">{subChild.title}</Typography>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      ...(isPathMatching(subChild.path) && {
+                        color: (theme) => theme.palette.color.primary,
+                      }),
+                    }}
+                  >
+                    {subChild.title}
+                  </Typography>
                 </a>
               </Box>
             ))}

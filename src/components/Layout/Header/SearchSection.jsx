@@ -1,20 +1,17 @@
-import { Close } from "@mui/icons-material";
 import {
   Box,
   Divider,
-  IconButton,
-  InputAdornment,
   InputBase,
   Modal,
   Paper,
   Stack,
+  Tab,
+  Tabs,
   Typography,
   styled,
 } from "@mui/material";
 import React from "react";
-import { BiCommand } from "react-icons/bi";
-import { FiSearch } from "react-icons/fi";
-import { searchItems } from "../../../static/header";
+import Search from "@mui/icons-material/Search";
 
 const style = {
   position: "absolute",
@@ -23,158 +20,147 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "512px",
   border: (theme) => `1px solid ${theme.palette.color.border}`,
+  background: (theme) => theme.palette.color.bg,
   borderRadius: "5px",
+  p: "14px 24px",
+  maxHeight: "386px",
+  overflowY: "auto",
 };
 
 const StyledInput = styled(InputBase)({
   border: 0,
   outline: "none",
   backgroundColor: "transparent",
-  // color: "inherit",
-  fontSize: "11.5px",
+  fontSize: "16px",
   fontWeight: 500,
 
   "&::placeholder": {
     color: "inherit",
-    fontSize: "11px",
+    fontSize: "16px",
     fontWeight: 500,
   },
   "& input": {
-    fontSize: "13px",
+    fontSize: "16px",
     fontWeight: 500,
     color: "inherit",
   },
 });
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const items = [
+  {
+    title: "Create announcement",
+    shortcut: "Use + to quickly create an announcement",
+  },
+  {
+    title: "Create coupon",
+    shortcut: "Use $ to quickly create a coupon",
+  },
+  {
+    title: "Find Client",
+    shortcut: "Use /client to search or @ to direct search",
+  },
+  {
+    title: "Find Trading account",
+    shortcut: "Use /account to search or # to direct search",
+  },
+  {
+    title: "Find Ticket",
+    shortcut: "Use /ticket to search or & to direct search",
+  },
+];
+
 export default function SearchSection() {
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <div>
-      <Box
+      <Search
         sx={{
-          display: "flex",
-          gap: 2,
-          border: (theme) => `1px solid ${theme.palette.color.border}`,
-          borderRadius: "5px",
-          background: "transparent",
-          py: 0.7,
-          px: 2,
-          alignItems: "center",
-          cursor: "pointer",
+          fontSize: "22px",
         }}
         onClick={handleOpen}
-      >
-        {/* <StyledInput placeholder="Type a command or search ..." /> */}
-        <Typography variant="subtitle2_500">
-          Type a command or search ...
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#8A96A626",
-            borderRadius: "5px",
-            fontSize: "11px",
-            px: 1,
-            py: 0.5,
-            height: "fit-content",
-            color: (theme) => theme.palette.color.secondary,
-          }}
-        >
-          <BiCommand size={12} />
-          <Typography sx={{ fontSize: "11px", ml: "3px", color: "inherit" }}>
-            K
-          </Typography>
-        </Box>
-      </Box>
-      {/* <StyledInput
-        onClick={handleOpen}
-        placeholder="Type a command or search ..."
-      /> */}
+      />
+
       <Modal open={open} onClose={handleClose}>
         <Paper sx={style}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            spacing={1}
+          <Box
             sx={{
-              p: "12px",
               fontSize: "10px",
             }}
           >
             <StyledInput
-              placeholder="Type a command or search ..."
+              placeholder="/Search and run a command"
               sx={{
                 color: (theme) => theme.palette.color.secondary,
               }}
-              startAdornment={
-                <InputAdornment
-                  position="start"
-                  sx={{ color: (theme) => theme.palette.color.secondary }}
-                >
-                  <FiSearch size={20} />
-                </InputAdornment>
-              }
             />
-            <IconButton onClick={handleClose}>
-              <Close
-                sx={{
-                  color: (theme) => theme.palette.color.secondary,
-                  fontSize: "18px",
-                }}
-              />
-            </IconButton>
-          </Stack>
-          <Divider />
-          <Stack
-            sx={{ p: "12px", height: "300px", overflowY: "auto" }}
-            spacing={2}
+          </Box>
+          <Box
+            sx={{
+              py: "12px",
+            }}
           >
-            {searchItems.map((item, index) => (
-              <Stack spacing={2}>
-                <Typography variant="body3">{item.title}</Typography>
-                {item.items.map((childItem) => (
-                  <Stack direction="row" justifyContent="space-between">
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems="center"
-                      sx={{ color: (theme) => theme.palette.color.secondary }}
-                    >
-                      {childItem.icon}
-                      <Typography variant="subtitle1_500">
-                        {childItem.title}
-                      </Typography>
-                    </Stack>
-                    {childItem.shortcut && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "#8A96A626",
-                          borderRadius: "5px",
-                          fontSize: "11px",
-                          px: 1,
-                          py: 0.5,
-                          height: "fit-content",
-                          color: (theme) => theme.palette.color.secondary,
-                        }}
-                      >
-                        <BiCommand size={12} />
-                        <Typography
-                          sx={{ fontSize: "11px", ml: "3px", color: "inherit" }}
-                        >
-                          {childItem.shortcut}
-                        </Typography>
-                      </Box>
-                    )}
-                  </Stack>
-                ))}
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              sx={{
+                "& .MuiTabs-indicator": {
+                  height: "1px",
+                  width: "fit-content",
+                },
+              }}
+            >
+              <Tab
+                sx={{ padding: "0px 12px" }}
+                label="All"
+                iconPosition="start"
+                {...a11yProps(0)}
+              />
+              <Tab label="Tickets" iconPosition="start" {...a11yProps(1)} />
+              <Tab label="Payouts" iconPosition="start" {...a11yProps(2)} />
+              <Tab
+                label="Flagged Profiles"
+                iconPosition="start"
+                {...a11yProps(3)}
+              />
+            </Tabs>
+          </Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ py: "8px" }}
+          >
+            <Typography variant="caption_500">Action</Typography>
+            <Typography variant="caption_500">Shortcut</Typography>
+          </Stack>
+          <Divider sx={{ my: 2 }} />
+          <Stack spacing={4} sx={{ mb: 2 }}>
+            {items.map((item, index) => (
+              <Stack spacing={1.5}>
+                <Typography
+                  variant="subtitle1_500"
+                  sx={{
+                    color: (theme) => theme.palette.color.tertiary,
+                  }}
+                >
+                  {item.title}
+                </Typography>
+                <Typography variant="caption_500">{item.shortcut}</Typography>
               </Stack>
             ))}
           </Stack>

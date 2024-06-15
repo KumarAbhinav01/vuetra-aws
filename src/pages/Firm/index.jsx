@@ -11,8 +11,8 @@ import AddProduct from "../../components/Firm/Products/AddProduct";
 const Firm = () => {
   const dispatch = useDispatch();
   return (
-    <Paper sx={{ padding: "24px" }}>
-      <Stack direction="row" spacing={3}>
+    <Paper sx={{ padding: "24px", background: "transparent", width: "100%" }}>
+      <Stack direction="row" spacing={3} sx={{ width: "100%" }}>
         {firmItems.map((item) => (
           <Card
             sx={{

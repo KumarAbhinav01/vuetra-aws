@@ -1,27 +1,14 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Tooltip,
-  Typography,
-  alpha,
-} from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
-import NavGroup from "./NavGroup";
-import { BiLogoDeviantart, BiPlus } from "react-icons/bi";
+import { BiLogoDeviantart } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Chat from "./Chat";
 import ProfileSection from "./ProfileSection";
 import { navItems, navItems2 } from "../../../static/navItems";
-import { ChevronLeft, Search } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
-import { toggleOpen } from "../../../slices/openModalSlice";
 import { getChildNavItem } from "../../../utils/getNavData";
 
 export default function SideBar() {
-  const dispatch = useDispatch();
   const pathname = window.location.pathname;
   const isPathMatching = (path) => {
     if (path === "/") return pathname === path;
@@ -51,6 +38,7 @@ export default function SideBar() {
         p: "0",
         position: "relative",
         width: "min-content",
+        // borderRight: (theme) => `2px solid ${theme.palette.color.border}`,
       }}
     >
       <Box
@@ -66,9 +54,8 @@ export default function SideBar() {
           height: "auto",
           overflow: "visible",
           width: "min-content",
-          border: (theme) => theme.palette.color.border,
           color: (theme) => theme.palette.color.secondary,
-          backgroundColor: (theme) => theme.palette.color.bg,
+          backgroundColor: (theme) => theme.palette.color.bg2,
           pb: 1,
         }}
       >
@@ -90,7 +77,7 @@ export default function SideBar() {
               alignItems: "center",
 
               gap: "1",
-              backgroundColor: (theme) => theme.palette.color.bg,
+              backgroundColor: (theme) => theme.palette.color.bg2,
             }}
           >
             {navItems.map((item) => {
@@ -111,7 +98,7 @@ export default function SideBar() {
                         ...(isActive && {
                           backgroundColor: (theme) => theme.palette.color.bg2,
                           borderLeft: (theme) =>
-                            `2px solid ${theme.palette.color.primary}`,
+                            `2px solid ${theme.palette.color.active}`,
                           color: (theme) => theme.palette.color.primary,
                         }),
                       }}
@@ -180,7 +167,7 @@ export default function SideBar() {
           <ProfileSection />
         </Box>
       </Box>
-      {navItem?.children && !childItem?.noSidebar && (
+      {/* {navItem?.children && !childItem?.noSidebar && (
         <Box
           sx={{
             display: "flex",
@@ -191,7 +178,7 @@ export default function SideBar() {
             gap: "2",
             py: 2,
             color: (theme) => theme.palette.darktext2,
-            backgroundColor: (theme) => theme.palette.color.bg2,
+            backgroundColor: (theme) => theme.palette.color,
             border: (theme) => `1px solid ${theme.palette.color.border}`,
             width: "268px",
           }}
@@ -360,7 +347,7 @@ export default function SideBar() {
             )}
           </Stack>
         </Box>
-      )}
+      )} */}
     </Box>
   );
 }

@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import Header from "./Header";
 import SideBar from "./Sidebar";
 import { Outlet } from "react-router-dom";
+import SideBar1 from "./Sidebar/Sidebar2";
 
 export default function Layout() {
   return (
@@ -16,7 +17,7 @@ export default function Layout() {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        backgroundColor: (theme) => theme.palette.color.bg3,
+        backgroundColor: (theme) => theme.palette.color.bg,
       }}
     >
       <SideBar />
@@ -37,7 +38,10 @@ export default function Layout() {
             overflowY: "auto",
           }}
         >
-          <Outlet />
+          <Box sx={{ display: "flex" }}>
+            <SideBar1 />
+            <Outlet />
+          </Box>
         </Box>
       </Box>
     </Box>

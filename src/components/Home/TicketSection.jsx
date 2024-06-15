@@ -4,10 +4,15 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { Divider } from "@mui/material";
+import { Divider, useTheme } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { ticketItems } from "../../static/dashboardItem";
 import Notification from "./Notification";
+import MenuIcon from "../Icons/MenuIcon";
+import TicketIcon from "../Icons/TicketsIcon";
+import AffiliateIcon from "../Icons/AffiliateIcon";
+import FlagIcon from "../Icons/FlagIcon";
+import PayoutIcon from "../Icons/PayoutsIcon";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,14 +48,18 @@ const TicketSection = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const theme = useTheme();
   return (
     <Stack direction="row" spacing={3} sx={{ my: 3 }}>
       <Box
         sx={{
           width: "100%",
+          position: "relative",
           border: (theme) => `1px solid ${theme.palette.color.border}`,
           borderRadius: "12px",
           overflow: "hidden",
+          background: (theme) => theme.palette.color.bg2,
         }}
       >
         <Box
@@ -58,7 +67,6 @@ const TicketSection = () => {
             paddingTop: "14px",
             px: "14px",
             width: "100%",
-            background: (theme) => theme.palette.color.bg2,
             borderBottom: (theme) => `1px solid ${theme.palette.color.border}`,
           }}
         >
@@ -67,11 +75,74 @@ const TicketSection = () => {
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
+              variant="scrollable"
+              sx={{
+                ".css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root.Mui-disabled":
+                  {
+                    display: "none",
+                  },
+              }}
             >
-              <Tab label="All" {...a11yProps(0)} />
-              <Tab label="Tickets" {...a11yProps(1)} />
-              <Tab label="Payouts" {...a11yProps(2)} />
-              <Tab label="Flagged Profiles" {...a11yProps(3)} />
+              <Tab
+                label="All"
+                icon={
+                  <MenuIcon
+                    color={
+                      theme.palette.color[value === 0 ? "primary" : "secondary"]
+                    }
+                  />
+                }
+                iconPosition="start"
+                {...a11yProps(0)}
+              />
+              <Tab
+                label="Tickets"
+                icon={
+                  <TicketIcon
+                    color={
+                      theme.palette.color[value === 1 ? "primary" : "secondary"]
+                    }
+                  />
+                }
+                iconPosition="start"
+                {...a11yProps(1)}
+              />
+              <Tab
+                label="Payouts"
+                icon={
+                  <PayoutIcon
+                    color={
+                      theme.palette.color[value === 2 ? "primary" : "secondary"]
+                    }
+                  />
+                }
+                iconPosition="start"
+                {...a11yProps(2)}
+              />
+              <Tab
+                label="Affiliate"
+                icon={
+                  <AffiliateIcon
+                    color={
+                      theme.palette.color[value === 3 ? "primary" : "secondary"]
+                    }
+                  />
+                }
+                iconPosition="start"
+                {...a11yProps(3)}
+              />
+              <Tab
+                label="Flagged Profiles"
+                icon={
+                  <FlagIcon
+                    color={
+                      theme.palette.color[value === 4 ? "primary" : "secondary"]
+                    }
+                  />
+                }
+                iconPosition="start"
+                {...a11yProps(3)}
+              />
             </Tabs>
           </Box>
         </Box>
@@ -96,6 +167,17 @@ const TicketSection = () => {
             </CustomTabPanel>
           ))}
         </Stack>
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "0",
+            right: "0",
+            width: "100%",
+            height: "74px",
+            background: (theme) =>
+              `linear-gradient(180deg, rgba(11, 13, 15, 0) 0%, ${theme.palette.color.bg2} 100%)`,
+          }}
+        />
       </Box>
       <Box
         sx={{
@@ -104,7 +186,6 @@ const TicketSection = () => {
           flexDirection: "column",
           gap: 0,
           border: (theme) => `1px solid ${theme.palette.color.border}`,
-          background: (theme) => theme.palette.color.bg2,
           borderRadius: "12px",
         }}
       >
