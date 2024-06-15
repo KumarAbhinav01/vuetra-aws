@@ -2,7 +2,6 @@ import { createTheme } from "@mui/material/styles";
 
 import themeTypography from "./typography";
 import componentStyleOverrides from "./compStyleOverride";
-import { light } from "@mui/material/styles/createPalette";
 
 const getColor = (mode, darkColor, lightColor) => {
   return mode === "dark" ? darkColor : lightColor;
@@ -26,6 +25,7 @@ export const theme = (mode) => {
     active: "#5F55EE",
     darkgray: "#13161A",
     lightgray: "#1D232B",
+    sidebar: getColor(mode, "#0E1015", "#F7F9FA"),
     gray: getColor(mode, "#13161A", "#1D232B"),
     darkblue: "#2196f3",
     bgblue: getColor(mode, "#121929", "#EDF3FF"),

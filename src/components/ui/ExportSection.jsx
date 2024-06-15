@@ -41,18 +41,20 @@ const ExportSection = () => {
     <div>
       <Typography
         sx={{
-          color: (theme) => theme.palette.color.secondary,
-          fontSize: "11.5px",
-          py: "3px",
-          px: "8px",
-          border: (theme) =>
-            `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-          cursor: "pointer",
+            color: (theme) => theme.palette.color.secondary,
+            fontSize: "11.5px",
+            py: "5px",
+            px: "10px",
+            bgcolor: (theme) => theme.palette.color.bg2,
+            border: (theme) =>
+                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+            cursor: "pointer",
+            borderRadius: "12px",
         }}
         onClick={handleOpen}
-      >
+    >
         <BiExport /> Export
-      </Typography>
+    </Typography>
       <Modal open={open} onClose={handleClose}>
         <Paper sx={style}>
           {!res && (

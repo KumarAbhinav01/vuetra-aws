@@ -184,6 +184,7 @@ export default function CalendarPopup({
         sx={{
           background: "transparent",
           color: (theme) => theme.palette.color.secondary,
+          borderRadius: "20px",
           border: (theme) =>
             `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           ":hover": {
