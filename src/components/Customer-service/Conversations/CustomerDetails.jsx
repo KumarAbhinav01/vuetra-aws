@@ -70,7 +70,7 @@ const CustomerDetails = ({ customer }) => {
             <Divider />
 
 
-            <Tabs
+            {/* <Tabs
                 value={selectedTab}
                 onChange={handleChange}
                 aria-label="client details tabs"
@@ -112,7 +112,7 @@ const CustomerDetails = ({ customer }) => {
                         },
                     }}
                 />
-            </Tabs>
+            </Tabs> */}
 
             <Box sx={{ display: 'flex', flexDirection: 'column', mx: 4, mt: 2, gap: 1.5 }}>
                 <Stack direction="row" justifyContent="space-between">
@@ -209,12 +209,12 @@ const CustomerDetails = ({ customer }) => {
                         flexDirection: 'row',
                         gap: 1,
                         alignItems: 'center',
-                        background: '#F6F9FA',
+                        background: (theme) => theme.palette.color.border,
                         borderRadius: '3px',
                         padding: '5px 15px',
                         margin: '0 5px',
                         '&:hover': {
-                            backgroundColor: '#e0e0e0',
+                            backgroundColor: (theme) => theme.palette.color.border,
                         },
                     }}
                 />
@@ -226,25 +226,25 @@ const CustomerDetails = ({ customer }) => {
                         flexDirection: 'row',
                         gap: 1,
                         alignItems: 'center',
-                        background: '#F6F9FA',
+                        // background: '#F6F9FA',
                         borderRadius: '3px',
                         padding: '5px 15px',
                         margin: '0 5px',
-                        '&:hover': {
-                            backgroundColor: '#e0e0e0',
-                        },
+                        // '&:hover': {
+                        //     backgroundColor: '#e0e0e0',
+                        // },
                     }}
                 />
                 <Tab
                     icon={<FiMessageCircle />}
                     sx={{
-                        background: '#F6F9FA',
+                        // background: '#F6F9FA',
                         borderRadius: '3px',
                         padding: '5px 15px',
                         margin: '0 5px',
-                        '&:hover': {
-                            backgroundColor: '#e0e0e0',
-                        },
+                        // '&:hover': {
+                        //     backgroundColor: '#e0e0e0',
+                        // },
                     }}
                 />
             </Tabs>
@@ -252,7 +252,7 @@ const CustomerDetails = ({ customer }) => {
             <List>
                 {activities.map((activity, index) => (
                     <StyledListItem key={index}>
-                        <Circle />
+                        <Circle sx={{bgcolor: (theme) => theme.palette.color.border}}/>
                         <VerticalLine />
                         <Box display="flex" gap={1} flexGrow={1}>
                             <Typography variant='body1'>{activity.text}</Typography>

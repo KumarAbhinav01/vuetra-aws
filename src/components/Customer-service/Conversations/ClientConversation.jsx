@@ -20,7 +20,7 @@ const ClientConversation = () => {
     <Box
       sx={{
         display: 'flex',
-        backgroundColor: (theme) => theme.palette.background.default,
+        backgroundColor: (theme) => theme.palette.background.paper,
         flexDirection: 'column',
         height: '100vh',
         borderLeft: (theme) => `1px solid ${theme.palette.divider}`,
@@ -38,13 +38,12 @@ const ClientConversation = () => {
       </Stack>
       <Divider />
 
-      <Paper
+      <Box
         sx={{
           flex: '1 1 auto',
           display: 'flex',
           flexDirection: 'column',
-          p: 2,
-          background: '#F6F9FA',
+          p: 2
         }}
       >
 
@@ -54,7 +53,7 @@ const ClientConversation = () => {
               sx={{
                 p: 2,
                 py: 3,
-                backgroundColor: '#111111',
+                backgroundColor: (theme) => theme.palette.color.border,
                 borderRadius: 2,
                 flexGrow: 1,
                 display: 'flex',
@@ -87,18 +86,17 @@ const ClientConversation = () => {
 
         <Box sx={{ mb: 2, width: '100%' }}>
           <Stack direction="row" spacing={1} alignItems="flex-end" sx={{ width: '100%' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Avatar
                 alt="User Avatar"
-                src="https://via.placeholder.com/150"
-                sx={{ width: 40, height: 40 }}
+                sx={{ width: 40, height: 40, bgcolor: (theme) => theme.palette.color.border }}
               />
             </Box>
             <Box
               sx={{
                 p: 2,
                 py: 3,
-                backgroundColor: 'white',
+                backgroundColor: (theme) => theme.palette.color.border,
                 borderRadius: 2,
                 flexGrow: 1,
                 display: 'flex',
@@ -106,7 +104,7 @@ const ClientConversation = () => {
                 alignItems: 'flex-start',
               }}
             >
-             <Typography variant="body1">
+              <Typography variant="body1">
                 I got a question about my evaluation. I bought it 2 days ago, but I did not receive any account credentials yet.
               </Typography>
               <Typography mt={2} variant="body1">
@@ -125,30 +123,30 @@ const ClientConversation = () => {
         <Box sx={{ mb: 2, mt: 2, width: '100%' }}>
           <Stack direction="row" spacing={1} justifyContent="space-between" alignItems='center' sx={{ width: '100%' }}>
             <Stack direction="row" gap={1} alignItems="center">
-          <Box sx={{border: '1px solid #8DADFF', borderRadius: '3px', px: '4px', py: '2px', color: '#8DADFF', fontSize: '10px'}}>Ai</Box>
-          <Typography variant="caption" color="#8DADFF" sx={{ mb: 1 }}>
-            AI suggestions
-          </Typography>
-          <Typography variant="caption" color="textSecondary" sx={{ mb: 1 }}>
-            (only visible for you)
-          </Typography>
-          </Stack>
-          <Link sx={{color: 'grey'}}>Reject</Link>
+              <Box sx={{ border: '1px solid #8DADFF', borderRadius: '3px', px: '4px', py: '2px', color: '#8DADFF', fontSize: '10px' }}>Ai</Box>
+              <Typography variant="caption" color="#8DADFF" sx={{ mb: 1 }}>
+                AI suggestions
+              </Typography>
+              <Typography variant="caption" color="caption" sx={{ mb: 1 }}>
+                (only visible for you)
+              </Typography>
+            </Stack>
+            <Link sx={{ color: 'grey' }}>Reject</Link>
           </Stack>
 
           <Paper
             sx={{
               p: 2,
               mt: 1,
-              backgroundColor: '#ECEFF2',
+              backgroundColor: (theme) => theme.palette.color.border,
               width: '100%',
             }}
           >
             <Stack direction="row" gap={1} alignItems="center" justifyContent='space-between' mb={1}>
-            <Typography variant="caption" color="textSecondary" sx={{ mb: 1 }}>
-              Account credentials account #1050405
-            </Typography>
-            <MdContentCopy />
+              <Typography variant="caption" color="textSecondary" sx={{ mb: 1 }}>
+                Account credentials account #1050405
+              </Typography>
+              <MdContentCopy />
             </Stack>
 
             <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
@@ -183,7 +181,7 @@ const ClientConversation = () => {
             <Paper
               sx={{
                 p: 2,
-                backgroundColor: '#F6F9FA',
+                backgroundColor: (theme) => theme.palette.color.border,
                 width: '100%',
                 boxSizing: 'border-box',
               }}
@@ -218,15 +216,14 @@ const ClientConversation = () => {
             </Paper>
           </Box>
         )}
-      </Paper>
+      </Box>
 
       <Box
         sx={{
           p: 2,
           gap: 1.5,
           display: 'flex',
-          alignItems: 'center',
-          backgroundColor: '#F6F9FA',
+          alignItems: 'center'
         }}
       >
         <TextField
@@ -236,13 +233,24 @@ const ClientConversation = () => {
           size="small"
           onChange={handleInputChange}
           sx={{
-            height: '40px',
+            bgcolor: (theme) => theme.palette.color.border,
+            border: (theme) => `1px solid ${theme.palette.color.border}`,
             '& .MuiOutlinedInput-root': {
-              borderRadius: '10px',
+              borderRadius: '5px',
             },
+            '& .MuiOutlinedInput-root.Mui-focused': {
+              borderColor: (theme) => theme.palette.color.active,
+          },
           }}
         />
-        <Button>
+        <Button sx={{
+          bgcolor: (theme) => theme.palette.color.active,
+          color: (theme) => theme.palette.color.primary,
+          ":hover": {
+            color: (theme) => theme.palette.color.primary,
+            bgcolor: (theme) => theme.palette.color.active,
+          }
+        }}>
           Send
         </Button>
       </Box>
