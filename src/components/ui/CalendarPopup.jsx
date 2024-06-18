@@ -14,7 +14,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
-import { BiChevronDown } from "react-icons/bi";
+import { FaRegCalendar } from "react-icons/fa";
 import dayjs from "dayjs";
 import Calendar from "./Calendar";
 
@@ -184,19 +184,21 @@ export default function CalendarPopup({
         sx={{
           background: "transparent",
           color: (theme) => theme.palette.color.secondary,
-          borderRadius: "20px",
+          borderRadius: "12px",
+          bgcolor: (theme) => theme.palette.color.bg2,
           border: (theme) =>
-            `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+          borderRadius: "12px",
           ":hover": {
+            bgcolor: (theme) => theme.palette.color.bg2,
             border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.45)}`,
-            background: "transparent",
+                  `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           },
           fontSize: "11.5px",
           height: "26px",
         }}
       >
-        {value} <BiChevronDown size={18} style={{ ml: "3px" }} />
+        <FaRegCalendar style={{marginRight: "5px"}}/> {value}
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Paper sx={style}>

@@ -50,6 +50,7 @@ const ExportSection = () => {
                 `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
             cursor: "pointer",
             borderRadius: "12px",
+            height: "26px",
         }}
         onClick={handleOpen}
     >

@@ -133,12 +133,12 @@ export default function DisplayColumns({
           px: "13px",
           bgcolor: (theme) => theme.palette.color.bg2,
           border: (theme) =>
-            `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           borderRadius: "12px",
           ":hover": {
+            bgcolor: (theme) => theme.palette.color.bg2,
             border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.45)}`,
-            backgroundColor: (theme) => theme.palette.color.bg2,
+                  `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           },
           height: "26px",
         }}
