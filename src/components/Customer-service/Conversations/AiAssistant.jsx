@@ -39,13 +39,12 @@ const AiAssistant = () => {
             </Stack>
             <Divider />
 
-            <Paper
+            <Box
                 sx={{
                     flex: '1 1 auto',
                     display: 'flex',
                     flexDirection: 'column',
-                    p: 2,
-                    background: (theme) => theme.palette.background.default,
+                    p: 2
                 }}
             >
                <Box sx={{ mb: 2, width: '100%' }}>
@@ -54,7 +53,7 @@ const AiAssistant = () => {
                             sx={{
                                 p: 2,
                                 py: 3,
-                                backgroundColor: '#111111',
+                                backgroundColor: (theme) => theme.palette.color.border,
                                 borderRadius: 2,
                                 flexGrow: 1,
                                 display: 'flex',
@@ -88,7 +87,7 @@ const AiAssistant = () => {
                             sx={{
                                 p: 2,
                                 py: 3,
-                                backgroundColor: '#F6F9FA',
+                                backgroundColor: (theme) => theme.palette.color.border,
                                 borderRadius: 2,
                                 flexGrow: 1,
                                 display: 'flex',
@@ -113,7 +112,7 @@ const AiAssistant = () => {
                         <Paper
                             sx={{
                                 p: 2,
-                                backgroundColor: '#F6F9FA',
+                                backgroundColor: (theme) => theme.palette.color.border,
                                 width: '100%',
                                 boxSizing: 'border-box',
                             }}
@@ -148,16 +147,14 @@ const AiAssistant = () => {
                         </Paper>
                     </Box>
                 )}
-            </Paper>
+            </Box>
 
             <Box
                 sx={{
                     p: 2,
                     gap: 1.5,
-                    borderTop: (theme) => `1px solid ${theme.palette.divider}`,
                     display: 'flex',
-                    alignItems: 'center',
-                    backgroundColor: '#F6F9FA'
+                    alignItems: 'center'
                 }}
             >
                 <TextField
@@ -171,9 +168,19 @@ const AiAssistant = () => {
                         '& .MuiOutlinedInput-root': {
                             borderRadius: '10px',
                         },
+                        '& .MuiOutlinedInput-root.Mui-focused': {
+                            borderColor: (theme) => theme.palette.color.active,
+                        },
                     }}
                 />
-                <Button>
+                <Button sx={{
+          bgcolor: (theme) => theme.palette.color.active,
+          color: (theme) => theme.palette.color.primary,
+          ":hover": {
+            color: (theme) => theme.palette.color.primary,
+            bgcolor: (theme) => theme.palette.color.active,
+          }
+        }}>
                     Send
                 </Button>
             </Box>

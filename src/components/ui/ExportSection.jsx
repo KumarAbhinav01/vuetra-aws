@@ -53,10 +53,10 @@ const ExportSection = () => {
           borderRadius: "50px",
           ":hover": {
             border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.35)}`,
-            backgroundColor: (theme) => theme.palette.color.bg2,
+              `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+            cursor: "pointer",
+            borderRadius: "12px",
           },
-          height: "30px",
         }}
       >
         <BiExport style={{ marginRight: "5px" }} /> Export

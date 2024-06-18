@@ -108,13 +108,13 @@ const Conversations = () => {
               color: (theme) => theme.palette.color.secondary + " !important",
             }}
           />
-          <Divider
+          {/* <Divider
             sx={{
               my: "6px",
             }}
-          />
+          /> */}
         </Stack>
-        <Accordion
+        {/* <Accordion
           defaultExpanded={true}
           sx={{
             ":before": { display: "none" },
@@ -196,9 +196,9 @@ const Conversations = () => {
               ))}
             </Stack>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
 
-        
+{/*         
         <Button
             variant="contained"
             sx={{
@@ -224,7 +224,7 @@ const Conversations = () => {
             }}
         >
             Close ticket
-        </Button>
+        </Button> */}
       </Paper>
 
       <Box

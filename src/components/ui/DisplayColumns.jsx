@@ -136,9 +136,9 @@ export default function DisplayColumns({
             `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           borderRadius: "50px",
           ":hover": {
+            bgcolor: (theme) => theme.palette.color.bg2,
             border: (theme) =>
-              `1px solid ${alpha(theme.palette.color.secondary, 0.45)}`,
-            backgroundColor: (theme) => theme.palette.color.bg2,
+              `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           },
           height: "30px",
         }}
