@@ -13,7 +13,8 @@ import React from "react";
 import { RxCaretSort } from "react-icons/rx";
 
 function Row(props) {
-  const { row, headcells, handleClick, isItemSelected, fontSize } = props;
+  const { row, headcells, handleClick, isItemSelected, fontSize, headcells2 } =
+    props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -27,7 +28,12 @@ function Row(props) {
         tabIndex={-1}
         key={row.id}
         selected={isItemSelected}
-        sx={{ cursor: "pointer" }}
+        sx={{
+          cursor: "pointer",
+          ...(open && {
+            background: (theme) => theme.palette.color.borderpure,
+          }),
+        }}
       >
         {headcells.map((headcell, index) => (
           <TableCell
@@ -35,6 +41,11 @@ function Row(props) {
             align={headcell.align || "left"}
             sx={{
               ...(fontSize && { fontSize: fontSize + " !important" }),
+              color: (theme) => theme.palette.color.secondary,
+              transition: "all 0.5s ease-in-out",
+              ...(open && {
+                background: (theme) => theme.palette.color.borderpure,
+              }),
             }}
           >
             {index === 0 ? (
@@ -75,7 +86,7 @@ function Row(props) {
           }}
           key={childrenRow.date}
         >
-          {headcells.map((headcell, index) => (
+          {(headcells2 || headcells).map((headcell, index) => (
             <TableCell
               key={headcell.id}
               align={headcell.align || "left"}
@@ -87,6 +98,11 @@ function Row(props) {
                 ...(!open && {
                   borderBottom: "0 !important",
                 }),
+                color: (theme) => theme.palette.color.secondary,
+                // transition: "all 0.5s ease-in-out",
+                background: (theme) => theme.palette.color.borderpure,
+                // ...(open && {
+                // }),
               }}
             >
               {index === 0 ? (
@@ -167,7 +183,13 @@ function EnhancedTableHead(props) {
   );
 }
 
-const CollapsibleTable = ({ headcells, rows, onRowClick, fontSize }) => {
+const CollapsibleTable = ({
+  headcells,
+  rows,
+  onRowClick,
+  fontSize,
+  headcells2,
+}) => {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -250,6 +272,7 @@ const CollapsibleTable = ({ headcells, rows, onRowClick, fontSize }) => {
                 labelId={labelId}
                 fontSize={fontSize}
                 handleClick={handleClick}
+                headcells2={headcells2}
               />
               //   <TableRow
               //     hover

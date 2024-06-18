@@ -36,12 +36,19 @@ import CustomAnswers from "../pages/Customer-service/AI-Settings/custom-answers"
 import DataSources from "../pages/Customer-service/AI-Settings/data-sources";
 import AISettings from "../pages/Customer-service/AI-Settings/settings";
 import AiAssistant from "../pages/AI-Assistant/aiAssistant";
+import Challenges from "../pages/Firm/challenges";
 
 export const navItems = [
   { path: "/", element: <Home />, isPrivate: true, layout: true },
   {
     path: "/firm/products",
     element: <Firm />,
+    isPrivate: true,
+    layout: true,
+  },
+  {
+    path: "/firm/challenges",
+    element: <Challenges />,
     isPrivate: true,
     layout: true,
   },

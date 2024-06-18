@@ -39,22 +39,29 @@ const ExportSection = () => {
   };
   return (
     <div>
-      <Typography
-        sx={{
-            color: (theme) => theme.palette.color.secondary,
-            fontSize: "11.5px",
-            py: "5px",
-            px: "10px",
-            bgcolor: (theme) => theme.palette.color.bg2,
-            border: (theme) =>
-                `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-            cursor: "pointer",
-            borderRadius: "12px",
-        }}
+      <Button
+        variant="outlined"
         onClick={handleOpen}
-    >
-        <BiExport /> Export
-    </Typography>
+        sx={{
+          color: (theme) => theme.palette.color.secondary,
+          fontSize: "11.5px",
+          py: "7px",
+          px: "13px",
+          bgcolor: (theme) => theme.palette.color.bg,
+          border: (theme) =>
+            `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
+          borderRadius: "50px",
+          ":hover": {
+            border: (theme) =>
+              `1px solid ${alpha(theme.palette.color.secondary, 0.35)}`,
+            backgroundColor: (theme) => theme.palette.color.bg2,
+          },
+          height: "30px",
+        }}
+      >
+        <BiExport style={{ marginRight: "5px" }} /> Export
+      </Button>
+
       <Modal open={open} onClose={handleClose}>
         <Paper sx={style}>
           {!res && (

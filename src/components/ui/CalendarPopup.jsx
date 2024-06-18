@@ -193,7 +193,7 @@ export default function CalendarPopup({
             background: "transparent",
           },
           fontSize: "11.5px",
-          height: "26px",
+          height: "30px",
         }}
       >
         {value} <BiChevronDown size={18} style={{ ml: "3px" }} />

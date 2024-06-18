@@ -42,7 +42,7 @@ export default function NavGroup({ navItem }) {
                   display: "flex",
                   alignItems: "center",
                   position: "relative",
-                  p: 0.8,
+                  p: "8px",
                   paddingLeft: "16px",
                   borderLeft: `2px solid transparent`,
                   ...(subChild.path === pathname && {
@@ -61,9 +61,10 @@ export default function NavGroup({ navItem }) {
                   transition: "opacity 0.5s",
                   cursor: "pointer",
                   borderRadius: "0px 8px 8px 0px",
+                  my: "1px",
                 }}
               >
-                {!isPathMatching(subChild.path) && (
+                {!isPathMatching(subChild.path) && !subChild.icon && (
                   <Box
                     className="border-box"
                     sx={{
@@ -88,10 +89,12 @@ export default function NavGroup({ navItem }) {
                     sx={{
                       color: (theme) =>
                         theme.palette.color[
-                          isPathMatching(subChild.path) ? "blue" : "secondary"
+                          isPathMatching(subChild.path)
+                            ? "primary"
+                            : "secondary"
                         ],
                       mr: 1,
-                      ml: isPathMatching(subChild.path) ? "-16px" : 0,
+                      ml: 0,
                     }}
                   >
                     <subChild.icon size={16} />
@@ -107,6 +110,7 @@ export default function NavGroup({ navItem }) {
                     sx={{
                       ...(isPathMatching(subChild.path) && {
                         color: (theme) => theme.palette.color.primary,
+                        lineHeight: "24px",
                       }),
                     }}
                   >

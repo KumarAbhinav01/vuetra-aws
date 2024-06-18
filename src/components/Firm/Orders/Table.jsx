@@ -227,7 +227,10 @@ const CustomTable = ({
                       key={headcell.id}
                       align={headcell.align || "left"}
                       sx={{
-                        ...(fontSize && { fontSize: fontSize + " !important" }),
+                        ...(fontSize && {
+                          fontSize: fontSize + " !important",
+                          color: (theme) => theme.palette.color.secondary,
+                        }),
                       }}
                     >
                       {headcell.getCell(row, index)}

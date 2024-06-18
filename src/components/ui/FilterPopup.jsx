@@ -54,8 +54,8 @@ function valuetext(value) {
 
 export default function FilterPopup({
   rangeFilter,
-  accordions,
-  height = "26px",
+  accordions = [],
+  height = "30px",
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, onSearchChange] = useState("");
@@ -94,6 +94,7 @@ export default function FilterPopup({
           fontSize: "11.5px",
           height: { height },
           padding: "6px 11px",
+          borderRadius: "50px",
         }}
       >
         All <BiChevronDown size={18} style={{ marginLeft: "4px" }} />

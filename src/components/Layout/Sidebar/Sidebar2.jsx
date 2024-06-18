@@ -1,21 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Tooltip,
-  Typography,
-  alpha,
-} from "@mui/material";
+import { Box, Button, Stack, Typography, alpha } from "@mui/material";
 
 import NavGroup from "./NavGroup";
-import { BiLogoDeviantart, BiPlus } from "react-icons/bi";
-import { FaArrowRightLong } from "react-icons/fa6";
-import Chat from "./Chat";
-import ProfileSection from "./ProfileSection";
-import { navItems, navItems2 } from "../../../static/navItems";
-import { ChevronLeft, ChevronRight, Search } from "@mui/icons-material";
+import { BiPlus } from "react-icons/bi";
+import { ChevronRight } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { toggleOpen } from "../../../slices/openModalSlice";
 import { getChildNavItem } from "../../../utils/getNavData";

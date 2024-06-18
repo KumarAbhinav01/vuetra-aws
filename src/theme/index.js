@@ -31,6 +31,7 @@ export const theme = (mode) => {
     bgblue: getColor(mode, "#121929", "#EDF3FF"),
     inputborder: getColor(mode, "transparent", "#e4e4e4"),
     border2: "#ced4da",
+    borderpure: "#101419",
     border: getColor(mode, "#15191FA6", "#EEEEEE"),
     border3: getColor(mode, "#647DB52B", "#EDEFF2"),
     paper: getColor(mode, "#0E1011", "#F7F9FA"),

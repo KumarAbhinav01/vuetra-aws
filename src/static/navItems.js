@@ -3,10 +3,17 @@ import { FaCodeBranch } from "react-icons/fa";
 import { GrAnnounce } from "react-icons/gr";
 import { HiMiniChartBar, HiMiniUsers } from "react-icons/hi2";
 import { IoFlash, IoSettings } from "react-icons/io5";
-import { MdChatBubble, MdHomeFilled } from "react-icons/md";
-import { PiCirclesFourBold } from "react-icons/pi";
-import { RiShoppingBag2Fill } from "react-icons/ri";
-import { TbLayoutList, TbPhotoCircle, TbRepeat } from "react-icons/tb";
+import { MdChatBubble, MdHomeFilled, MdLandscape } from "react-icons/md";
+import { PiCirclesFourBold, PiUsersBold } from "react-icons/pi";
+import { RiShoppingBag2Fill, RiShoppingBasket2Line } from "react-icons/ri";
+import {
+  TbLayoutList,
+  TbPercentage,
+  TbPhotoCircle,
+  TbRepeat,
+} from "react-icons/tb";
+import PayoutIcon from "../components/Icons/PayoutsIcon";
+import { IoMdHelpCircleOutline } from "react-icons/io";
 
 export const navItems = [
   {
@@ -20,29 +27,36 @@ export const navItems = [
     icon: RiShoppingBag2Fill,
     path: "/firm",
     tooltip: "Your Firm",
-    to: "/firm/products",
+    to: "/firm/challenges",
     children: [
       {
         title: "Firm",
         path: "/firm",
         children: [
           {
-            title: "Products",
-            path: "/firm/products",
-            heading: "Products",
+            title: "Challenges",
+            path: "/firm/challenges",
+            heading: "Challenge",
             button: "Add New Product",
+            icon: MdLandscape,
           },
-          { title: "Orders", path: "/firm/orders" },
+          {
+            title: "Orders",
+            path: "/firm/orders",
+            icon: RiShoppingBasket2Line,
+          },
           {
             title: "Customers",
             path: "/firm/customers",
+            icon: PiUsersBold,
           },
           {
             title: "Discounts",
             path: "/firm/discounts",
             button: "Add New Discount",
+            icon: TbPercentage,
           },
-          { title: "Payouts", path: "/firm/payouts" },
+          { title: "Payouts", path: "/firm/payouts", icon: PayoutIcon },
         ],
       },
       {
@@ -92,11 +106,13 @@ export const navItems = [
                 ],
               },
             ],
+            icon: IoMdHelpCircleOutline,
           },
           {
             title: "Announcements",
             path: "/firm/content-management/announcements",
             button: "Add New Announcement",
+            icon: GrAnnounce,
           },
         ],
       },

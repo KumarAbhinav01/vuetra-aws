@@ -131,19 +131,19 @@ export default function DisplayColumns({
           fontSize: "11.5px",
           py: "7px",
           px: "13px",
-          bgcolor: (theme) => theme.palette.color.bg2,
+          bgcolor: (theme) => theme.palette.color.bg,
           border: (theme) =>
             `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
-          borderRadius: "12px",
+          borderRadius: "50px",
           ":hover": {
             border: (theme) =>
               `1px solid ${alpha(theme.palette.color.secondary, 0.45)}`,
             backgroundColor: (theme) => theme.palette.color.bg2,
           },
-          height: "26px",
+          height: "30px",
         }}
       >
-        {title ? title : "Toggle Columns"} <BiChevronDown />
+        {title ? title : "Display"} <BiChevronDown />
       </Button>
       <Menu
         anchorEl={anchorEl}

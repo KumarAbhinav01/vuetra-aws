@@ -153,7 +153,7 @@ export default function componentStyleOverrides(theme) {
       styleOverrides: {
         root: {
           backgroundImage: "none",
-          background: theme.colors.bg3,
+          background: theme.colors.bg,
           "&:focus-visible": {
             outline: "none",
           },
