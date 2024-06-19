@@ -270,10 +270,16 @@ const Challenges = () => {
       }}
     >
       <Stack
-        direction="row"
+        // direction="row"
         justifyContent="space-between"
-        alignItems="center"
-        sx={{ px: "24px" }}
+        // alignItems="center"
+        sx={{
+          px: { xs: 0, lg: "24px" },
+
+          flexDirection: { xs: "column", lg: "row" },
+          alignItems: { xs: "flex-start", lg: "center" },
+          gap: { xs: 1, lg: 2 },
+        }}
       >
         <Typography
           variant="heading"

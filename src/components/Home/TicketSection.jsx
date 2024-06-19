@@ -51,7 +51,14 @@ const TicketSection = () => {
 
   const theme = useTheme();
   return (
-    <Stack direction="row" spacing={3} sx={{ my: 3 }}>
+    <Box
+      sx={{
+        my: 3,
+        display: "flex",
+        flexDirection: { xs: "column", lg: "row" },
+        gap: { xs: 2, lg: 3 },
+      }}
+    >
       <Box
         sx={{
           width: "100%",
@@ -219,7 +226,7 @@ const TicketSection = () => {
           </>
         ))}
       </Box>
-    </Stack>
+    </Box>
   );
 };
 

@@ -107,6 +107,7 @@ export default function ProfileSection() {
           background: (theme) => "rgb(29, 35, 43)",
           borderRadius: "100px",
           cursor: "pointer",
+          display: { xs: "none", lg: "flex" },
         }}
         onClick={handleClick}
         direction="row"

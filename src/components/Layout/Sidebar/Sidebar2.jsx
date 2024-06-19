@@ -26,7 +26,7 @@ export default function SideBar1() {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: { xs: "none", lg: "flex" },
         alignItems: "start",
         flexGrow: "0",
         flexShrink: "0",
