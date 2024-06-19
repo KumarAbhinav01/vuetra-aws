@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
   alpha,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -50,6 +51,7 @@ export default function CalendarPopup({
   mainEndDate,
   setMainEndDate,
 }) {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -185,12 +187,12 @@ export default function CalendarPopup({
           background: "transparent",
           color: (theme) => theme.palette.color.secondary,
           borderRadius: "12px",
-          bgcolor: (theme) => theme.palette.color.bg2,
+          bgcolor: (theme) => theme.palette.color.bg,
           border: (theme) =>
                 `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           borderRadius: "12px",
           ":hover": {
-            bgcolor: (theme) => theme.palette.color.bg2,
+            bgcolor: (theme) => theme.palette.color.bg,
             border: (theme) =>
                   `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           },
@@ -198,7 +200,7 @@ export default function CalendarPopup({
           height: "30px",
         }}
       >
-        <FaRegCalendar style={{marginRight: "5px"}}/> {value}
+        <FaRegCalendar style={{marginRight: "5px"}}/> {!isSmallScreen && value}
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Paper sx={style}>

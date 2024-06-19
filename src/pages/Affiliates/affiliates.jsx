@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Stack, Typography, alpha } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography, alpha, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import CustomTable from "../../components/Firm/Orders/Table";
 import { Search } from "@mui/icons-material";
@@ -7,9 +7,9 @@ import ToggleColumns from "../../components/ui/ToggleColumns";
 import { useNavigate } from "react-router-dom";
 import FormSelect from "../../components/ui/FormSelect";
 import { filterData } from "../../utils/filterByDate";
-import SearchBar from "../../components/Affiliates/searchBar";
 import ExportSection from "../../components/ui/ExportSection";
 import DisplayColumns from "../../components/ui/DisplayColumns";
+import SmallSearchBar from "../../components/Affiliates/smallSearchBar";
 
 const headcells = [
   {
@@ -157,6 +157,7 @@ const data = [
 ];
 
 const Customers = () => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const [columns, setColumns] = useState(headcells);
   const [selectedColumns, setSelectedColumns] = useState(columns.map((col) => col.id));
   const navigate = useNavigate();
@@ -169,21 +170,25 @@ const Customers = () => {
         width: "100%",
       }}
     >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack 
+        direction={isSmallScreen ? "column" : "row"}
+        justifyContent={isSmallScreen ? "flex-start" : "flex-end"}
+        alignItems={isSmallScreen ? "flex-start" : "center"}
+        gap={2}
+      >
         <Box
           sx={{
             display: "flex",
-            gap: "14px",
-            alignItems: "center",
+            alignItems: "start",
           }}
         >
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" mb={2}>
             {data.length} affiliates match of {data.length}
           </Typography>
         </Box>
         <Stack
           direction="row"
-          spacing={2}
+          spacing={isSmallScreen? 1: 2}
           alignItems="center"
           justifyContent="flex-end"
           sx={{
@@ -193,9 +198,9 @@ const Customers = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <SearchBar />
+          <SmallSearchBar />
           <ExportSection />
-          <ExportSection />
+          <ExportSection isImport={true} />
           <DisplayColumns
             columns={columns}
             setColumns={setColumns}
