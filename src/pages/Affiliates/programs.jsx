@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
   alpha,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useState } from "react";
 import dayjs from "dayjs";
@@ -29,6 +30,7 @@ import DisplayColumns from "../../components/ui/DisplayColumns";
 import FilterPopup from "../../components/ui/FilterPopup";
 import SearchBar from "../../components/Affiliates/searchBar";
 import CreateAnnouncementModal from "../../components/Affiliates/Programs/createAnnouncementModal";
+import SmallSearchBar from "../../components/Affiliates/smallSearchBar";
 
 const statutes = [
   { value: "active", label: "Active", color: "green" },
@@ -322,6 +324,7 @@ const Programs = () => {
     // },
   ];
 
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const [columns, setColumns] = useState(headcells);
   const [heads, setHeads] = React.useState(
     headcells.filter((cell) => cell.default).map((cell) => cell.id)
@@ -337,7 +340,12 @@ const Programs = () => {
         p: "24px",
       }}
     >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack 
+        direction={isSmallScreen ? "column" : "row"}
+        justifyContent={isSmallScreen ? "flex-start" : "space-between"}
+        alignItems={isSmallScreen ? "flex-start" : "center"}
+        gap={2}
+      >
         <Box
           sx={{
             display: "flex",
@@ -351,7 +359,7 @@ const Programs = () => {
         </Box>
         <Stack
           direction="row"
-          spacing={2}
+          spacing={isSmallScreen ? 0.5 : 2}
           alignItems="center"
           justifyContent="flex-end"
           sx={{
@@ -361,9 +369,9 @@ const Programs = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <SearchBar />
+          {isSmallScreen ? <SmallSearchBar /> : <SearchBar />}
           <ExportSection />
-          <ExportSection />
+          <ExportSection isImport={true} />
           <DisplayColumns
             columns={columns}
             setColumns={setColumns}
@@ -376,6 +384,7 @@ const Programs = () => {
             setColumns={setColumns}
             selectedColumns={heads}
             setSelectedColumns={setHeads}
+            title={"Toggle Columns"}
           />
           {/* <FilterPopup
             rangeFilter={{
@@ -401,7 +410,7 @@ const Programs = () => {
               },
             ]}
           /> */}
-          <Button
+          {/* <Button
             sx={{
               padding: "4px 10px",
               color: (theme) => theme.palette.color.primary,
@@ -417,7 +426,7 @@ const Programs = () => {
           >
             <IoMdAdd style={{ marginRight: "5px" }} size={17} />
             Add Program
-          </Button>
+          </Button> */}
         </Stack>
       </Stack>
 

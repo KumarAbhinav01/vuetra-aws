@@ -1,16 +1,17 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import CustomTable from "../../components/Firm/Orders/Table";
 import { headcells, tickets } from "../../static/tickets";
 import DisplayColumns from "../../components/ui/DisplayColumns";
-import SearchBar from "../../components/Affiliates/searchBar";
 import ExportSection from "../../components/ui/ExportSection";
 import CalendarPopup from "../../components/ui/CalendarPopup";
 import dayjs from "dayjs";
+import SmallSearchBar from "../../components/Affiliates/smallSearchBar";
 
 const filteredHeadcells = headcells.filter((h) => h.id !== "assignedto");
 
 const ClosedTickets = () => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const [startDate, setStartDate] = useState(dayjs().startOf("week"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week"));
   const [columns, setColumns] = useState(filteredHeadcells);
@@ -27,7 +28,12 @@ const ClosedTickets = () => {
         width: "100%",
       }}
     >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack 
+        direction={isSmallScreen ? "column" : "row"}
+        justifyContent={isSmallScreen ? "flex-start" : "space-between"}
+        alignItems={isSmallScreen ? "flex-start" : "center"}
+        gap={2}
+      >
         <Box
           sx={{
             display: "flex",
@@ -41,7 +47,7 @@ const ClosedTickets = () => {
         </Box>
         <Stack
           direction="row"
-          spacing={2}
+          spacing={isSmallScreen? 1: 2}
           alignItems="center"
           justifyContent="flex-end"
           sx={{
@@ -51,9 +57,9 @@ const ClosedTickets = () => {
             color: (theme) => theme.palette.color.secondary,
           }}
         >
-          <SearchBar />
+          <SmallSearchBar />
           <ExportSection />
-          <ExportSection />
+          <ExportSection isImport={true}/>
           <CalendarPopup
             mainEndDate={endDate}
             mainStartDate={startDate}

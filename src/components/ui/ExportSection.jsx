@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
   alpha,
+  useMediaQuery,
 } from "@mui/material";
 import { BiExport } from "react-icons/bi";
 import { FiDownloadCloud } from "react-icons/fi";
@@ -27,7 +28,8 @@ const style = {
   background: (theme) => theme.palette.color.bg,
 };
 
-const ExportSection = () => {
+const ExportSection = ({ isImport }) => {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const [open, setOpen] = React.useState(false);
   const [formats, setFormats] = React.useState([]);
   const [res, setRes] = React.useState("");
@@ -52,14 +54,17 @@ const ExportSection = () => {
             `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
           borderRadius: "50px",
           ":hover": {
+            bgcolor: (theme) => theme.palette.color.bg,
             border: (theme) =>
               `1px solid ${alpha(theme.palette.color.secondary, 0.15)}`,
             cursor: "pointer",
-            borderRadius: "12px",
+            borderRadius: "50px",
           },
         }}
       >
-        <BiExport style={{ marginRight: "5px" }} /> Export
+        <BiExport style={{ marginRight: "5px" }} /> {!isSmallScreen && (
+          isImport ? "Import" : "Export"
+        )}
       </Button>
 
       <Modal open={open} onClose={handleClose}>
@@ -87,7 +92,7 @@ const ExportSection = () => {
                       Select file type
                     </Typography>
                     <Typography variant="body3">
-                      Choose one or multiple types you want to export.
+                      Choose one or multiple types you want to {isImport? "import" : "export"}.
                     </Typography>
                   </Stack>
                 </Stack>
@@ -144,6 +149,14 @@ const ExportSection = () => {
                 <Button
                   onClick={() => setRes("success")}
                   variant="contained"
+                  sx={{
+                    bgcolor: (theme) => theme.palette.color.active,
+                    color: (theme) => theme.palette.color.primary,
+                    ":hover": {
+                      bgcolor: (theme) => theme.palette.color.active,
+                      color: (theme) => theme.palette.color.primary,
+                    }
+                  }}
                   fullWidth
                 >
                   Continue
@@ -189,7 +202,7 @@ const ExportSection = () => {
                 variant="h4"
                 sx={{ color: (theme) => theme.palette.color.tertiary }}
               >
-                Account Exported Successfully
+                Account {isImport ? "Imported" : "Exported"} Successfully
               </Typography>
               <Typography
                 sx={{
@@ -199,7 +212,7 @@ const ExportSection = () => {
                   lineHeight: "20px",
                 }}
               >
-                Your account has been exported successfully. You can download
+                Your account has been {isImport ? "imported" : "exported"} successfully. You can download
                 the file from the download section.
               </Typography>
             </Stack>
@@ -242,7 +255,7 @@ const ExportSection = () => {
                 variant="h4"
                 sx={{ color: (theme) => theme.palette.color.tertiary }}
               >
-                Account Export Failed
+                Account {isImport ? "Import" : "Export"} Failed
               </Typography>
               <Typography
                 sx={{
@@ -252,7 +265,7 @@ const ExportSection = () => {
                   lineHeight: "20px",
                 }}
               >
-                Your account export has failed. Please try again later.
+                Your account {isImport ? "import" : "export"} has failed. Please try again later.
               </Typography>
             </Stack>
           )}
