@@ -221,6 +221,7 @@ export const navItems = [
           { title: "Collection 3", path:  "/customer-services/collection-3" },
           { title: "Collection 4", path:  "/customer-services/collection-4" },
           { title: "Collection 5", path:  "/customer-services/collection-5" },
+          { title: "Collection 6", path:  "/customer-services/collection-6" },
           // { title: "Refunds", path: "/customer-services/refunds" },
           // {
           //   title: "Account Issues",
