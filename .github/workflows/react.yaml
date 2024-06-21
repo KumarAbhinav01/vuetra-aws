@@ -1,37 +1,74 @@
+name: Deploy
+
 on: 
   push:
     branches:
-    - main
+      - main
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy-staging:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-central-1 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.6.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1 
 
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version: '18.x'
 
-    - name: Install dependencies
-      run: npm install --force
+      - name: Install dependencies
+        run: npm install --force
 
-    - name: Build
-      run: npm run build  
+      - name: Build
+        run: npm run build  
 
-    - name: Deploy to S3
-      if: success()
-      run: aws s3 sync ./build s3://vuetra-aws  
+      - name: Deploy to S3 (Staging)
+        if: success()
+        run: aws s3 sync ./build s3://vuetra-aws/pfs/staging  
 
-    - name: Invalidate CloudFront Cache
-      if: success()
-      run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/*"   
+      - name: Invalidate CloudFront Cache (Staging)
+        if: success()
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID_STAGING }} --paths "/*"
+
+  deploy-production:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.6.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1 
+
+      - name: Checkout
+        uses: actions/checkout@v2.5.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Build
+        run: npm run build  
+
+      - name: Deploy to S3 (Production)
+        if: success()
+        run: aws s3 sync ./build s3://vuetra-aws/pfs/production  
+
+      - name: Invalidate CloudFront Cache (Production)
+        if: success()
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID_PRODUCTION }} --paths "/*"
