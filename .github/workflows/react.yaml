@@ -67,7 +67,7 @@ jobs:
 
       - name: Deploy to S3 (Production)
         if: success()
-        run: aws s3 sync ./build s3://vuetra/workspace-aws/production  
+        run: aws s3 sync ./build s3://vuetra-aws/workspace/production  
 
       - name: Invalidate CloudFront Cache (Production)
         if: success()
